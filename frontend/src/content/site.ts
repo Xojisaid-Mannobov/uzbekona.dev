@@ -56,7 +56,7 @@ export const processSteps = [
   },
   {
     title: 'O‘stiramiz',
-    text: 'Launch — faqat boshlanish. Analitika va foydalanuvchilar fikri asosida mahsulotingizni rivojlantirib boramiz.',
+    text: 'Launch — faqat boshlanish. Kelishuv asosida analitika va foydalanuvchilar fikriga tayanib mahsulotingizni rivojlantirib boramiz.',
   },
 ]
 
@@ -88,7 +88,7 @@ export const whyUs = {
     {
       key: 'support',
       title: 'Ishga tushirgandan keyin ham yoningizdamiz',
-      text: 'Launch — xayrlashuv emas. Monitoring, yangilanishlar va mahsulotni o‘stirish — bizning zimmamizda.',
+      text: 'Launch — xayrlashuv emas. Kelishuv asosida monitoring, yangilanishlar va mahsulotni o‘stirishni o‘z zimmamizga olamiz.',
     },
     {
       key: 'trust',

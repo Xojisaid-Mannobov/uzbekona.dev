@@ -10,7 +10,7 @@ import { useSeo } from '@/composables/useSeo'
 
 const values = [
   { title: 'Aniqlik', text: 'Nima qilayotganimiz, qancha vaqt ketishi va nima uchun — har doim ochiq. Yashirin ish yo‘q.' },
-  { title: 'Mas’uliyat', text: 'Kod production’da ishlashi bizning vazifamiz. Launch’dan keyin ham yoningizdamiz.' },
+  { title: 'Mas’uliyat', text: 'Kod production’da ishlashi bizning vazifamiz. Kelishuv asosida launch’dan keyin ham yoningizdamiz.' },
   { title: 'Soddalik', text: 'Murakkab muammoga eng sodda ishlaydigan yechim. Ortiqcha texnologiya — ortiqcha xavf.' },
 ]
 
