@@ -7,7 +7,7 @@ import TeamGrid from '@/modules/team/TeamGrid.vue'
 <template>
   <section class="section" aria-labelledby="team-title">
     <div class="container">
-      <SectionHeader title-id="team-title" index="06" label="Jamoa" title="Mahsulotni quradigan odamlar.">
+      <SectionHeader title-id="team-title" index="06" label="Jamoa" title="Loyihangiz ustida ishlaydigan odamlar.">
         <template #aside>
           <UiButton to="/team" variant="secondary" icon="arrow-up-right">Jamoa haqida</UiButton>
         </template>

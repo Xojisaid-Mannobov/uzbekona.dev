@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import HeroSection from '@/modules/home/HeroSection.vue'
-import PreviewSection from '@/modules/home/PreviewSection.vue'
 import AboutStatement from '@/modules/home/AboutStatement.vue'
 import SelectedProjects from '@/modules/home/SelectedProjects.vue'
 import MetricsSection from '@/modules/home/MetricsSection.vue'
@@ -16,9 +14,9 @@ import { useAsync } from '@/composables/useAsync'
 import { useSeo } from '@/composables/useSeo'
 import { publicApi } from '@/services/public'
 
-// TZ 56-band: Hero → Preview → About → Projects → Metrics → Services → Tech → Process → Why → Team → Labs → Journal
+// Tartib ishontirish mantig'i bo'yicha: kimmiz → isbot (loyihalar, raqamlar) → nega biz → nima qilamiz → qanday → vositalar.
+// Preview bloki olib tashlangan: hero'da illyustratsiya bor, birinchi loyiha esa "Tanlangan loyihalar"da darhol ko'rinadi.
 const { data: projects, loading, error, reload } = useAsync(() => publicApi.projects({ featured: true, limit: 7 }))
-const heroProject = computed(() => projects.value?.[0] ?? null)
 
 useSeo({})
 </script>
@@ -26,14 +24,13 @@ useSeo({})
 <template>
   <div>
     <HeroSection />
-    <PreviewSection :project="heroProject" :loading="loading" />
     <AboutStatement />
     <SelectedProjects :projects="projects" :loading="loading" :error="error" @retry="reload" />
     <MetricsSection />
-    <ServicesSection />
-    <TechSection />
-    <ProcessSection />
-    <WhySection />
+    <WhySection index="02" />
+    <ServicesSection index="03" />
+    <ProcessSection index="04" />
+    <TechSection index="05" />
     <TeamSection />
     <LabsSection />
     <JournalSection />

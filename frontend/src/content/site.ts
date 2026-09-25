@@ -24,8 +24,8 @@ export const hero = {
 
 export const aboutStatement = {
   label: 'Biz haqimizda',
-  lead: 'Biz shunchaki sayt yozmaymiz.',
-  text: 'Jarayonlarni tushunamiz, ularni raqamlashtiramiz va odamlar ishlata oladigan tizimlarga aylantiramiz.',
+  lead: 'Biz sayt emas — natija topshiramiz.',
+  text: 'Avval biznesingiz qanday ishlashini tushunamiz, keyin uni odamlar zavq bilan ishlatadigan raqamli tizimga aylantiramiz.',
 }
 
 export const technologies = [
@@ -37,20 +37,66 @@ export const technologies = [
 ]
 
 export const processSteps = [
-  { title: 'Tushunamiz', text: 'Biznes, foydalanuvchilar va mavjud jarayonlarni o‘rganamiz. Muammo aniq bo‘lmaguncha kod yozilmaydi.' },
-  { title: 'Loyihalaymiz', text: 'Arxitektura, ma’lumotlar modeli va interfeys ssenariylarini loyihalaymiz. Prototipda tekshiramiz.' },
-  { title: 'Quramiz', text: 'Qisqa iteratsiyalarda ishlab chiqamiz — har bosqich oxirida ishlaydigan natijani ko‘rasiz.' },
-  { title: 'Test qilamiz', text: 'Avtomatik testlar, yuklama sinovlari va real foydalanuvchilar bilan tekshiruv.' },
-  { title: 'Ishga tushiramiz', text: 'Production infratuzilma, monitoring va zaxira nusxalar bilan xavfsiz launch.' },
-  { title: 'Rivojlantiramiz', text: 'Launch — boshlanish. Analitika va fikr-mulohazalar asosida mahsulotni o‘stiramiz.' },
+  {
+    title: 'Tushunamiz',
+    text: 'Biznesingiz, mijozlaringiz va hozirgi jarayonlaringizni o‘rganamiz. Muammo aniq bo‘lmaguncha bitta qator kod ham yozilmaydi.',
+  },
+  {
+    title: 'Loyihalaymiz',
+    text: 'Arxitektura va interfeysni chizib, prototipda sinab ko‘rasiz — katta xarajatdan oldin natijani ko‘rasiz.',
+  },
+  { title: 'Quramiz', text: 'Ikki haftalik bosqichlarda ishlab chiqamiz. Har bosqich oxirida ishlaydigan versiya qo‘lingizda bo‘ladi.' },
+  {
+    title: 'Sinovdan o‘tkazamiz',
+    text: 'Avtomatik testlar, yuklama sinovlari va real foydalanuvchilar bilan tekshiruv — xatolarni mijozlaringizdan oldin topamiz.',
+  },
+  {
+    title: 'Ishga tushiramiz',
+    text: 'Monitoring, zaxira nusxalar va xavfsizlik sozlangan holda launch qilamiz. Birinchi kun ham tinch o‘tadi.',
+  },
+  {
+    title: 'O‘stiramiz',
+    text: 'Launch — faqat boshlanish. Analitika va foydalanuvchilar fikri asosida mahsulotingizni rivojlantirib boramiz.',
+  },
 ]
 
-export const principles = [
-  { title: 'Product thinking', text: 'Koddan oldin muammoni tushunamiz.' },
-  { title: 'Engineering', text: 'Production uchun ishlaydigan tizim quramiz.' },
-  { title: 'Scalability', text: 'Bugun ishlaydigan emas, ertaga ham o‘sadigan arxitektura.' },
-  { title: 'Support', text: 'Launch’dan keyin ham mahsulot rivojlantiriladi.' },
-]
+/** "Nega aynan biz" — har bir karta mijozning bitta xavotiriga javob beradi */
+export const whyUs = {
+  title: 'Nega aynan Uzbekona.dev?',
+  lead: 'Chunki biz uchun har bir loyiha — shunchaki shartnoma emas, balki nomimiz va mas’uliyatimiz.',
+  cards: [
+    {
+      key: 'care',
+      title: 'Har bir loyihaga o‘zimiznikidek mehr beramiz',
+      text: 'Sizning mahsulotingiz biz uchun portfoliodagi navbatdagi qator emas. Uni xuddi o‘zimiz har kuni ishlatadigandek — sinchkovlik bilan, eng kichik tafsilotigacha o‘ylab quramiz.',
+    },
+    {
+      key: 'scale',
+      title: 'Katta miqyosga tayyor tizimlar quramiz',
+      text: 'Universitetlar va tashkilotlar uchun minglab foydalanuvchi bir vaqtda ishlaydigan platformalar yaratamiz. Yuklama oshsa — tizim to‘xtamaydi.',
+    },
+    {
+      key: 'sprint',
+      title: 'Har ikki haftada — ishlaydigan natija',
+      text: 'Oylab kutib o‘tirmaysiz. Har bosqich oxirida mahsulotni o‘z ko‘zingiz bilan ko‘rasiz, sinaysiz va yo‘nalishni birga belgilaymiz.',
+    },
+    {
+      key: 'ownership',
+      title: 'Kod, server va hujjatlar — to‘liq sizniki',
+      text: 'Hech qanday yashirin «garov» yo‘q. Manba kodi, kirish huquqlari va texnik hujjatlar boshidanoq sizning qo‘lingizda.',
+    },
+    {
+      key: 'support',
+      title: 'Ishga tushirgandan keyin ham yoningizdamiz',
+      text: 'Launch — xayrlashuv emas. Monitoring, yangilanishlar va mahsulotni o‘stirish — bizning zimmamizda.',
+    },
+    {
+      key: 'trust',
+      title: 'Mijozlarimiz ishonchi — bizning eng katta yutug‘imiz',
+      text: 'Muvaffaqiyatni topshirilgan loyihalar soni bilan emas, bizga qayta murojaat qilgan va bizni boshqalarga tavsiya qilgan mijozlar bilan o‘lchaymiz.',
+    },
+  ],
+} as const
 
 export const labStageLabels: Record<string, string> = {
   open_source: 'Open Source',

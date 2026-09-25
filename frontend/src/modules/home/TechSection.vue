@@ -15,7 +15,7 @@ withDefaults(defineProps<{ index?: string }>(), { index: '03' })
         :index="index"
         label="Texnologiyalar"
         :title="'Chiroyli interfeysning\norqasida kuchli engineering.'"
-        lead="Har bir loyiha uchun vositalarni vazifaga qarab tanlaymiz — moda uchun emas, yillar davomida ishlashi uchun."
+        lead="Texnologiyani modaga qarab emas, mahsulotingiz yillar davomida ishonchli ishlashi uchun tanlaymiz."
       />
 
       <div class="tech__groups">

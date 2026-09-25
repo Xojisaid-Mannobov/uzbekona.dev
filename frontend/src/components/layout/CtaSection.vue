@@ -18,10 +18,10 @@ const settings = useSettingsStore()
     </div>
     <div class="container cta__inner">
       <p class="t-label cta__label" v-reveal><OrnamentStar :size="14" /> Keyingi qadam</p>
-      <h2 id="cta-title" class="t-display cta__title" v-reveal="80">Biror narsa<br />qurmoqchimisiz?</h2>
+      <h2 id="cta-title" class="t-display cta__title" v-reveal="80">G‘oyangiz bormi?<br />Keling, birga quramiz.</h2>
       <div class="cta__bottom" v-reveal="160">
         <p class="cta__text">
-          G‘oyangizni, muammoingizni yoki mavjud jarayoningizni aytib bering. Birinchi suhbat bepul va hech narsaga majburlamaydi.
+          Vazifangizni qisqacha yozing — bir ish kuni ichida javob beramiz. Birinchi suhbat bepul va hech narsaga majburlamaydi.
         </p>
         <div class="cta__actions">
           <UiButton to="/contact" variant="light" icon="arrow-up-right">Loyihani boshlash</UiButton>

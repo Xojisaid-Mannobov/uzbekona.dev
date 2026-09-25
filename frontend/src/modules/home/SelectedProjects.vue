@@ -31,7 +31,7 @@ const rows = computed(() => {
 <template>
   <section id="projects" class="section projects" aria-labelledby="projects-title">
     <div class="container">
-      <SectionHeader title-id="projects-title" index="01" label="Tanlangan loyihalar" title="Ishlagan mahsulotlarimiz.">
+      <SectionHeader title-id="projects-title" index="01" label="Tanlangan loyihalar" title="Biz qurgan va bugun ishlayotgan mahsulotlar.">
         <template #aside>
           <UiButton to="/projects" variant="secondary" icon="arrow-up-right">Barcha loyihalar</UiButton>
         </template>

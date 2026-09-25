@@ -14,8 +14,8 @@ withDefaults(defineProps<{ index?: string }>(), { index: '04' })
         title-id="process-title"
         :index="index"
         label="Ish jarayoni"
-        title="Oltita aniq bosqich."
-        lead="Har bosqich oxirida ko‘rish, sinash va fikr bildirish mumkin bo‘lgan natija bo‘ladi."
+        title="G‘oyadan ishga tushirishgacha — oltita aniq qadam."
+        lead="Har bir bosqichda nima bo‘layotganini bilib turasiz. Kutilmagan hodisalar va yashirin xarajatlarsiz."
       />
 
       <ol role="list" class="process__grid">

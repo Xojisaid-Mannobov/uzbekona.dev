@@ -32,8 +32,8 @@ function onMove(e: MouseEvent) {
         v-if="showHeader"
         :index="index"
         label="Xizmatlar"
-        title="Biznes uchun raqamli mahsulotlar."
-        lead="G‘oyadan production’gacha: tadqiqot, dizayn, ishlab chiqish va qo‘llab-quvvatlash bitta jamoada."
+        title="Bitta jamoa — barcha raqamli yechimlar."
+        lead="Web platformadan Telegram botgacha, dizayndan serverlargacha. Bir nechta pudratchini boshqarib yurishingizga hojat yo‘q."
       />
 
       <div v-if="loading && !services" class="services__list">
@@ -112,14 +112,12 @@ function onMove(e: MouseEvent) {
   transition: transform var(--dur) var(--ease);
 }
 
+/* Qisqa tavsif doim ko'rinadi, hover'da yorqinlashadi */
 .service__summary {
   font-size: var(--fs-body);
-  color: var(--ink-2);
-  opacity: 0;
-  transform: translateY(8px);
-  transition:
-    opacity var(--dur) var(--ease),
-    transform var(--dur) var(--ease);
+  line-height: 1.5;
+  color: var(--ink-3);
+  transition: color var(--dur) var(--ease);
 }
 
 .service__arrow {
@@ -147,8 +145,7 @@ function onMove(e: MouseEvent) {
 
 .service:hover .service__summary,
 .service:focus-visible .service__summary {
-  opacity: 1;
-  transform: none;
+  color: var(--ink-2);
 }
 
 .service:hover .service__arrow {
@@ -194,8 +191,6 @@ function onMove(e: MouseEvent) {
   .service__summary {
     grid-column: 2 / 3;
     grid-row: 2;
-    opacity: 1;
-    transform: none;
     font-size: 16px;
   }
 

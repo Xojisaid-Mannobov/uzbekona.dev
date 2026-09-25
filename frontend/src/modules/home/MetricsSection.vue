@@ -55,7 +55,7 @@ onBeforeUnmount(() => triggers.forEach((t) => t.kill()))
 <template>
   <section v-if="settings.metrics.length" ref="root" class="section metrics" aria-label="Raqamlarda">
     <div class="container">
-      <p class="t-label metrics__label" v-reveal>Raqamlarda</p>
+      <p class="t-label metrics__label" v-reveal>Raqamlar o‘zi gapiradi</p>
       <dl class="metrics__grid">
         <div v-for="(m, i) in settings.metrics" :key="m.label" class="metrics__item" v-reveal="i * 90">
           <dt class="metrics__desc">{{ m.label }}</dt>
