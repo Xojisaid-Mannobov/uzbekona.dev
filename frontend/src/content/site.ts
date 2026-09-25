@@ -17,9 +17,10 @@ export const footerNavigation = [
 ]
 
 export const hero = {
-  title: ['G‘oyalarni ishlaydigan', 'raqamli mahsulotlarga', 'aylantiramiz.'],
-  subtitle:
-    'Uzbekona.dev web platformalar, mobil ilovalar, Telegram tizimlari va biznes jarayonlarini avtomatlashtiruvchi mahsulotlar ishlab chiqadi.',
+  tagline: 'Raqamli O‘zbekistonni birga quramiz',
+  services: ['Raqamli mahsulotlar', 'Avtomatlashtirish', 'Dasturlash'],
+  lead: 'G‘oyalarni ishlaydigan raqamli mahsulotlarga aylantiramiz: web platformalar, mobil ilovalar, Telegram tizimlari va biznes avtomatlashtirish.',
+  words: ['G‘oyalar', 'Odamlar', 'Texnologiya', 'Yorug‘ kelajak'],
 }
 
 export const aboutStatement = {

@@ -26,6 +26,7 @@
   /* Milliy naqshlar: ko'k — Rishton/koshin, oltin — zardo'zi */
   --ornament: #2350f5;
   --gold: #a8812f;
+  --flag-white: #ffffff;
   --gold-soft: rgb(168 129 47 / 0.12);
 
   /* Qora CTA / footer bloklari */
@@ -111,6 +112,7 @@
     --ornament: #7892ff;
     --gold: #d2ae63;
     --gold-soft: rgb(210 174 99 / 0.14);
+    --flag-white: #e4e9f2;
     --dark: #1a1d1b;
     --dark-2: #222623;
     --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.3);
@@ -136,6 +138,7 @@
   --ornament: #7892ff;
   --gold: #d2ae63;
   --gold-soft: rgb(210 174 99 / 0.14);
+  --flag-white: #e4e9f2;
   --dark: #1a1d1b;
   --dark-2: #222623;
   --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.3);

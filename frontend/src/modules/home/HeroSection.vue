@@ -1,97 +1,257 @@
 <script setup lang="ts">
 import UiButton from '@/components/ui/UiButton.vue'
-import GirihPattern from '@/components/ornament/GirihPattern.vue'
-import SuzaniRosette from '@/components/ornament/SuzaniRosette.vue'
+import BrandMark from '@/components/layout/BrandMark.vue'
+import HeroSkyline from './hero/HeroSkyline.vue'
+import HeroFlagWave from './hero/HeroFlagWave.vue'
+import HeroCircuit from './hero/HeroCircuit.vue'
 import { hero } from '@/content/site'
 import { useSettingsStore } from '@/stores/settings'
 import { scrollToTarget } from '@/composables/useSmoothScroll'
 
-// Hero animatsiyasi sof CSS'da — birinchi ekran JavaScript kutubxonalarini kutmaydi (LCP).
-// Fonda girih to'ri va sekin aylanuvchi suzani rozetkasi — o'zbekona kayfiyat.
+// Hero: brend belgisi + Registon silueti + hilpirayotgan bayroq — "Raqamli O'zbekiston" kayfiyati.
+// Illyustratsiya to'liq SVG (rasm yuklanmaydi), animatsiya sof CSS'da — LCP JavaScript'ni kutmaydi.
 const settings = useSettingsStore()
 </script>
 
 <template>
   <section class="hero" aria-labelledby="hero-title">
-    <div class="hero__decor" aria-hidden="true">
-      <GirihPattern :size="88" :opacity="0.16" fade="right" />
-      <div class="hero__rosette">
-        <SuzaniRosette :opacity="0.45" spin />
-      </div>
+    <div class="hero__art" aria-hidden="true">
+      <HeroCircuit variant="top" class="hero__circuit hero__circuit--top" />
+      <HeroCircuit variant="bottom" class="hero__circuit hero__circuit--bottom" />
+      <HeroSkyline class="hero__skyline" />
+      <HeroFlagWave class="hero__wave" />
     </div>
+
+    <ul class="hero__words hero__fade" style="--d: 700ms" role="list">
+      <li v-for="w in hero.words" :key="w">{{ w }}</li>
+    </ul>
+
     <div class="container hero__inner">
-      <p class="hero__eyebrow hero__fade" style="--d: 0ms">
-        <span class="hero__dot" :class="{ 'is-on': settings.site.available }" aria-hidden="true" />
-        {{ settings.site.available ? 'Yangi loyihalar uchun ochiqmiz' : 'Digital Product Studio' }}
-      </p>
-
-      <h1 id="hero-title" class="t-hero hero__title">
-        <span v-for="(line, i) in hero.title" :key="line" class="hero__line"
-          ><span :style="{ '--i': i }">{{ line }}</span></span
-        >
-      </h1>
-
-      <div class="hero__bottom">
-        <p class="hero__subtitle hero__fade" style="--d: 520ms">{{ hero.subtitle }}</p>
-        <div class="hero__actions hero__fade" style="--d: 600ms">
-          <UiButton icon="arrow-down" @click="scrollToTarget('#projects')">Loyihalarni ko‘rish</UiButton>
-          <UiButton to="/contact" variant="secondary" icon="arrow-up-right">Biz bilan ishlash</UiButton>
+      <div class="hero__brand">
+        <BrandMark class="hero__mark" />
+        <div class="hero__brand-text">
+          <p class="hero__tagline hero__fade" style="--d: 80ms">{{ hero.tagline }}</p>
+          <h1 id="hero-title" class="hero__title">
+            <span class="hero__rise">Uzbekona<span class="hero__tld">.dev</span></span>
+          </h1>
+          <p class="hero__services hero__fade" style="--d: 300ms">
+            <template v-for="(s, i) in hero.services" :key="s">
+              <span v-if="i" class="hero__sep" aria-hidden="true" />
+              <span>{{ s }}</span>
+            </template>
+          </p>
         </div>
       </div>
+
+      <p class="hero__lead hero__fade" style="--d: 420ms">{{ hero.lead }}</p>
+
+      <div class="hero__actions hero__fade" style="--d: 520ms">
+        <UiButton icon="arrow-down" @click="scrollToTarget('#projects')">Loyihalarni ko‘rish</UiButton>
+        <UiButton to="/contact" variant="secondary" icon="arrow-up-right">Biz bilan ishlash</UiButton>
+      </div>
+
+      <p v-if="settings.site.available" class="hero__status hero__fade" style="--d: 620ms">
+        <span class="hero__dot" aria-hidden="true" />
+        Yangi loyihalar uchun ochiqmiz
+      </p>
     </div>
   </section>
 </template>
 
 <style scoped>
 .hero {
+  --wave-h: clamp(190px, 27vw, 400px);
+  --edge: max(var(--gutter), (100vw - var(--container)) / 2);
   position: relative;
-  min-height: clamp(560px, calc(92svh - var(--nav-h)), 820px);
+  min-height: clamp(640px, calc(100svh - var(--nav-h)), 860px);
   display: flex;
   align-items: center;
-  padding-block: 56px 88px;
+  padding-top: 48px;
+  padding-bottom: calc(var(--wave-h) * 0.72);
   overflow: hidden;
   isolation: isolate;
+  background: radial-gradient(60% 70% at 78% 46%, color-mix(in srgb, var(--ornament) 11%, transparent), transparent 70%);
 }
 
-.hero__decor {
+/* ─── Illyustratsiya ─────────────────────────────── */
+.hero__art {
   position: absolute;
   inset: 0;
   z-index: -1;
+  pointer-events: none;
 }
 
-/* Rozetka o'ng tomonda, yarmi ekrandan chiqib turadi — naqsh matnga xalaqit bermaydi */
-.hero__rosette {
+.hero__circuit {
   position: absolute;
-  top: 50%;
-  right: max(-120px, calc((100vw - var(--container)) / 2 - 200px));
-  width: min(46vw, 620px);
-  aspect-ratio: 1;
-  translate: 0 -50%;
+  opacity: 0.8;
 }
 
-.hero__rosette::before {
+.hero__circuit--top {
+  top: -72px;
+  left: 50%;
+  width: min(38vw, 560px);
+}
+
+.hero__circuit--bottom {
+  left: 0;
+  bottom: 12px;
+  width: min(32vw, 460px);
+}
+
+.hero__skyline {
+  position: absolute;
+  right: calc(var(--edge) - 24px);
+  bottom: calc(var(--wave-h) * 0.5);
+  width: min(52vw, 780px);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 20%), linear-gradient(180deg, #000 58%, transparent 96%);
+  mask-composite: intersect;
+  animation: skyline-in 1400ms cubic-bezier(0.16, 1, 0.3, 1) 150ms both;
+}
+
+.hero__wave {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--wave-h);
+  mask-image: linear-gradient(90deg, transparent 0%, rgb(0 0 0 / 0.35) 22%, #000 48%), linear-gradient(180deg, #000 84%, transparent 100%);
+  mask-composite: intersect;
+  /* bayroq chapdan o'ngga "yoyiladi" */
+  animation: wave-in 1600ms cubic-bezier(0.65, 0, 0.35, 1) 250ms both;
+}
+
+@keyframes skyline-in {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+}
+
+@keyframes wave-in {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* O'ng yuqoridagi so'zlar ro'yxati */
+.hero__words {
+  position: absolute;
+  top: 40px;
+  right: var(--edge);
+  display: grid;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+.hero__words::after {
   content: '';
-  position: absolute;
-  inset: 12%;
-  border-radius: 50%;
-  background: radial-gradient(circle, color-mix(in srgb, var(--ornament) 10%, transparent), transparent 70%);
+  width: 36px;
+  height: 2px;
+  margin-top: 10px;
+  background: var(--ornament);
 }
 
+/* ─── Matn ───────────────────────────────────────── */
 .hero__inner {
   display: grid;
+  justify-items: start;
   gap: 32px;
 }
 
-.hero__eyebrow {
+.hero__brand {
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 2vw, 32px);
+}
+
+.hero__mark {
+  height: clamp(96px, 9.6vw, 148px);
+  flex-shrink: 0;
+  animation: mark-in 1100ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes mark-in {
+  from {
+    opacity: 0;
+    transform: scale(0.82) translateY(12px);
+  }
+}
+
+.hero__brand-text {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+
+.hero__tagline {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+.hero__title {
+  font-size: clamp(48px, 5.6vw, 84px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.hero__rise {
+  display: inline-block;
+  animation: hero-rise 950ms cubic-bezier(0.16, 1, 0.3, 1) 120ms both;
+}
+
+.hero__tld {
+  color: var(--accent);
+}
+
+.hero__services {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 14px;
+  font-size: clamp(14px, 1.2vw, 18px);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--ink-2);
+}
+
+.hero__sep {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.hero__lead {
+  max-width: 560px;
+  font-size: var(--fs-body-lg);
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+
+.hero__actions {
+  display: flex;
+  gap: 12px;
+}
+
+.hero__status {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  width: fit-content;
-  height: 40px;
-  padding: 0 18px 0 14px;
-  border-radius: var(--r-pill);
-  border: 1px solid var(--line);
-  background: var(--surface);
+  gap: 10px;
+  margin-top: -12px;
   font-size: var(--fs-small);
   font-weight: 600;
   color: var(--ink-2);
@@ -101,10 +261,6 @@ const settings = useSettingsStore()
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--ink-3);
-}
-
-.hero__dot.is-on {
   background: var(--success);
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--success) 18%, transparent);
   animation: pulse 2.4s var(--ease) infinite;
@@ -114,25 +270,6 @@ const settings = useSettingsStore()
   50% {
     box-shadow: 0 0 0 7px color-mix(in srgb, var(--success) 6%, transparent);
   }
-}
-
-.hero__title {
-  max-width: 880px;
-}
-
-.hero__line {
-  display: block;
-  overflow: hidden;
-  /* descender'lar (g, y) kesilmasligi uchun */
-  padding-bottom: 0.14em;
-  margin-bottom: -0.14em;
-}
-
-.hero__line > span {
-  display: inline-block;
-  /* Qatorlar pastdan ko'tariladi (text reveal) */
-  animation: hero-rise 950ms cubic-bezier(0.16, 1, 0.3, 1) both;
-  animation-delay: calc(var(--i) * 90ms + 80ms);
 }
 
 .hero__fade {
@@ -153,49 +290,84 @@ const settings = useSettingsStore()
   }
 }
 
-.hero__bottom {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 32px;
-  margin-top: 4px;
-}
-
-.hero__subtitle {
-  max-width: 560px;
-  font-size: var(--fs-body-lg);
-  line-height: 1.55;
-  color: var(--ink-2);
-}
-
-.hero__actions {
-  display: flex;
-  gap: 12px;
-  flex-shrink: 0;
+/* ─── Moslashuvchanlik ───────────────────────────── */
+@media (max-width: 1200px) {
+  .hero__words {
+    display: none;
+  }
 }
 
 @media (max-width: 1024px) {
-  .hero__rosette {
-    width: 60vw;
-    right: -22vw;
-    top: 30%;
+  .hero {
+    min-height: auto;
+    align-items: flex-start;
+    padding-top: 56px;
+    padding-bottom: calc(var(--wave-h) + min(44vw, 360px));
+  }
+
+  .hero__skyline {
+    width: min(92vw, 720px);
+    right: -4vw;
+    bottom: calc(var(--wave-h) * 0.45);
+  }
+
+  .hero__circuit--top {
+    left: auto;
+    right: -80px;
+    width: 420px;
+    opacity: 0.5;
+  }
+
+  .hero__circuit--bottom {
+    display: none;
   }
 }
 
 @media (max-width: 560px) {
   .hero {
-    padding-block: 32px 56px;
+    --wave-h: 150px;
+    padding-top: 32px;
+    padding-bottom: calc(var(--wave-h) + 50vw);
   }
 
-  .hero__rosette {
-    width: 88vw;
-    right: -40vw;
-    top: 18%;
-    opacity: 0.6;
+  .hero__brand {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
   }
 
-  .hero__inner {
-    gap: 28px;
+  .hero__mark {
+    height: 84px;
+  }
+
+  .hero__title {
+    font-size: clamp(40px, 12.4vw, 52px);
+  }
+
+  .hero__tagline {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+  }
+
+  .hero__services {
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    gap: 4px 8px;
+  }
+
+  .hero__sep {
+    width: 4px;
+    height: 4px;
+  }
+
+  .hero__circuit--top {
+    display: none;
+  }
+
+  .hero__skyline {
+    width: 118vw;
+    right: -6vw;
+    bottom: calc(var(--wave-h) * 0.4);
   }
 
   .hero__actions {
