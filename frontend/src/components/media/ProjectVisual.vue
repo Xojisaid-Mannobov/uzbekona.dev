@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import type { MediaRef } from '@/types/api'
 import MediaImage from './MediaImage.vue'
+import GirihPattern from '@/components/ornament/GirihPattern.vue'
 
 /**
  * Loyiha vizuali. Cover yuklangan bo'lsa — real screenshot.
@@ -36,8 +37,10 @@ const kind = computed(() => {
 <template>
   <div class="visual" :style="{ '--pa': accent }">
     <MediaImage v-if="cover" :media="cover" :sizes="sizes" :priority="priority" fill :alt="cover.alt || title" />
+    <!-- Screenshot bo'lmaganda fonda loyiha rangidagi girih naqshi -->
+    <GirihPattern v-if="!cover" :color="accent" :size="84" :opacity="0.2" fade="top" />
 
-    <div v-else class="mock" :class="`mock--${kind}`" role="img" :aria-label="`${title} — interfeys eskizi`">
+    <div v-if="!cover" class="mock" :class="`mock--${kind}`" role="img" :aria-label="`${title} — interfeys eskizi`">
       <!-- Dashboard: sidebar + KPI + grafik -->
       <div v-if="kind === 'dashboard'" class="win">
         <div class="win__bar">

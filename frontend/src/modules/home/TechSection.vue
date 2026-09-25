@@ -61,12 +61,12 @@ withDefaults(defineProps<{ index?: string }>(), { index: '03' })
 .tech__item {
   display: inline-flex;
   align-items: center;
-  height: 64px;
+  height: 52px;
   padding: 0 28px;
   border-radius: var(--r-pill);
   background: var(--surface);
   border: 1px solid var(--line);
-  font-size: clamp(20px, 1.9vw, 30px);
+  font-size: clamp(17px, 1.4vw, 22px);
   font-weight: 600;
   letter-spacing: -0.03em;
   transition:
@@ -89,7 +89,7 @@ withDefaults(defineProps<{ index?: string }>(), { index: '03' })
   }
 
   .tech__item {
-    height: 52px;
+    height: 46px;
     padding: 0 22px;
   }
 }

@@ -24,11 +24,11 @@ withDefaults(defineProps<{ size?: 'md' | 'lg' }>(), { size: 'md' })
 }
 
 .brand--md {
-  font-size: 22px;
+  font-size: 20px;
 }
 
 .brand--lg {
-  font-size: 28px;
+  font-size: 24px;
 }
 
 .brand__mark {

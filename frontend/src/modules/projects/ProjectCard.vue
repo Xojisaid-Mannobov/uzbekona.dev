@@ -55,14 +55,14 @@ const sizes = computed(() => (props.size === 'wide' ? '(min-width: 1440px) 1360p
   position: relative;
   border-radius: var(--r-lg);
   overflow: hidden;
-  min-height: 650px;
-  height: clamp(420px, 50vw, 760px);
+  min-height: 520px;
+  height: clamp(380px, 44vw, 640px);
   isolation: isolate;
 }
 
 .project--half .project__visual {
   min-height: 0;
-  height: clamp(380px, 42vw, 620px);
+  height: clamp(320px, 36vw, 520px);
 }
 
 .project__visual > :deep(.visual) {
@@ -106,8 +106,8 @@ const sizes = computed(() => (props.size === 'wide' ? '(min-width: 1440px) 1360p
 .project__arrow {
   display: grid;
   place-items: center;
-  width: 56px;
-  height: 56px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   border: 1px solid var(--line-strong);
   color: var(--ink);
@@ -145,8 +145,8 @@ const sizes = computed(() => (props.size === 'wide' ? '(min-width: 1440px) 1360p
   }
 
   .project__arrow {
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
   }
 }
 </style>

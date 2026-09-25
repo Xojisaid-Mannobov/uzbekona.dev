@@ -158,7 +158,7 @@ useSeo(() => ({
   gap: 32px;
   padding: 28px 0;
   border-bottom: 1px solid var(--line);
-  font-size: clamp(22px, 2vw, 32px);
+  font-size: clamp(19px, 1.6vw, 25px);
   font-weight: 600;
   letter-spacing: -0.03em;
 }
@@ -181,7 +181,7 @@ useSeo(() => ({
 }
 
 .svc-stack li {
-  height: 52px;
+  height: 46px;
   display: inline-flex;
   align-items: center;
   padding: 0 22px;
@@ -189,7 +189,7 @@ useSeo(() => ({
   background: var(--surface);
   border: 1px solid var(--line);
   font-weight: 600;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .svc-related {

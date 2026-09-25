@@ -7,6 +7,7 @@ import StateMessage from '@/components/states/StateMessage.vue'
 import ProjectVisual from '@/components/media/ProjectVisual.vue'
 import MediaImage from '@/components/media/MediaImage.vue'
 import BlockRenderer from '@/components/content/BlockRenderer.vue'
+import GirihPattern from '@/components/ornament/GirihPattern.vue'
 import { useAsync } from '@/composables/useAsync'
 import { useSeo } from '@/composables/useSeo'
 import { vReveal } from '@/composables/reveal'
@@ -61,17 +62,20 @@ useSeo(() => ({
     </div>
 
     <article v-else-if="project" :key="project.id">
-      <header class="container case-hero">
-        <RouterLink to="/projects" class="case-hero__back"><AppIcon name="arrow-left" :size="18" /> Loyihalar</RouterLink>
-        <h1 class="t-display case-hero__title" v-reveal>{{ project.title }}</h1>
-        <p class="t-statement case-hero__tagline" v-reveal="80">{{ project.tagline }}</p>
+      <header class="case-hero">
+        <GirihPattern :color="project.accent || undefined" :size="84" :opacity="0.14" fade="right" />
+        <div class="container case-hero__inner">
+          <RouterLink to="/projects" class="case-hero__back"><AppIcon name="arrow-left" :size="18" /> Loyihalar</RouterLink>
+          <h1 class="t-display case-hero__title" v-reveal>{{ project.title }}</h1>
+          <p class="t-statement case-hero__tagline" v-reveal="80">{{ project.tagline }}</p>
 
-        <dl class="facts" v-reveal="140">
-          <div v-for="f in facts" :key="f.label" class="facts__item">
-            <dt>{{ f.label }}</dt>
-            <dd>{{ f.value }}</dd>
-          </div>
-        </dl>
+          <dl class="facts" v-reveal="140">
+            <div v-for="f in facts" :key="f.label" class="facts__item">
+              <dt>{{ f.label }}</dt>
+              <dd>{{ f.value }}</dd>
+            </div>
+          </dl>
+        </div>
       </header>
 
       <div class="container">
@@ -152,8 +156,16 @@ useSeo(() => ({
 }
 
 .case-hero {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
   padding-top: clamp(48px, 6vw, 96px);
   padding-bottom: clamp(56px, 6vw, 96px);
+}
+
+.case-hero__inner {
+  position: relative;
+  z-index: 1;
 }
 
 .case-hero__back {
@@ -170,7 +182,7 @@ useSeo(() => ({
 }
 
 .case-hero__title {
-  font-size: clamp(64px, 10vw, 160px);
+  font-size: clamp(52px, 7vw, 112px);
 }
 
 .case-hero__tagline {
@@ -208,7 +220,7 @@ useSeo(() => ({
 
 .case-cover {
   position: relative;
-  height: clamp(420px, 52vw, 800px);
+  height: clamp(380px, 46vw, 680px);
   border-radius: var(--r-lg);
   overflow: hidden;
 }
@@ -302,7 +314,7 @@ useSeo(() => ({
 .next__arrow {
   display: grid;
   place-items: center;
-  width: clamp(72px, 7vw, 112px);
+  width: clamp(60px, 5.4vw, 88px);
   aspect-ratio: 1;
   border-radius: 50%;
   background: var(--ink);

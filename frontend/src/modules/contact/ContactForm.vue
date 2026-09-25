@@ -208,7 +208,7 @@ textarea {
 
 textarea {
   height: auto;
-  min-height: 200px;
+  min-height: 180px;
   padding: 18px 22px;
   resize: vertical;
   line-height: 1.55;
@@ -251,7 +251,7 @@ textarea:focus {
 .chip {
   display: inline-flex;
   align-items: center;
-  height: 52px;
+  height: 46px;
   padding: 0 22px;
   border-radius: var(--r-pill);
   border: 1px solid var(--line-strong);

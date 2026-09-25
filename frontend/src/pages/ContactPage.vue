@@ -86,7 +86,7 @@ useSeo({ title: 'Bog‘lanish', description: 'Loyihangiz haqida yozing — Uzbek
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: clamp(22px, 2vw, 30px);
+  font-size: clamp(19px, 1.6vw, 24px);
   font-weight: 600;
   letter-spacing: -0.03em;
   border-bottom: 1px solid var(--line-strong);
@@ -115,7 +115,7 @@ useSeo({ title: 'Bog‘lanish', description: 'Loyihangiz haqida yozing — Uzbek
 }
 
 .contact__num {
-  font-size: 32px;
+  font-size: 26px;
   font-weight: 600;
   letter-spacing: -0.05em;
   color: var(--accent);
@@ -123,7 +123,7 @@ useSeo({ title: 'Bog‘lanish', description: 'Loyihangiz haqida yozing — Uzbek
 }
 
 .contact__steps strong {
-  font-size: 20px;
+  font-size: 18px;
   letter-spacing: -0.02em;
 }
 

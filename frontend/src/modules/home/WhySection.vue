@@ -3,6 +3,7 @@ import SectionHeader from '@/components/ui/SectionHeader.vue'
 import { principles } from '@/content/site'
 import { vReveal } from '@/composables/reveal'
 import { pad2 } from '@/utils/format'
+import GirihPattern from '@/components/ornament/GirihPattern.vue'
 
 withDefaults(defineProps<{ index?: string }>(), { index: '05' })
 </script>
@@ -14,6 +15,7 @@ withDefaults(defineProps<{ index?: string }>(), { index: '05' })
 
       <div class="why__grid">
         <article v-for="(p, i) in principles" :key="p.title" class="why__block" v-reveal="(i % 2) * 110">
+          <GirihPattern :size="64" :opacity="0.14" fade="right" />
           <span class="why__num">{{ pad2(i + 1) }}</span>
           <div>
             <h3 class="t-h3">{{ p.title }}</h3>
@@ -33,11 +35,14 @@ withDefaults(defineProps<{ index?: string }>(), { index: '05' })
 }
 
 .why__block {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 64px;
-  min-height: 360px;
+  min-height: 290px;
   padding: clamp(32px, 3.4vw, 56px);
   background: var(--surface);
   border-radius: var(--r-lg);
@@ -71,7 +76,7 @@ withDefaults(defineProps<{ index?: string }>(), { index: '05' })
   }
 
   .why__block {
-    min-height: 280px;
+    min-height: 240px;
   }
 }
 </style>

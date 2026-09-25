@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import MediaImage from '@/components/media/MediaImage.vue'
+import GirihPattern from '@/components/ornament/GirihPattern.vue'
 import type { Article } from '@/types/api'
 import { formatDate } from '@/utils/format'
 
@@ -19,6 +20,7 @@ withDefaults(defineProps<{ article: Article; large?: boolean }>(), { large: fals
           fill
         />
         <div v-else class="article__typo" aria-hidden="true">
+          <GirihPattern :size="72" :opacity="0.16" fade="top" />
           <span class="article__typo-meta">{{ article.reading_time }} daqiqa o‘qish</span>
           <span class="article__typo-word">{{ article.category?.name ?? 'Journal' }}</span>
         </div>
@@ -74,6 +76,7 @@ withDefaults(defineProps<{ article: Article; large?: boolean }>(), { large: fals
 }
 
 .article__typo-meta {
+  position: relative;
   align-self: flex-end;
   font-size: 13px;
   font-weight: 700;
@@ -84,7 +87,8 @@ withDefaults(defineProps<{ article: Article; large?: boolean }>(), { large: fals
 
 /* Kategoriya nomi — katta, pastki chetdan biroz kesilgan tipografik kompozitsiya */
 .article__typo-word {
-  font-size: clamp(56px, 6.4vw, 104px);
+  position: relative;
+  font-size: clamp(44px, 4.8vw, 76px);
   line-height: 0.8;
   font-weight: 700;
   letter-spacing: -0.06em;
@@ -94,7 +98,7 @@ withDefaults(defineProps<{ article: Article; large?: boolean }>(), { large: fals
 }
 
 .article--large .article__typo-word {
-  font-size: clamp(72px, 11vw, 180px);
+  font-size: clamp(56px, 8vw, 128px);
 }
 
 .article__meta {
@@ -113,14 +117,14 @@ withDefaults(defineProps<{ article: Article; large?: boolean }>(), { large: fals
 
 .article__title {
   margin-top: 12px;
-  font-size: clamp(24px, 2vw, 32px);
+  font-size: clamp(19px, 1.5vw, 24px);
   letter-spacing: -0.035em;
   line-height: 1.15;
   transition: color var(--dur-fast) var(--ease);
 }
 
 .article--large .article__title {
-  font-size: clamp(30px, 2.8vw, 44px);
+  font-size: clamp(24px, 2.2vw, 34px);
 }
 
 .article__link:hover .article__title {

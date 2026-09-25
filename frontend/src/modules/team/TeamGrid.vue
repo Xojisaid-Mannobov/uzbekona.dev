@@ -72,8 +72,8 @@ const { data: team, loading, error, reload } = useAsync(publicApi.team)
 .team-grid__plus {
   display: grid;
   place-items: center;
-  width: 72px;
-  height: 72px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   background: var(--ink);
   color: var(--bg);
@@ -86,7 +86,7 @@ const { data: team, loading, error, reload } = useAsync(publicApi.team)
 
 .team-grid__join strong {
   display: block;
-  font-size: clamp(24px, 1.9vw, 28px);
+  font-size: clamp(19px, 1.5vw, 23px);
   letter-spacing: -0.03em;
   margin-bottom: 12px;
 }

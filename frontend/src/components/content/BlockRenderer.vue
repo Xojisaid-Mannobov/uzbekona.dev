@@ -166,7 +166,7 @@ function youtubeEmbed(url?: string): string | null {
 }
 
 .blocks--article .b-heading .t-h2 {
-  font-size: clamp(28px, 2.6vw, 40px);
+  font-size: clamp(24px, 2.1vw, 32px);
 }
 
 .b-text {
@@ -179,7 +179,7 @@ function youtubeEmbed(url?: string): string | null {
 
 .blocks--article .b-text {
   color: var(--ink);
-  font-size: clamp(18px, 1.35vw, 20px);
+  font-size: clamp(17px, 1.2vw, 18px);
 }
 
 .b-large {
@@ -189,7 +189,7 @@ function youtubeEmbed(url?: string): string | null {
 }
 
 .blocks--article .b-large .t-statement {
-  font-size: clamp(26px, 2.4vw, 36px);
+  font-size: clamp(22px, 2vw, 30px);
 }
 
 .b-image figcaption,
@@ -262,7 +262,7 @@ function youtubeEmbed(url?: string): string | null {
 }
 
 .b-stats dd {
-  font-size: clamp(56px, 6vw, 96px);
+  font-size: clamp(44px, 4.6vw, 72px);
   line-height: 0.9;
   font-weight: 600;
   letter-spacing: -0.055em;
@@ -273,7 +273,7 @@ function youtubeEmbed(url?: string): string | null {
 }
 
 .b-quote p {
-  font-size: clamp(28px, 3vw, 48px);
+  font-size: clamp(24px, 2.4vw, 36px);
   line-height: 1.15;
   letter-spacing: -0.03em;
   font-weight: 500;
@@ -285,7 +285,7 @@ function youtubeEmbed(url?: string): string | null {
 }
 
 .blocks--article .b-quote p {
-  font-size: clamp(24px, 2.2vw, 32px);
+  font-size: clamp(20px, 1.8vw, 26px);
 }
 
 .b-quote footer {
@@ -321,7 +321,7 @@ function youtubeEmbed(url?: string): string | null {
 }
 
 .b-cols__item h3 {
-  font-size: clamp(26px, 2.2vw, 34px);
+  font-size: clamp(21px, 1.7vw, 26px);
   letter-spacing: -0.03em;
   color: var(--ink);
 }
@@ -340,12 +340,12 @@ function youtubeEmbed(url?: string): string | null {
 .b-tech li {
   display: inline-flex;
   align-items: center;
-  height: 60px;
-  padding: 0 26px;
+  height: 50px;
+  padding: 0 22px;
   border-radius: var(--r-pill);
   background: var(--surface);
   border: 1px solid var(--line);
-  font-size: clamp(18px, 1.6vw, 24px);
+  font-size: clamp(16px, 1.3vw, 20px);
   font-weight: 600;
   letter-spacing: -0.025em;
 }
@@ -365,7 +365,7 @@ function youtubeEmbed(url?: string): string | null {
 }
 
 .b-process__num {
-  font-size: clamp(56px, 5vw, 80px);
+  font-size: clamp(44px, 4vw, 64px);
   line-height: 0.9;
   font-weight: 600;
   letter-spacing: -0.06em;
@@ -374,7 +374,7 @@ function youtubeEmbed(url?: string): string | null {
 }
 
 .b-process h3 {
-  font-size: clamp(24px, 2vw, 30px);
+  font-size: clamp(20px, 1.6vw, 24px);
   letter-spacing: -0.03em;
 }
 

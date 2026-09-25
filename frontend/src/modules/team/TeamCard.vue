@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import MediaImage from '@/components/media/MediaImage.vue'
+import GirihPattern from '@/components/ornament/GirihPattern.vue'
 import type { TeamMember } from '@/types/api'
 
 const props = defineProps<{ member: TeamMember }>()
@@ -17,6 +18,7 @@ const initials = computed(() =>
 <template>
   <article class="member">
     <div class="member__photo">
+      <GirihPattern v-if="!member.photo" :size="64" :opacity="0.16" fade="center" />
       <MediaImage v-if="member.photo" :media="member.photo" sizes="(min-width: 1024px) 420px, 100vw" fill :alt="member.name" />
       <span v-else class="member__initials" aria-hidden="true">{{ initials }}</span>
     </div>
@@ -56,20 +58,20 @@ const initials = computed(() =>
 }
 
 .member__initials {
-  font-size: clamp(72px, 8vw, 120px);
+  font-size: clamp(56px, 6vw, 96px);
   font-weight: 600;
   letter-spacing: -0.06em;
   color: var(--ink-3);
 }
 
 .member__name {
-  font-size: clamp(24px, 1.9vw, 28px);
+  font-size: clamp(19px, 1.5vw, 23px);
   letter-spacing: -0.03em;
 }
 
 .member__role {
   margin-top: 4px;
-  font-size: clamp(16px, 1.25vw, 18px);
+  font-size: 15px;
   color: var(--ink-2);
 }
 

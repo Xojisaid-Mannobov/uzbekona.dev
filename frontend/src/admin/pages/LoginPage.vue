@@ -3,6 +3,7 @@ import { reactive, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import AppIcon from '@/components/ui/AppIcon.vue'
 import BrandLogo from '@/components/layout/BrandLogo.vue'
+import GirihPattern from '@/components/ornament/GirihPattern.vue'
 import FormField from '@/admin/components/FormField.vue'
 import { useAuthStore } from '@/admin/stores/auth'
 import { toApiError } from '@/services/http'
@@ -43,6 +44,7 @@ async function submit() {
 
 <template>
   <div class="admin login">
+    <GirihPattern :size="96" :opacity="0.14" fade="left" />
     <div class="login__card">
       <BrandLogo size="lg" />
       <div class="login__head">
@@ -98,6 +100,9 @@ async function submit() {
 
 <style scoped>
 .login {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   min-height: 100vh;
   display: grid;
   place-items: center;
@@ -106,6 +111,8 @@ async function submit() {
 }
 
 .login__card {
+  position: relative;
+  z-index: 1;
   width: min(440px, 100%);
   display: grid;
   gap: 28px;

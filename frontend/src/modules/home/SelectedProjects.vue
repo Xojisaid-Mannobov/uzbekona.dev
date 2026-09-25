@@ -85,7 +85,7 @@ const rows = computed(() => {
 }
 
 .projects__skeleton {
-  height: 650px;
+  height: 520px;
   border-radius: var(--r-lg);
 }
 
@@ -96,7 +96,7 @@ const rows = computed(() => {
   }
 
   .projects__skeleton {
-    height: 420px;
+    height: 360px;
   }
 }
 </style>

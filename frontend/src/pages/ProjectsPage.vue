@@ -97,9 +97,10 @@ useSeo({
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  height: 52px;
+  height: 46px;
   padding: 0 22px;
   border-radius: var(--r-pill);
+  background: var(--bg);
   border: 1px solid var(--line-strong);
   font-weight: 600;
   transition:

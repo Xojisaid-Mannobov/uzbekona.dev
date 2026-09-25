@@ -55,13 +55,13 @@ withDefaults(defineProps<{ index?: string }>(), { index: '04' })
 }
 
 .step__title {
-  font-size: clamp(26px, 2.2vw, 34px);
+  font-size: clamp(21px, 1.7vw, 26px);
   letter-spacing: -0.03em;
 }
 
 .step__text {
   max-width: 36ch;
-  font-size: clamp(17px, 1.35vw, 20px);
+  font-size: 16px;
   color: var(--ink-2);
 }
 

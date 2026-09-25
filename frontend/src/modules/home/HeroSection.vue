@@ -1,15 +1,24 @@
 <script setup lang="ts">
 import UiButton from '@/components/ui/UiButton.vue'
+import GirihPattern from '@/components/ornament/GirihPattern.vue'
+import SuzaniRosette from '@/components/ornament/SuzaniRosette.vue'
 import { hero } from '@/content/site'
 import { useSettingsStore } from '@/stores/settings'
 import { scrollToTarget } from '@/composables/useSmoothScroll'
 
-// Hero animatsiyasi sof CSS'da — birinchi ekran JavaScript kutubxonalarini kutmaydi (LCP)
+// Hero animatsiyasi sof CSS'da — birinchi ekran JavaScript kutubxonalarini kutmaydi (LCP).
+// Fonda girih to'ri va sekin aylanuvchi suzani rozetkasi — o'zbekona kayfiyat.
 const settings = useSettingsStore()
 </script>
 
 <template>
   <section class="hero" aria-labelledby="hero-title">
+    <div class="hero__decor" aria-hidden="true">
+      <GirihPattern :size="88" :opacity="0.16" fade="right" />
+      <div class="hero__rosette">
+        <SuzaniRosette :opacity="0.45" spin />
+      </div>
+    </div>
     <div class="container hero__inner">
       <p class="hero__eyebrow hero__fade" style="--d: 0ms">
         <span class="hero__dot" :class="{ 'is-on': settings.site.available }" aria-hidden="true" />
@@ -35,16 +44,42 @@ const settings = useSettingsStore()
 
 <style scoped>
 .hero {
-  min-height: calc(100vh - var(--nav-h));
-  min-height: calc(100svh - var(--nav-h));
+  position: relative;
+  min-height: clamp(560px, calc(92svh - var(--nav-h)), 820px);
   display: flex;
   align-items: center;
-  padding-block: 64px 96px;
+  padding-block: 56px 88px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero__decor {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+/* Rozetka o'ng tomonda, yarmi ekrandan chiqib turadi — naqsh matnga xalaqit bermaydi */
+.hero__rosette {
+  position: absolute;
+  top: 50%;
+  right: max(-120px, calc((100vw - var(--container)) / 2 - 200px));
+  width: min(46vw, 620px);
+  aspect-ratio: 1;
+  translate: 0 -50%;
+}
+
+.hero__rosette::before {
+  content: '';
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--ornament) 10%, transparent), transparent 70%);
 }
 
 .hero__inner {
   display: grid;
-  gap: 40px;
+  gap: 32px;
 }
 
 .hero__eyebrow {
@@ -52,8 +87,8 @@ const settings = useSettingsStore()
   align-items: center;
   gap: 12px;
   width: fit-content;
-  height: 44px;
-  padding: 0 20px 0 16px;
+  height: 40px;
+  padding: 0 18px 0 14px;
   border-radius: var(--r-pill);
   border: 1px solid var(--line);
   background: var(--surface);
@@ -82,7 +117,7 @@ const settings = useSettingsStore()
 }
 
 .hero__title {
-  max-width: 1200px;
+  max-width: 880px;
 }
 
 .hero__line {
@@ -120,15 +155,15 @@ const settings = useSettingsStore()
 
 .hero__bottom {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 48px;
-  margin-top: 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+  margin-top: 4px;
 }
 
 .hero__subtitle {
-  max-width: 680px;
-  font-size: clamp(18px, 1.5vw, 22px);
+  max-width: 560px;
+  font-size: var(--fs-body-lg);
   line-height: 1.55;
   color: var(--ink-2);
 }
@@ -140,16 +175,23 @@ const settings = useSettingsStore()
 }
 
 @media (max-width: 1024px) {
-  .hero__bottom {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 32px;
+  .hero__rosette {
+    width: 60vw;
+    right: -22vw;
+    top: 30%;
   }
 }
 
 @media (max-width: 560px) {
   .hero {
-    padding-block: 40px 64px;
+    padding-block: 32px 56px;
+  }
+
+  .hero__rosette {
+    width: 88vw;
+    right: -40vw;
+    top: 18%;
+    opacity: 0.6;
   }
 
   .hero__inner {

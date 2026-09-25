@@ -73,7 +73,7 @@ const { data: labs, loading, error, reload } = useAsync(publicApi.labs)
 }
 
 .labs__skeleton {
-  height: 380px;
+  height: 320px;
   border-radius: var(--r-lg);
 }
 
@@ -81,7 +81,7 @@ const { data: labs, loading, error, reload } = useAsync(publicApi.labs)
   display: flex;
   flex-direction: column;
   gap: 16px;
-  min-height: 380px;
+  min-height: 320px;
   padding: clamp(28px, 3vw, 48px);
   border-radius: var(--r-lg);
   background: var(--surface);
@@ -154,7 +154,7 @@ const { data: labs, loading, error, reload } = useAsync(publicApi.labs)
 }
 
 .lab__title {
-  font-size: clamp(30px, 2.8vw, 44px);
+  font-size: clamp(24px, 2vw, 32px);
   letter-spacing: -0.04em;
 }
 
@@ -210,7 +210,7 @@ const { data: labs, loading, error, reload } = useAsync(publicApi.labs)
   }
 
   .lab {
-    min-height: 320px;
+    min-height: 280px;
   }
 }
 </style>

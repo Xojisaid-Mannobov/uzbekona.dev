@@ -3,6 +3,8 @@ import { RouterLink } from 'vue-router'
 import AppIcon from '@/components/ui/AppIcon.vue'
 import { aboutStatement } from '@/content/site'
 import { vReveal } from '@/composables/reveal'
+import OrnamentStar from '@/components/ornament/OrnamentStar.vue'
+import SuzaniRosette from '@/components/ornament/SuzaniRosette.vue'
 
 // Katta bayonot (48–64px): ikki bosqichli yumshoq reveal
 </script>
@@ -10,7 +12,10 @@ import { vReveal } from '@/composables/reveal'
 <template>
   <section class="section statement" aria-labelledby="about-title">
     <div class="container statement__grid">
-      <p class="t-label statement__label">{{ aboutStatement.label }}</p>
+      <div class="statement__side">
+        <p class="t-label statement__label"><OrnamentStar :size="14" /> {{ aboutStatement.label }}</p>
+        <SuzaniRosette class="statement__rosette" tone="gold" :opacity="0.7" />
+      </div>
       <div>
         <h2 id="about-title" class="t-statement statement__lead" v-reveal>{{ aboutStatement.lead }}</h2>
         <p class="t-statement statement__text" v-reveal="120">{{ aboutStatement.text }}</p>
@@ -27,7 +32,20 @@ import { vReveal } from '@/composables/reveal'
   gap: 48px;
 }
 
+.statement__side {
+  display: grid;
+  align-content: start;
+  gap: 40px;
+}
+
+.statement__rosette {
+  width: min(100%, 200px);
+}
+
 .statement__label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   padding-top: 18px;
 }
 
@@ -64,6 +82,16 @@ import { vReveal } from '@/composables/reveal'
   .statement__grid {
     grid-template-columns: 1fr;
     gap: 24px;
+  }
+
+  .statement__side {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .statement__rosette {
+    width: 88px;
   }
 
   .statement__label {

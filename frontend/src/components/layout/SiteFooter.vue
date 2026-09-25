@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import AppIcon from '@/components/ui/AppIcon.vue'
+import OrnamentBorder from '@/components/ornament/OrnamentBorder.vue'
 import { useSettingsStore } from '@/stores/settings'
 import { useTheme } from '@/composables/useTheme'
 import { footerNavigation } from '@/content/site'
@@ -15,6 +16,8 @@ const socials = computed(() => settings.socials.filter((s) => s.url))
 
 <template>
   <footer class="footer">
+    <!-- Hoshiya — an'anaviy chegara naqshi CTA va footer orasida -->
+    <OrnamentBorder class="footer__hoshiya" :opacity="0.45" />
     <div class="container">
       <div class="footer__grid">
         <div class="footer__brand">
@@ -70,9 +73,12 @@ const socials = computed(() => settings.socials.filter((s) => s.url))
 .footer {
   background: var(--dark);
   color: var(--on-dark);
-  padding-top: clamp(80px, 8vw, 120px);
+  padding-top: 0;
   overflow: hidden;
-  border-top: 1px solid var(--dark-line);
+}
+
+.footer__hoshiya {
+  margin-bottom: clamp(56px, 6vw, 96px);
 }
 
 .footer__grid {
@@ -82,7 +88,7 @@ const socials = computed(() => settings.socials.filter((s) => s.url))
 }
 
 .footer__name {
-  font-size: 32px;
+  font-size: 26px;
   font-weight: 700;
   letter-spacing: -0.04em;
 }
@@ -102,7 +108,7 @@ const socials = computed(() => settings.socials.filter((s) => s.url))
   align-items: center;
   gap: 10px;
   margin-top: 40px;
-  font-size: clamp(22px, 2vw, 30px);
+  font-size: clamp(19px, 1.6vw, 24px);
   font-weight: 600;
   letter-spacing: -0.03em;
   border-bottom: 1px solid var(--dark-line);
@@ -130,7 +136,7 @@ const socials = computed(() => settings.socials.filter((s) => s.url))
 }
 
 .footer__link {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   width: fit-content;
   transition: opacity var(--dur-fast) var(--ease);

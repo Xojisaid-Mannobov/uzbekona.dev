@@ -95,7 +95,7 @@ onBeforeUnmount(() => triggers.forEach((t) => t.kill()))
 }
 
 .metrics__desc {
-  font-size: clamp(16px, 1.25vw, 18px);
+  font-size: 15px;
   color: var(--ink-2);
   font-weight: 500;
 }

@@ -80,7 +80,7 @@ function onMove(e: MouseEvent) {
 }
 
 .services__skeleton {
-  height: 104px;
+  height: 88px;
   margin-top: 12px;
 }
 
@@ -89,7 +89,7 @@ function onMove(e: MouseEvent) {
   grid-template-columns: 96px minmax(0, 1.2fr) minmax(0, 1fr) 56px;
   align-items: center;
   gap: 24px;
-  min-height: 112px;
+  min-height: 92px;
   padding: 20px 8px;
   border-bottom: 1px solid var(--line-strong);
   transition:
@@ -125,8 +125,8 @@ function onMove(e: MouseEvent) {
 .service__arrow {
   display: grid;
   place-items: center;
-  width: 56px;
-  height: 56px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   justify-self: end;
   transition:
@@ -202,8 +202,8 @@ function onMove(e: MouseEvent) {
   .service__arrow {
     grid-row: 1 / span 2;
     grid-column: 3;
-    width: 48px;
-    height: 48px;
+    width: 42px;
+    height: 42px;
   }
 }
 </style>

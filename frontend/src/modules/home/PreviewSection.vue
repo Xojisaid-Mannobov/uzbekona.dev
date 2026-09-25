@@ -67,8 +67,8 @@ onBeforeUnmount(() => {
 <style scoped>
 .preview__frame {
   position: relative;
-  height: clamp(420px, 52vw, 800px);
-  min-height: 650px;
+  height: clamp(400px, 46vw, 680px);
+  min-height: 540px;
   border-radius: var(--r-lg);
   overflow: hidden;
   transform-origin: 50% 0;

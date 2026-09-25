@@ -115,7 +115,7 @@ function onKey(e: KeyboardEvent) {
 .nav__link {
   position: relative;
   padding: 12px 18px;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
   color: var(--ink-2);
   border-radius: var(--r-pill);
@@ -179,7 +179,7 @@ function onKey(e: KeyboardEvent) {
   align-items: baseline;
   gap: 16px;
   padding: 20px 0;
-  font-size: 36px;
+  font-size: 30px;
   font-weight: 600;
   letter-spacing: -0.035em;
   border-bottom: 1px solid var(--line);

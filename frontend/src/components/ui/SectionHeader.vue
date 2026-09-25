@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { vReveal } from '@/composables/reveal'
+import OrnamentStar from '@/components/ornament/OrnamentStar.vue'
 
 // "01 / TANLANGAN LOYIHALAR" uslubidagi raqamli label + katta sarlavha
 defineProps<{
@@ -15,6 +16,7 @@ defineProps<{
 <template>
   <header class="section-header">
     <p class="section-header__label t-label" v-reveal>
+      <OrnamentStar :size="14" />
       <span v-if="index" class="section-header__index">{{ index }} /</span>
       {{ label }}
     </p>
@@ -33,13 +35,18 @@ defineProps<{
 <style scoped>
 .section-header {
   display: grid;
-  gap: 28px;
-  margin-bottom: clamp(56px, 6vw, 96px);
+  gap: 22px;
+  margin-bottom: clamp(44px, 4.6vw, 72px);
+}
+
+.section-header__label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .section-header__index {
   color: var(--ink);
-  margin-right: 6px;
 }
 
 .section-header__main {

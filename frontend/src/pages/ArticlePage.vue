@@ -123,7 +123,7 @@ useSeo(() => ({
 
 .article-title {
   margin-top: 24px;
-  font-size: clamp(40px, 5vw, 76px);
+  font-size: clamp(32px, 3.8vw, 56px);
   line-height: 1.02;
   letter-spacing: -0.045em;
 }
