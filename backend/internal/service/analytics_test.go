@@ -8,6 +8,7 @@ func TestNormalizePath(t *testing.T) {
 		"/projects/":                "/projects",
 		"/projects/kuaf?utm=tg#top": "/projects/kuaf",
 		"/news/yangi-sayt":          "/news/yangi-sayt",
+		"/join":                     "/join",
 		"/admin":                    "",
 		"/admin/news":               "",
 		"/projects/kuaf/extra":      "",

@@ -51,6 +51,7 @@ func (s *NewsService) AdminGet(ctx context.Context, id int64) (*model.News, erro
 func (s *NewsService) Save(ctx context.Context, id int64, in *model.NewsInput) (*model.News, error) {
 	in.Title = strings.TrimSpace(in.Title)
 	in.Tag = strings.TrimSpace(in.Tag)
+	in.CoverRatio, in.CoverFocus = coverDefaults(in.CoverRatio, in.CoverFocus)
 	if err := validateBlocks("content", in.Content); err != nil {
 		return nil, err
 	}

@@ -55,6 +55,7 @@ func (s *ArticleService) AdminGet(ctx context.Context, id int64) (*model.Article
 func (s *ArticleService) Save(ctx context.Context, id int64, in *model.ArticleInput) (*model.Article, error) {
 	in.Title = strings.TrimSpace(in.Title)
 	in.AuthorName = strings.TrimSpace(in.AuthorName)
+	in.CoverRatio, in.CoverFocus = coverDefaults(in.CoverRatio, in.CoverFocus)
 	if err := validateBlocks("content", in.Content); err != nil {
 		return nil, err
 	}

@@ -29,11 +29,13 @@ type Services struct {
 	Analytics *AnalyticsService
 	Media     *MediaService
 	Contacts  *ContactService
+	Careers   *CareersService
 	Settings  *SettingsService
 	Dashboard *DashboardService
 }
 
 func New(cfg *config.Config, repos *repository.Repositories) *Services {
+	notifier := NewTelegramNotifier(cfg)
 	return &Services{
 		Auth:      &AuthService{cfg: cfg, admins: repos.Admins},
 		Projects:  &ProjectService{repos: repos},
@@ -44,7 +46,8 @@ func New(cfg *config.Config, repos *repository.Repositories) *Services {
 		News:      &NewsService{repo: repos.News},
 		Analytics: newAnalyticsService(cfg, repos),
 		Media:     &MediaService{cfg: cfg, repo: repos.Media},
-		Contacts:  &ContactService{repo: repos.Contacts, notifier: NewTelegramNotifier(cfg)},
+		Contacts:  &ContactService{repo: repos.Contacts, notifier: notifier},
+		Careers:   &CareersService{repo: repos.Applications, notifier: notifier},
 		Settings:  &SettingsService{repos: repos},
 		Dashboard: &DashboardService{repos: repos},
 	}
@@ -191,4 +194,15 @@ func logErr(msg string, err error) {
 	if err != nil {
 		slog.Error(msg, "error", err)
 	}
+}
+
+// coverDefaults — muqova nisbati va fokus berilmasa: rasmning asl nisbati, markaz.
+func coverDefaults(ratio, focus string) (string, string) {
+	if ratio == "" {
+		ratio = "auto"
+	}
+	if focus == "" {
+		focus = "center"
+	}
+	return ratio, focus
 }

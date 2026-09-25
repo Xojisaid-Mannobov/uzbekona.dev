@@ -5,6 +5,7 @@ import PageHeader from '@/admin/components/PageHeader.vue'
 import AdminEmpty from '@/admin/components/AdminEmpty.vue'
 import FormField from '@/admin/components/FormField.vue'
 import MediaField from '@/admin/components/MediaField.vue'
+import CoverSizeField from '@/admin/components/CoverSizeField.vue'
 import SeoFields from '@/admin/components/SeoFields.vue'
 import EditorSidebar from '@/admin/components/EditorSidebar.vue'
 import ErrorSummary from '@/admin/components/ErrorSummary.vue'
@@ -40,6 +41,8 @@ const { form, entity, loading, loadError, saving, errors, dirty, isNew, save, lo
     slug: '',
     excerpt: '',
     cover: null,
+    cover_ratio: 'auto',
+    cover_focus: 'center',
     category_id: null,
     content: [{ type: 'text', data: { text: '' } }],
     author_name: auth.admin?.name ?? '',
@@ -53,6 +56,8 @@ const { form, entity, loading, loadError, saving, errors, dirty, isNew, save, lo
     slug: a.slug,
     excerpt: a.excerpt,
     cover: a.cover,
+    cover_ratio: a.cover_ratio ?? 'auto',
+    cover_focus: a.cover_focus ?? 'center',
     category_id: a.category_id,
     content: JSON.parse(JSON.stringify(a.content ?? [])),
     author_name: a.author_name,
@@ -148,6 +153,7 @@ const publicUrl = computed(() => (entity.value?.status === 'published' ? `/journ
         <section class="a-card">
           <h2 class="a-card__title">Cover</h2>
           <MediaField v-model="form.cover" />
+          <CoverSizeField v-model:ratio="form.cover_ratio" v-model:focus="form.cover_focus" :media="form.cover" />
           <p class="a-hint" style="margin-top: 10px">Bo‘lmasa, kartada kategoriya asosidagi tipografik muqova ko‘rsatiladi.</p>
         </section>
       </aside>

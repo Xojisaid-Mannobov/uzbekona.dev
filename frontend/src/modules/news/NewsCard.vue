@@ -29,6 +29,7 @@ withDefaults(defineProps<{ news: News; variant?: 'card' | 'feature' | 'row'; lev
           <NewsCover
             :news="news"
             class="news__cover"
+            :fallback="variant === 'feature' ? '16 / 10.5' : '16 / 11'"
             :sizes="variant === 'feature' ? '(min-width: 1024px) 760px, 100vw' : '(min-width: 1024px) 440px, 100vw'"
           />
           <DateLeaf :date="news.published_at" :size="variant === 'feature' ? 'lg' : 'md'" class="news__leaf" />
@@ -55,8 +56,8 @@ withDefaults(defineProps<{ news: News; variant?: 'card' | 'feature' | 'row'; lev
 }
 
 .news__cover {
-  aspect-ratio: 16 / 11;
   border-radius: var(--r-lg);
+  max-height: min(78vh, 720px);
 }
 
 .news__cover :deep(img),
@@ -129,10 +130,6 @@ withDefaults(defineProps<{ news: News; variant?: 'card' | 'feature' | 'row'; lev
   grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
   gap: clamp(28px, 3.4vw, 56px);
   align-items: center;
-}
-
-.news--feature .news__cover {
-  aspect-ratio: 16 / 10.5;
 }
 
 .news--feature .news__body {

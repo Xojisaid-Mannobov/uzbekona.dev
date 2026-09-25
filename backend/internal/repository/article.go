@@ -20,7 +20,7 @@ func articleColumns(withContent bool) string {
 	if withContent {
 		content = `a.content`
 	}
-	return `a.id, a.slug, a.title, a.excerpt, a.cover_id, ` + mediaJSON("a.cover_id") + `,
+	return `a.id, a.slug, a.title, a.excerpt, a.cover_id, ` + mediaJSON("a.cover_id") + `, a.cover_ratio, a.cover_focus,
 		a.category_id, (SELECT jsonb_build_object('id', c.id, 'name', c.name, 'slug', c.slug, 'position', c.position)
 			FROM article_categories c WHERE c.id = a.category_id),
 		` + content + `, a.reading_time, a.author_name, a.status, a.featured, a.seo,
@@ -29,7 +29,7 @@ func articleColumns(withContent bool) string {
 
 func scanArticle(row pgx.Row) (*model.Article, error) {
 	var a model.Article
-	err := row.Scan(&a.ID, &a.Slug, &a.Title, &a.Excerpt, &a.CoverID, &a.Cover,
+	err := row.Scan(&a.ID, &a.Slug, &a.Title, &a.Excerpt, &a.CoverID, &a.Cover, &a.CoverRatio, &a.CoverFocus,
 		&a.CategoryID, &a.Category, &a.Content, &a.ReadingTime, &a.AuthorName, &a.Status, &a.Featured, &a.SEO,
 		&a.PublishedAt, &a.CreatedAt, &a.UpdatedAt)
 	if err != nil {
@@ -134,12 +134,13 @@ func (r *ArticleRepo) SlugExists(ctx context.Context, slug string, excludeID int
 func (r *ArticleRepo) Create(ctx context.Context, slug string, readingTime int, in *model.ArticleInput) (int64, error) {
 	var id int64
 	err := r.db.QueryRow(ctx, `INSERT INTO articles
-		(slug, title, excerpt, cover_id, category_id, content, reading_time, author_name, status, featured, seo, published_at)
+		(slug, title, excerpt, cover_id, category_id, content, reading_time, author_name, status, featured, seo, published_at,
+		 cover_ratio, cover_focus)
 		VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,
-			CASE WHEN $9 = 'published' THEN COALESCE($12, now()) ELSE $12 END)
+			CASE WHEN $9 = 'published' THEN COALESCE($12, now()) ELSE $12 END, $13, $14)
 		RETURNING id`,
 		slug, in.Title, in.Excerpt, in.CoverID, in.CategoryID, orEmpty(in.Content), readingTime,
-		in.AuthorName, in.Status, in.Featured, in.SEO, in.PublishedAt,
+		in.AuthorName, in.Status, in.Featured, in.SEO, in.PublishedAt, in.CoverRatio, in.CoverFocus,
 	).Scan(&id)
 	return id, err
 }
@@ -147,10 +148,11 @@ func (r *ArticleRepo) Create(ctx context.Context, slug string, readingTime int, 
 func (r *ArticleRepo) Update(ctx context.Context, id int64, slug string, readingTime int, in *model.ArticleInput) error {
 	tag, err := r.db.Exec(ctx, `UPDATE articles SET slug = $2, title = $3, excerpt = $4, cover_id = $5,
 		category_id = $6, content = $7, reading_time = $8, author_name = $9, status = $10, featured = $11, seo = $12,
-		published_at = CASE WHEN $10 = 'published' THEN COALESCE($13, published_at, now()) ELSE COALESCE($13, published_at) END
+		published_at = CASE WHEN $10 = 'published' THEN COALESCE($13, published_at, now()) ELSE COALESCE($13, published_at) END,
+		cover_ratio = $14, cover_focus = $15
 		WHERE id = $1`,
 		id, slug, in.Title, in.Excerpt, in.CoverID, in.CategoryID, orEmpty(in.Content), readingTime,
-		in.AuthorName, in.Status, in.Featured, in.SEO, in.PublishedAt)
+		in.AuthorName, in.Status, in.Featured, in.SEO, in.PublishedAt, in.CoverRatio, in.CoverFocus)
 	if err == nil && tag.RowsAffected() == 0 {
 		return ErrNotFound
 	}

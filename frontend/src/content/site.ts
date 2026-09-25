@@ -16,6 +16,7 @@ export const footerNavigation = [
   { to: '/team', label: 'Team' },
   { to: '/news', label: 'News' },
   { to: '/journal', label: 'Journal' },
+  { to: '/join', label: 'Careers' },
 ]
 
 export const hero = {
@@ -115,5 +116,19 @@ export const projectTypes = [
   'AI integratsiya',
   'Boshqa',
 ]
+
+/** Jamoaga qo'shilish formasidagi yo'nalishlar va tajriba */
+export const careerPositions = [
+  'Frontend dasturchi',
+  'Backend dasturchi',
+  'Mobil dasturchi',
+  'UI/UX dizayner',
+  'DevOps muhandis',
+  'Loyiha menejeri',
+  'Stajyor',
+  'Boshqa',
+]
+
+export const careerExperience = ['Tajribasiz', '1 yilgacha', '1–3 yil', '3–5 yil', '5+ yil']
 
 export const budgets = ['$3 000 gacha', '$3 000 – $10 000', '$10 000 – $30 000', '$30 000+', 'Hali aniq emas']

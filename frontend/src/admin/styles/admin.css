@@ -415,13 +415,15 @@
 
 .a-badge--published,
 .a-badge--done,
+.a-badge--accepted,
 .a-badge--on {
   background: color-mix(in srgb, var(--success) 12%, transparent);
   color: var(--success);
 }
 
 .a-badge--draft,
-.a-badge--in_progress {
+.a-badge--in_progress,
+.a-badge--reviewing {
   background: color-mix(in srgb, var(--warning) 12%, transparent);
   color: var(--warning);
 }
@@ -431,8 +433,14 @@
   color: var(--accent);
 }
 
+.a-badge--interview {
+  background: color-mix(in srgb, var(--gold) 16%, transparent);
+  color: color-mix(in srgb, var(--gold) 80%, var(--ink));
+}
+
 .a-badge--archived,
 .a-badge--spam,
+.a-badge--rejected,
 .a-badge--off {
   background: var(--surface-2);
   color: var(--ink-3);

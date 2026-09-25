@@ -29,7 +29,7 @@ const { data: team, loading, error, reload } = useAsync(publicApi.team)
     <div v-for="(m, i) in team" :key="m.id" v-reveal="(i % 3) * 90">
       <TeamCard :member="m" />
     </div>
-    <RouterLink to="/contact" class="team-grid__join" v-reveal="((team?.length ?? 0) % 3) * 90">
+    <RouterLink to="/join" class="team-grid__join" v-reveal="((team?.length ?? 0) % 3) * 90">
       <span class="team-grid__plus"><AppIcon name="plus" :size="32" /></span>
       <span>
         <strong>Jamoaga qo‘shiling</strong>

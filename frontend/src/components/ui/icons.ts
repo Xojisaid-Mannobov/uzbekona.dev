@@ -53,3 +53,4 @@ export type IconName =
   | 'send'
   | 'link'
   | 'pulse'
+  | 'briefcase'

@@ -34,7 +34,7 @@ func newAnalyticsService(cfg *config.Config, repos *repository.Repositories) *An
 
 var (
 	// Faqat saytdagi haqiqiy marshrutlar hisoblanadi — ixtiyoriy yo'llar bilan statistikani "ifloslantirib" bo'lmaydi
-	trackablePath = regexp.MustCompile(`^/(projects|services|about|team|journal|news|contact)?(/[a-z0-9-]{1,120})?$`)
+	trackablePath = regexp.MustCompile(`^/(projects|services|about|team|journal|news|contact|join)?(/[a-z0-9-]{1,120})?$`)
 	newsPath      = regexp.MustCompile(`^/news/([a-z0-9-]{1,120})$`)
 	clientID      = regexp.MustCompile(`^[A-Za-z0-9-]{8,64}$`)
 	// Telegram ichki brauzeri ("Telegram-Android") haqiqiy foydalanuvchi — faqat "TelegramBot" robot

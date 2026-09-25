@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import UiButton from '@/components/ui/UiButton.vue'
+import BrandIcon from '@/components/ui/BrandIcon.vue'
 import GirihPattern from '@/components/ornament/GirihPattern.vue'
 import SuzaniRosette from '@/components/ornament/SuzaniRosette.vue'
 import OrnamentStar from '@/components/ornament/OrnamentStar.vue'
@@ -25,7 +26,10 @@ const settings = useSettingsStore()
         </p>
         <div class="cta__actions">
           <UiButton to="/contact" variant="light" icon="arrow-up-right">Loyihani boshlash</UiButton>
-          <UiButton v-if="settings.telegramUrl" :href="settings.telegramUrl" variant="outline-light">Telegram’da yozish</UiButton>
+          <UiButton v-if="settings.telegramUrl" :href="settings.telegramUrl" variant="outline-light">
+            <template #lead><BrandIcon name="telegram" :size="22" /></template>
+            Telegram’da yozish
+          </UiButton>
         </div>
       </div>
     </div>

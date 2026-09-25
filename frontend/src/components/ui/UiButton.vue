@@ -41,6 +41,7 @@ const external = computed(() => !!props.href && /^https?:\/\//.test(props.href))
     :rel="external ? 'noopener noreferrer' : undefined"
   >
     <AppIcon v-if="iconLeft" :name="iconLeft" :size="18" />
+    <slot name="lead" />
     <span class="btn__label"><slot /></span>
     <span v-if="icon" class="btn__icon"><AppIcon :name="icon" :size="18" /></span>
     <span v-if="loading" class="btn__spinner" aria-hidden="true" />

@@ -12,6 +12,7 @@ import LabsSection from '@/modules/home/LabsSection.vue'
 import JournalSection from '@/modules/home/JournalSection.vue'
 import NewsSection from '@/modules/home/NewsSection.vue'
 import NewsTicker from '@/modules/news/NewsTicker.vue'
+import GhostMarquee from '@/components/ornament/GhostMarquee.vue'
 import { useAsync } from '@/composables/useAsync'
 import { useSeo } from '@/composables/useSeo'
 import { publicApi } from '@/services/public'
@@ -32,6 +33,12 @@ useSeo({})
     <MetricsSection />
     <WhySection index="02" />
     <ServicesSection index="03" />
+    <GhostMarquee
+      :rows="[
+        ['Web platformalar', 'Mobil ilovalar', 'Telegram tizimlari', 'AI integratsiya'],
+        ['Avtomatlashtirish', 'Product design', 'Infratuzilma', 'Raqamli O‘zbekiston'],
+      ]"
+    />
     <ProcessSection index="04" />
     <TechSection index="05" />
     <TeamSection />

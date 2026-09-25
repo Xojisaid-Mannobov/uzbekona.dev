@@ -92,6 +92,7 @@ func NewApp(d Deps) *fiber.App {
 	get("/news/:slug", h.GetNews)
 	api.Post("/track", middleware.RateLimit(d.Storage, "track", 120, time.Minute), h.Track)
 	api.Post("/contact", limit, middleware.RateLimit(d.Storage, "contact", 5, 10*time.Minute), h.SubmitContact)
+	api.Post("/careers/apply", limit, middleware.RateLimit(d.Storage, "careers", 3, 30*time.Minute), h.SubmitApplication)
 
 	// ─── Admin API ──────────────────────────────────────────
 	admin := api.Group("/admin", middleware.OriginGuard(cfg.CORSOrigins))
@@ -154,6 +155,11 @@ func NewApp(d Deps) *fiber.App {
 	secured.Put("/media/:id", h.UpdateMedia)
 	secured.Get("/media/:id/usage", h.MediaUsage)
 	secured.Delete("/media/:id", h.DeleteMedia)
+
+	secured.Get("/applications", h.ListApplications)
+	secured.Get("/applications/:id", h.GetApplication)
+	secured.Patch("/applications/:id", h.UpdateApplication)
+	secured.Delete("/applications/:id", h.DeleteApplication)
 
 	secured.Get("/requests", h.ListRequests)
 	secured.Get("/requests/:id", h.GetRequest)

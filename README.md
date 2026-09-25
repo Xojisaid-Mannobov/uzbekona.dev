@@ -133,6 +133,7 @@ GET  /services                 GET  /articles/:slug
 GET  /services/:slug           GET  /article-categories
 GET  /news?page=&limit=        GET  /news/:slug
 POST /contact                  POST /track   (sahifa ko'rilishi, 204)
+POST /careers/apply            (jamoaga qo'shilish arizasi)
 GET  /health
 ```
 
@@ -147,6 +148,7 @@ GET|POST /admin/{services,team,labs}   GET|PUT|DELETE /admin/{…}/:id   PUT /ad
 GET|POST /admin/articles   GET|PUT|DELETE /admin/articles/:id
 GET|POST /admin/news       GET|PUT|DELETE /admin/news/:id
 GET /admin/analytics?days=7|30|90
+GET /admin/applications   PATCH|DELETE /admin/applications/:id
 GET|POST /admin/article-categories   PUT|DELETE /admin/article-categories/:id
 GET|POST /admin/media   PUT|DELETE /admin/media/:id   GET /admin/media/:id/usage
 GET /admin/requests   GET|PATCH|DELETE /admin/requests/:id
@@ -156,7 +158,7 @@ GET|POST /admin/users   DELETE /admin/users/:id
 
 ## Admin panel
 
-`/admin/login` → Dashboard (faol/e’lon qilingan loyihalar, maqolalar, yangi so‘rovlar, 14 kunlik grafik), Loyihalar (draft/publish/archive, featured, drag & drop tartiblash, galereya, SEO), **content builder** (14 blok: Heading, Text, Large Text, Image, Full-width Image, Gallery, Video, Stats, Quote, Two/Three Columns, Technology, Process, Before/After — qo‘shish, tahrirlash, nusxalash, o‘chirish, tartiblash), Xizmatlar, Jamoa, Labs, Maqolalar (+kategoriyalar, rejalashtirilgan e’lon), Yangiliklar (teg, mahkamlash, ko‘rishlar soni), Statistika, Media manager, So‘rovlar, Sozlamalar (kontaktlar, metrikalar, SEO, ijtimoiy tarmoqlar, parol), Adminlar.
+`/admin/login` → Dashboard (faol/e’lon qilingan loyihalar, maqolalar, yangi so‘rovlar, 14 kunlik grafik), Loyihalar (draft/publish/archive, featured, drag & drop tartiblash, galereya, SEO), **content builder** (14 blok: Heading, Text, Large Text, Image, Full-width Image, Gallery, Video, Stats, Quote, Two/Three Columns, Technology, Process, Before/After — qo‘shish, tahrirlash, nusxalash, o‘chirish, tartiblash), Xizmatlar, Jamoa, Labs, Maqolalar (+kategoriyalar, rejalashtirilgan e’lon), Yangiliklar (teg, mahkamlash, ko‘rishlar soni), Statistika, Nomzodlar (jamoaga qo‘shilish arizalari), Media manager, So‘rovlar, Sozlamalar (kontaktlar, metrikalar, SEO, ijtimoiy tarmoqlar, parol), Adminlar.
 
 Saqlanmagan o‘zgarishlar bilan sahifadan chiqishda ogohlantirish, `Ctrl+S` — tezkor saqlash.
 
@@ -166,6 +168,14 @@ Saqlanmagan o‘zgarishlar bilan sahifadan chiqishda ogohlantirish, `Ctrl+S` —
 - **Statistika** (`/admin/analytics`): ko‘rishlar, tashriflar (sessiyalar), noyob tashrif buyuruvchilar, hozir saytda, kunlik grafik, eng ko‘p ko‘rilgan sahifalar, manbalar (Telegram, Google …), qurilmalar va eng ko‘p o‘qilgan yangiliklar; 7/30/90 kun va oldingi davrga nisbatan o‘zgarish.
 - **Maxfiylik**: tashqi analytics skriptlari va cookie yo‘q. Brauzer tasodifiy ID’ni localStorage/sessionStorage’da saqlaydi, server faqat uning HMAC-xeshini yozadi; IP va User-Agent bazaga tushmaydi. Robotlar, admin sahifalari, 404 va “Do Not Track” yoqilgan brauzerlar hisobga olinmaydi. 400 kundan eski yozuvlar kuniga bir marta tozalanadi.
 - Kunlar `Asia/Tashkent` vaqti bo‘yicha hisoblanadi.
+
+## Jamoaga qo‘shilish
+
+`/join` sahifasida nomzod o‘zi haqida yozadi (ism, email, telefon/Telegram, yo‘nalish, tajriba, portfolio va rezyume havolalari, “o‘zim haqimda” — kamida 50 belgi, rozilik belgisi). Ariza admin paneldagi **Nomzodlar** bo‘limiga tushadi: holat (Yangi → Ko‘rib chiqilmoqda → Suhbat → Qabul qilindi / Rad etildi), ichki izoh, “Javob yozish” (email). `TELEGRAM_BOT_TOKEN` berilgan bo‘lsa, yangi ariza Telegram’ga ham yuboriladi. Honeypot va rate limit (30 daqiqada 3 ta), havolalar faqat `http(s)://`.
+
+## Muqova o‘lchami
+
+Yangilik va maqola muqovasi uchun admin kartadagi nisbatni tanlaydi (asl, 16:9, 4:3, 1:1, 3:4, 21:9) va kesilganda qaysi qism saqlanishini (yuqori/markaz/past) — yonida jonli ko‘rinish. Matn ichidagi “Rasm” blokida o‘lcham (kichik / o‘rta / keng) va nisbat tanlanadi.
 
 ## Media
 

@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import AppIcon from '@/components/ui/AppIcon.vue'
+import BrandIcon from '@/components/ui/BrandIcon.vue'
 import UiButton from '@/components/ui/UiButton.vue'
 import StateMessage from '@/components/states/StateMessage.vue'
 import BlockRenderer from '@/components/content/BlockRenderer.vue'
@@ -83,7 +84,7 @@ async function copyLink() {
           <div class="share" v-reveal="160">
             <span class="share__label">Ulashish:</span>
             <a :href="telegramShare" target="_blank" rel="noopener noreferrer" class="share__btn">
-              <AppIcon name="send" :size="18" /> Telegram
+              <BrandIcon name="telegram" :size="20" /> Telegram
             </a>
             <button type="button" class="share__btn" @click="copyLink">
               <AppIcon :name="copied ? 'check' : 'link'" :size="18" /> {{ copied ? 'Nusxalandi' : 'Havolani nusxalash' }}
@@ -96,7 +97,7 @@ async function copyLink() {
         <NewsCover
           :news="item"
           class="news-cover"
-          :class="{ 'news-cover--poster': !item.cover }"
+          :fallback="item.cover ? '16 / 8' : '16 / 5.5'"
           sizes="(min-width: 1440px) 1360px, 100vw"
           priority
           v-reveal="{ variant: 'scale' }"
@@ -235,14 +236,9 @@ async function copyLink() {
 }
 
 .news-cover {
-  aspect-ratio: 16 / 8;
+  max-height: 82vh;
   border-radius: var(--r-lg);
   margin-bottom: clamp(48px, 5vw, 80px);
-}
-
-/* Rasm yo'q bo'lsa — naqshli plakat pastroq bo'ladi */
-.news-cover--poster {
-  aspect-ratio: 16 / 5.5;
 }
 
 .news-body {
@@ -276,10 +272,6 @@ async function copyLink() {
 @media (max-width: 640px) {
   .related__grid {
     grid-template-columns: 1fr;
-  }
-
-  .news-cover {
-    aspect-ratio: 4 / 3;
   }
 }
 </style>

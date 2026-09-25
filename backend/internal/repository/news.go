@@ -20,13 +20,13 @@ func newsColumns(withContent bool) string {
 	if withContent {
 		content = `n.content`
 	}
-	return `n.id, n.slug, n.title, n.excerpt, n.tag, n.cover_id, ` + mediaJSON("n.cover_id") + `,
+	return `n.id, n.slug, n.title, n.excerpt, n.tag, n.cover_id, ` + mediaJSON("n.cover_id") + `, n.cover_ratio, n.cover_focus,
 		` + content + `, n.status, n.pinned, n.views, n.seo, n.published_at, n.created_at, n.updated_at`
 }
 
 func scanNews(row pgx.Row) (*model.News, error) {
 	var n model.News
-	err := row.Scan(&n.ID, &n.Slug, &n.Title, &n.Excerpt, &n.Tag, &n.CoverID, &n.Cover,
+	err := row.Scan(&n.ID, &n.Slug, &n.Title, &n.Excerpt, &n.Tag, &n.CoverID, &n.Cover, &n.CoverRatio, &n.CoverFocus,
 		&n.Content, &n.Status, &n.Pinned, &n.Views, &n.SEO, &n.PublishedAt, &n.CreatedAt, &n.UpdatedAt)
 	if err != nil {
 		return nil, err
@@ -146,11 +146,12 @@ func (r *NewsRepo) SlugExists(ctx context.Context, slug string, excludeID int64)
 func (r *NewsRepo) Create(ctx context.Context, slug string, in *model.NewsInput) (int64, error) {
 	var id int64
 	err := r.db.QueryRow(ctx, `INSERT INTO news
-		(slug, title, excerpt, tag, cover_id, content, status, pinned, seo, published_at)
+		(slug, title, excerpt, tag, cover_id, content, status, pinned, seo, published_at, cover_ratio, cover_focus)
 		VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,
-			CASE WHEN $7 = 'published' THEN COALESCE($10, now()) ELSE $10 END)
+			CASE WHEN $7 = 'published' THEN COALESCE($10, now()) ELSE $10 END, $11, $12)
 		RETURNING id`,
 		slug, in.Title, in.Excerpt, in.Tag, in.CoverID, orEmpty(in.Content), in.Status, in.Pinned, in.SEO, in.PublishedAt,
+		in.CoverRatio, in.CoverFocus,
 	).Scan(&id)
 	return id, err
 }
@@ -158,9 +159,11 @@ func (r *NewsRepo) Create(ctx context.Context, slug string, in *model.NewsInput)
 func (r *NewsRepo) Update(ctx context.Context, id int64, slug string, in *model.NewsInput) error {
 	tag, err := r.db.Exec(ctx, `UPDATE news SET slug = $2, title = $3, excerpt = $4, tag = $5, cover_id = $6,
 		content = $7, status = $8, pinned = $9, seo = $10,
-		published_at = CASE WHEN $8 = 'published' THEN COALESCE($11, published_at, now()) ELSE COALESCE($11, published_at) END
+		published_at = CASE WHEN $8 = 'published' THEN COALESCE($11, published_at, now()) ELSE COALESCE($11, published_at) END,
+		cover_ratio = $12, cover_focus = $13
 		WHERE id = $1`,
-		id, slug, in.Title, in.Excerpt, in.Tag, in.CoverID, orEmpty(in.Content), in.Status, in.Pinned, in.SEO, in.PublishedAt)
+		id, slug, in.Title, in.Excerpt, in.Tag, in.CoverID, orEmpty(in.Content), in.Status, in.Pinned, in.SEO, in.PublishedAt,
+		in.CoverRatio, in.CoverFocus)
 	if err == nil && tag.RowsAffected() == 0 {
 		return ErrNotFound
 	}

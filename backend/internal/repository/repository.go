@@ -23,36 +23,38 @@ type DBTX interface {
 }
 
 type Repositories struct {
-	pool       *pgxpool.Pool
-	Admins     *AdminRepo
-	Projects   *ProjectRepo
-	Services   *ServiceRepo
-	Team       *TeamRepo
-	Labs       *LabRepo
-	Articles   *ArticleRepo
-	Categories *CategoryRepo
-	News       *NewsRepo
-	Analytics  *AnalyticsRepo
-	Media      *MediaRepo
-	Contacts   *ContactRepo
-	Settings   *SettingsRepo
+	pool         *pgxpool.Pool
+	Admins       *AdminRepo
+	Projects     *ProjectRepo
+	Services     *ServiceRepo
+	Team         *TeamRepo
+	Labs         *LabRepo
+	Articles     *ArticleRepo
+	Categories   *CategoryRepo
+	News         *NewsRepo
+	Applications *ApplicationRepo
+	Analytics    *AnalyticsRepo
+	Media        *MediaRepo
+	Contacts     *ContactRepo
+	Settings     *SettingsRepo
 }
 
 func New(pool *pgxpool.Pool) *Repositories {
 	return &Repositories{
-		pool:       pool,
-		Admins:     &AdminRepo{db: pool},
-		Projects:   &ProjectRepo{db: pool},
-		Services:   &ServiceRepo{db: pool},
-		Team:       &TeamRepo{db: pool},
-		Labs:       &LabRepo{db: pool},
-		Articles:   &ArticleRepo{db: pool},
-		Categories: &CategoryRepo{db: pool},
-		News:       &NewsRepo{db: pool},
-		Analytics:  &AnalyticsRepo{db: pool},
-		Media:      &MediaRepo{db: pool},
-		Contacts:   &ContactRepo{db: pool},
-		Settings:   &SettingsRepo{db: pool},
+		pool:         pool,
+		Admins:       &AdminRepo{db: pool},
+		Projects:     &ProjectRepo{db: pool},
+		Services:     &ServiceRepo{db: pool},
+		Team:         &TeamRepo{db: pool},
+		Labs:         &LabRepo{db: pool},
+		Articles:     &ArticleRepo{db: pool},
+		Categories:   &CategoryRepo{db: pool},
+		News:         &NewsRepo{db: pool},
+		Applications: &ApplicationRepo{db: pool},
+		Analytics:    &AnalyticsRepo{db: pool},
+		Media:        &MediaRepo{db: pool},
+		Contacts:     &ContactRepo{db: pool},
+		Settings:     &SettingsRepo{db: pool},
 	}
 }
 

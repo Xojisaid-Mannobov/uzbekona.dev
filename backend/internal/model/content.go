@@ -186,6 +186,8 @@ type Article struct {
 	Excerpt     string           `json:"excerpt"`
 	CoverID     *int64           `json:"cover_id"`
 	Cover       *MediaRef        `json:"cover"`
+	CoverRatio  string           `json:"cover_ratio"`
+	CoverFocus  string           `json:"cover_focus"`
 	CategoryID  *int64           `json:"category_id"`
 	Category    *ArticleCategory `json:"category"`
 	Content     []Block          `json:"content,omitempty"`
@@ -209,6 +211,8 @@ type ArticleInput struct {
 	Slug        string     `json:"slug" validate:"omitempty,max=200,slug"`
 	Excerpt     string     `json:"excerpt" validate:"max=500"`
 	CoverID     *int64     `json:"cover_id"`
+	CoverRatio  string     `json:"cover_ratio" validate:"omitempty,oneof=auto 16:9 4:3 1:1 3:4 21:9"`
+	CoverFocus  string     `json:"cover_focus" validate:"omitempty,oneof=center top bottom"`
 	CategoryID  *int64     `json:"category_id"`
 	Content     []Block    `json:"content" validate:"max=300,dive"`
 	AuthorName  string     `json:"author_name" validate:"max=120"`
@@ -234,6 +238,8 @@ type News struct {
 	Tag         string     `json:"tag"`
 	CoverID     *int64     `json:"cover_id"`
 	Cover       *MediaRef  `json:"cover"`
+	CoverRatio  string     `json:"cover_ratio"`
+	CoverFocus  string     `json:"cover_focus"`
 	Content     []Block    `json:"content,omitempty"`
 	Status      string     `json:"status"`
 	Pinned      bool       `json:"pinned"`
@@ -255,6 +261,8 @@ type NewsInput struct {
 	Excerpt     string     `json:"excerpt" validate:"max=500"`
 	Tag         string     `json:"tag" validate:"max=40"`
 	CoverID     *int64     `json:"cover_id"`
+	CoverRatio  string     `json:"cover_ratio" validate:"omitempty,oneof=auto 16:9 4:3 1:1 3:4 21:9"`
+	CoverFocus  string     `json:"cover_focus" validate:"omitempty,oneof=center top bottom"`
 	Content     []Block    `json:"content" validate:"max=300,dive"`
 	Status      string     `json:"status" validate:"required,oneof=draft published archived"`
 	Pinned      bool       `json:"pinned"`

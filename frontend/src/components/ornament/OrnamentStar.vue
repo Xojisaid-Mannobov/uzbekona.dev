@@ -16,6 +16,6 @@ withDefaults(defineProps<{ size?: number; filled?: boolean }>(), { size: 14, fil
 .star8 {
   display: inline-block;
   flex-shrink: 0;
-  color: var(--gold);
+  color: var(--star-color, var(--gold));
 }
 </style>

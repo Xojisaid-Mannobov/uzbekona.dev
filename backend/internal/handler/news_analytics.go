@@ -64,3 +64,50 @@ func (h *Handler) Analytics(c *fiber.Ctx) error {
 	}
 	return ok(c, report)
 }
+
+// ─── Jamoaga qo'shilish arizalari ───────────────────────────
+
+// POST /api/v1/careers/apply
+func (h *Handler) SubmitApplication(c *fiber.Ctx) error {
+	var in model.ApplicationInput
+	if err := h.bind(c, &in); err != nil {
+		return err
+	}
+	if err := h.svc.Careers.Submit(c.UserContext(), &in, c.IP(), c.Get(fiber.HeaderUserAgent)); err != nil {
+		return err
+	}
+	return created(c, fiber.Map{"message": "Arizangiz qabul qilindi. Ko‘rib chiqib, siz bilan bog‘lanamiz."})
+}
+
+func (h *Handler) ListApplications(c *fiber.Ctx) error {
+	items, meta, err := h.svc.Careers.List(c.UserContext(), listParams(c))
+	if err != nil {
+		return err
+	}
+	return paged(c, items, meta)
+}
+
+func (h *Handler) GetApplication(c *fiber.Ctx) error {
+	return getHandler(h.svc.Careers.Get)(c)
+}
+
+// PATCH /api/v1/admin/applications/:id — holat va izoh
+func (h *Handler) UpdateApplication(c *fiber.Ctx) error {
+	id, err := paramID(c)
+	if err != nil {
+		return err
+	}
+	var in model.ApplicationUpdateInput
+	if err := h.bind(c, &in); err != nil {
+		return err
+	}
+	item, err := h.svc.Careers.Update(c.UserContext(), id, &in)
+	if err != nil {
+		return err
+	}
+	return ok(c, item)
+}
+
+func (h *Handler) DeleteApplication(c *fiber.Ctx) error {
+	return deleteHandler(h.svc.Careers.Delete)(c)
+}

@@ -1,0 +1,3 @@
+ALTER TABLE articles DROP COLUMN IF EXISTS cover_focus, DROP COLUMN IF EXISTS cover_ratio;
+ALTER TABLE news DROP COLUMN IF EXISTS cover_focus, DROP COLUMN IF EXISTS cover_ratio;
+DROP TABLE IF EXISTS job_applications;

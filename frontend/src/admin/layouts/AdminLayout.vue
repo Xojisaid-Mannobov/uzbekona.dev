@@ -17,8 +17,9 @@ const router = useRouter()
 const theme = useTheme()
 const sidebarOpen = ref(false)
 const newRequests = ref(0)
+const newApplications = ref(0)
 
-const nav: { to: string; label: string; icon: IconName; badge?: 'requests' }[][] = [
+const nav: { to: string; label: string; icon: IconName; badge?: 'requests' | 'applications' }[][] = [
   [
     { to: '/admin/dashboard', label: 'Dashboard', icon: 'home' },
     { to: '/admin/analytics', label: 'Statistika', icon: 'pulse' },
@@ -34,6 +35,7 @@ const nav: { to: string; label: string; icon: IconName; badge?: 'requests' }[][]
   ],
   [
     { to: '/admin/requests', label: 'So‘rovlar', icon: 'inbox', badge: 'requests' },
+    { to: '/admin/applications', label: 'Nomzodlar', icon: 'briefcase', badge: 'applications' },
     { to: '/admin/settings', label: 'Sozlamalar', icon: 'settings' },
     { to: '/admin/users', label: 'Adminlar', icon: 'user' },
   ],
@@ -44,8 +46,12 @@ const title = computed(() => route.meta.title ?? 'Admin')
 // Yangi so'rovlar soni — sidebar'dagi badge uchun
 async function refreshCounts() {
   try {
-    const res = await adminApi.requests.list({ status: 'new', limit: 1 })
-    newRequests.value = res.meta.total
+    const [req, apps] = await Promise.all([
+      adminApi.requests.list({ status: 'new', limit: 1 }),
+      adminApi.applications.list({ status: 'new', limit: 1 }),
+    ])
+    newRequests.value = req.meta.total
+    newApplications.value = apps.meta.total
   } catch {
     /* badge ixtiyoriy */
   }
@@ -56,7 +62,7 @@ watch(
   () => route.fullPath,
   () => {
     sidebarOpen.value = false
-    if (route.path.startsWith('/admin/requests') || route.path === '/admin/dashboard') refreshCounts()
+    if (/^\/admin\/(requests|applications|dashboard)/.test(route.path)) refreshCounts()
   },
 )
 
@@ -77,6 +83,7 @@ async function logout() {
             <AppIcon :name="item.icon" :size="19" />
             <span>{{ item.label }}</span>
             <span v-if="item.badge === 'requests' && newRequests" class="side__badge">{{ newRequests }}</span>
+            <span v-if="item.badge === 'applications' && newApplications" class="side__badge">{{ newApplications }}</span>
           </RouterLink>
         </div>
       </nav>

@@ -70,8 +70,9 @@ func (r *SettingsRepo) DashboardCounts(ctx context.Context, s *model.DashboardSt
 		(SELECT count(*) FROM articles),
 		(SELECT count(*) FROM news),
 		(SELECT count(*) FROM contacts WHERE status = 'new'),
+		(SELECT count(*) FROM job_applications WHERE status = 'new'),
 		(SELECT count(*) FROM contacts WHERE status <> 'spam'),
 		(SELECT count(*) FROM media),
 		(SELECT count(*) FROM admins)`,
-	).Scan(&s.ActiveProjects, &s.PublishedProjects, &s.Articles, &s.News, &s.IncomingRequests, &s.TotalRequests, &s.Media, &s.Admins)
+	).Scan(&s.ActiveProjects, &s.PublishedProjects, &s.Articles, &s.News, &s.IncomingRequests, &s.NewApplications, &s.TotalRequests, &s.Media, &s.Admins)
 }

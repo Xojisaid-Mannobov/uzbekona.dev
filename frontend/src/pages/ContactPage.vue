@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import AppIcon from '@/components/ui/AppIcon.vue'
+import BrandIcon from '@/components/ui/BrandIcon.vue'
 import PageHero from '@/components/layout/PageHero.vue'
 import ContactForm from '@/modules/contact/ContactForm.vue'
 import { useSettingsStore } from '@/stores/settings'
@@ -35,7 +36,7 @@ useSeo({ title: 'Bog‘lanish', description: 'Loyihangiz haqida yozing — Uzbek
               {{ settings.site.email }} <AppIcon name="arrow-up-right" :size="22" />
             </a>
             <a v-if="settings.telegramUrl" :href="settings.telegramUrl" class="contact__big" target="_blank" rel="noopener noreferrer">
-              {{ settings.site.telegram }} <AppIcon name="arrow-up-right" :size="22" />
+              <BrandIcon name="telegram" :size="26" /> {{ settings.site.telegram }} <AppIcon name="arrow-up-right" :size="22" />
             </a>
             <a v-if="settings.site.phone" :href="`tel:${settings.site.phone.replace(/\s/g, '')}`" class="contact__big">
               {{ settings.site.phone }}

@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import AppIcon from '@/components/ui/AppIcon.vue'
 import OrnamentBorder from '@/components/ornament/OrnamentBorder.vue'
+import Doppi from '@/components/ornament/Doppi.vue'
+import BrandIcon from '@/components/ui/BrandIcon.vue'
 import { useSettingsStore } from '@/stores/settings'
 import { useTheme } from '@/composables/useTheme'
 import { footerNavigation } from '@/content/site'
@@ -12,6 +14,32 @@ const theme = useTheme()
 const year = new Date().getFullYear()
 
 const socials = computed(() => settings.socials.filter((s) => s.url))
+
+// "UZBEKONA" dagi O harfiga do'ppi: harf o'rni shrift yuklangandan keyin o'lchanadi
+// (getExtentOfChar — gorizontal, canvas measureText — harfning yuqori chegarasi)
+const BASELINE = 148
+const wordText = ref<SVGTextElement>()
+const doppi = ref<{ x: number; y: number; w: number; h: number } | null>(null)
+
+async function placeDoppi() {
+  await document.fonts?.ready
+  const t = wordText.value
+  const ctx = document.createElement('canvas').getContext('2d')
+  if (!t || !ctx) return
+  try {
+    const ext = t.getExtentOfChar(5)
+    const cs = getComputedStyle(t)
+    ctx.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`
+    const top = BASELINE - ctx.measureText('O').actualBoundingBoxAscent
+    const w = ext.width * 1.04
+    const h = (w * 80) / 120
+    // qiya burilish chapga siljitadi — markazni biroz o'ngga surib to'g'rilaymiz
+    doppi.value = { x: ext.x + (ext.width - w) / 2 + w * 0.06, y: top - h * 0.74, w, h }
+  } catch {
+    // Brauzer SVG matn o'lchamini bermasa — do'ppisiz qoladi
+  }
+}
+onMounted(placeDoppi)
 </script>
 
 <template>
@@ -36,15 +64,22 @@ const socials = computed(() => settings.socials.filter((s) => s.url))
 
         <div class="footer__col">
           <p class="footer__heading">Social</p>
-          <a v-for="s in socials" :key="s.url" :href="s.url" class="footer__link" target="_blank" rel="noopener noreferrer">
+          <a v-for="s in socials" :key="s.url" :href="s.url" class="footer__link footer__tg" target="_blank" rel="noopener noreferrer">
+            <BrandIcon v-if="s.platform.toLowerCase() === 'telegram'" name="telegram" :size="20" />
             {{ s.label || s.platform }}
           </a>
         </div>
 
         <div class="footer__col">
           <p class="footer__heading">Kontakt</p>
-          <a v-if="settings.telegramUrl" :href="settings.telegramUrl" class="footer__link" target="_blank" rel="noopener noreferrer">
-            {{ settings.site.telegram }}
+          <a
+            v-if="settings.telegramUrl"
+            :href="settings.telegramUrl"
+            class="footer__link footer__tg"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <BrandIcon name="telegram" :size="20" /> {{ settings.site.telegram }}
           </a>
           <a v-if="settings.site.phone" :href="`tel:${settings.site.phone.replace(/\s/g, '')}`" class="footer__link">{{
             settings.site.phone
@@ -63,8 +98,12 @@ const socials = computed(() => settings.socials.filter((s) => s.url))
     </div>
 
     <!-- Dekorativ wordmark: SVG — konteyner kengligiga aniq moslashadi -->
-    <svg class="footer__wordmark" viewBox="0 0 1000 150" preserveAspectRatio="xMidYMax meet" aria-hidden="true" focusable="false">
-      <text x="500" y="148" text-anchor="middle" textLength="980" lengthAdjust="spacingAndGlyphs">UZBEKONA</text>
+    <svg class="footer__wordmark" viewBox="0 -100 1000 250" preserveAspectRatio="xMidYMax meet" aria-hidden="true" focusable="false">
+      <text ref="wordText" x="500" :y="BASELINE" text-anchor="middle" textLength="980" lengthAdjust="spacingAndGlyphs">UZBEKONA</text>
+      <!-- O harfiga kiydirilgan do'ppi -->
+      <g v-if="doppi" class="footer__doppi" :transform="`rotate(-9 ${doppi.x + doppi.w / 2} ${doppi.y + doppi.h})`">
+        <Doppi :x="doppi.x" :y="doppi.y" :width="doppi.w" :height="doppi.h" />
+      </g>
     </svg>
   </footer>
 </template>
@@ -184,13 +223,35 @@ const socials = computed(() => settings.socials.filter((s) => s.url))
   display: block;
   width: 100%;
   height: auto;
+  /* yuqoridagi bo'sh joy do'ppi uchun — pastki qatorga yopishmasligi uchun manfiy margin */
+  margin-top: -9vw;
   margin-bottom: -2.6vw;
+  pointer-events: none;
   fill: var(--dark-2);
   font-family: var(--font);
   font-size: 196px;
   font-weight: 700;
   letter-spacing: -0.05em;
   user-select: none;
+}
+
+.footer__tg {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer__doppi {
+  --doppi-body: #070808;
+  --doppi-outline: rgb(255 255 255 / 0.16);
+  animation: doppi-drop 900ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes doppi-drop {
+  from {
+    opacity: 0;
+    translate: 0 -40px;
+  }
 }
 
 @media (max-width: 1024px) {

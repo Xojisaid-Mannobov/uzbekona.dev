@@ -11,6 +11,10 @@ const labels: Record<string, string> = {
   in_progress: 'Jarayonda',
   done: 'Yakunlangan',
   spam: 'Spam',
+  reviewing: 'Ko‘rib chiqilmoqda',
+  interview: 'Suhbat',
+  accepted: 'Qabul qilindi',
+  rejected: 'Rad etildi',
   on: 'Ko‘rinadi',
   off: 'Yashirin',
 }

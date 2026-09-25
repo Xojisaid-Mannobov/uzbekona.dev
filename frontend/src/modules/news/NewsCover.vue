@@ -5,18 +5,24 @@ import GirihPattern from '@/components/ornament/GirihPattern.vue'
 import SuzaniRosette from '@/components/ornament/SuzaniRosette.vue'
 import type { News } from '@/types/api'
 import { toneStyle } from './tone'
+import { focusCss, ratioCss } from '@/utils/cover'
 
 // Yangilik muqovasi: rasm bo'lsa — rasm, bo'lmasa teg rangidagi naqshli "plakat"
-const props = withDefaults(defineProps<{ news: News; sizes?: string; priority?: boolean }>(), {
+// Rasm bo'lsa — admin tanlagan nisbat (yoki rasmning asl nisbati); plakat uchun — `fallback`
+const props = withDefaults(defineProps<{ news: News; sizes?: string; priority?: boolean; fallback?: string }>(), {
   sizes: '(min-width: 1024px) 440px, 100vw',
   priority: false,
+  fallback: '16 / 11',
 })
-const style = computed(() => toneStyle(props.news.tag))
+const style = computed(() => ({
+  ...toneStyle(props.news.tag),
+  aspectRatio: props.news.cover ? ratioCss(props.news.cover_ratio, props.news.cover, props.fallback) : props.fallback,
+}))
 </script>
 
 <template>
   <div class="cover" :style="style">
-    <MediaImage v-if="news.cover" :media="news.cover" :sizes="sizes" :priority="priority" fill />
+    <MediaImage v-if="news.cover" :media="news.cover" :sizes="sizes" :priority="priority" :position="focusCss(news.cover_focus)" fill />
     <div v-else class="cover__poster" aria-hidden="true">
       <GirihPattern tone="light" :size="64" :opacity="0.16" fade="right" />
       <SuzaniRosette class="cover__rosette" tone="light" :opacity="0.42" />

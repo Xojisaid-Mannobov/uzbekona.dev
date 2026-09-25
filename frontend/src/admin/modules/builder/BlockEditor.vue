@@ -6,11 +6,19 @@ import MediaPicker from '@/admin/components/MediaPicker.vue'
 import MetricsEditor from '@/admin/components/MetricsEditor.vue'
 import TagInput from '@/admin/components/TagInput.vue'
 import type { Block, Media } from '@/types/api'
+import { COVER_RATIOS } from '@/utils/cover'
 
 // Har bir blok turi uchun tahrirlash maydonlari. Blok obyekti joyida (in-place) o'zgartiriladi.
 const props = defineProps<{ block: Block }>()
 
 const galleryOpen = ref(false)
+
+// Matn ichidagi rasm: kichik (markazda), o'rta (matn kengligida), keng (matndan chiqib turadi)
+const IMAGE_SIZES = [
+  { value: 'small', label: 'Kichik' },
+  { value: 'medium', label: 'O‘rta' },
+  { value: 'wide', label: 'Keng' },
+] as const
 
 function addGallery(items: Media[]) {
   if (props.block.type !== 'gallery') return
@@ -53,6 +61,40 @@ function moveItem<T>(arr: T[], i: number, dir: number) {
     <!-- Rasm -->
     <template v-else-if="block.type === 'image' || block.type === 'full_image'">
       <MediaField v-model="block.data.media" ratio="16 / 8" />
+      <div v-if="block.type === 'image'" class="be__row be__imgopts">
+        <div class="a-field">
+          <span class="a-label">O‘lchami</span>
+          <div class="be__seg" role="radiogroup" aria-label="Rasm o‘lchami">
+            <button
+              v-for="o in IMAGE_SIZES"
+              :key="o.value"
+              type="button"
+              role="radio"
+              :aria-checked="(block.data.size ?? 'medium') === o.value"
+              :class="{ 'is-active': (block.data.size ?? 'medium') === o.value }"
+              @click="block.data.size = o.value"
+            >
+              {{ o.label }}
+            </button>
+          </div>
+        </div>
+        <div class="a-field">
+          <span class="a-label">Nisbati</span>
+          <div class="be__seg" role="radiogroup" aria-label="Rasm nisbati">
+            <button
+              v-for="r in COVER_RATIOS"
+              :key="r.value"
+              type="button"
+              role="radio"
+              :aria-checked="(block.data.ratio ?? 'auto') === r.value"
+              :class="{ 'is-active': (block.data.ratio ?? 'auto') === r.value }"
+              @click="block.data.ratio = r.value"
+            >
+              {{ r.label }}
+            </button>
+          </div>
+        </div>
+      </div>
       <label class="a-field">
         <span class="a-label">Izoh <small>ixtiyoriy</small></span>
         <input v-model="block.data.caption" class="a-input" placeholder="Talaba kabineti — asosiy sahifa" />
@@ -202,6 +244,35 @@ function moveItem<T>(arr: T[], i: number, dir: number) {
 </template>
 
 <style scoped>
+.be__imgopts {
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.be__seg {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 12px;
+  background: var(--surface-2);
+}
+
+.be__seg button {
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-2);
+}
+
+.be__seg button.is-active {
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--shadow-sm);
+}
+
 .be {
   display: grid;
   gap: 16px;

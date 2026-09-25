@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import MediaImage from '@/components/media/MediaImage.vue'
+import { ratioCss } from '@/utils/cover'
 import BeforeAfter from './BeforeAfter.vue'
 import { vReveal } from '@/composables/reveal'
 import { paragraphs, pad2 } from '@/utils/format'
@@ -41,11 +42,22 @@ function youtubeEmbed(url?: string): string | null {
       <figure
         v-else-if="(block.type === 'image' || block.type === 'full_image') && block.data.media"
         class="b b-image"
-        :class="{ 'b-image--full': block.type === 'full_image' }"
+        :class="[block.type === 'full_image' ? 'b-image--full' : `b-image--${block.data.size ?? 'medium'}`]"
         v-reveal="{ variant: 'scale' }"
       >
-        <div class="b-image__frame">
-          <MediaImage :media="block.data.media" :sizes="block.type === 'full_image' ? '100vw' : '(min-width: 1440px) 1360px, 100vw'" />
+        <div
+          class="b-image__frame"
+          :style="
+            block.type === 'image' && block.data.ratio && block.data.ratio !== 'auto'
+              ? { aspectRatio: ratioCss(block.data.ratio, block.data.media, '16 / 9') }
+              : undefined
+          "
+        >
+          <MediaImage
+            :media="block.data.media"
+            :sizes="block.type === 'full_image' ? '100vw' : '(min-width: 1440px) 1360px, 100vw'"
+            :fill="block.type === 'image' && !!block.data.ratio && block.data.ratio !== 'auto'"
+          />
         </div>
         <figcaption v-if="block.data.caption">{{ block.data.caption }}</figcaption>
       </figure>
@@ -205,6 +217,18 @@ function youtubeEmbed(url?: string): string | null {
   border-radius: var(--r-lg);
   overflow: hidden;
   background: var(--surface-2);
+}
+
+/* Rasm bloki o'lchamlari: kichik — markazda; keng — maqola matni kengligidan chiqib turadi */
+.b-image--small {
+  width: min(100%, 520px);
+  margin-inline: auto;
+}
+
+.blocks--article .b-image--wide {
+  --wide: min(1100px, 100vw - var(--gutter) * 2);
+  width: var(--wide);
+  margin-left: calc(50% - var(--wide) / 2);
 }
 
 .b-image--full {

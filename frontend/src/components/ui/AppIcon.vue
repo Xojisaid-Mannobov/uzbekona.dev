@@ -193,6 +193,11 @@ withDefaults(defineProps<{ name: IconName; size?: number | string }>(), { size: 
       <path d="M10 14a4.5 4.5 0 0 0 6.4 0l3.2-3.2a4.5 4.5 0 0 0-6.4-6.4L12 5.6" />
       <path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3.2 3.2a4.5 4.5 0 0 0 6.4 6.4l1.2-1.2" />
     </template>
+    <template v-else-if="name === 'briefcase'">
+      <rect x="3" y="7" width="18" height="13" rx="2.5" />
+      <path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7" />
+      <path d="M3 12.5h18" />
+    </template>
     <template v-else-if="name === 'pulse'">
       <path d="M3 12h4l2.5-6 5 12L17 12h4" />
     </template>

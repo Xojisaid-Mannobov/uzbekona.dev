@@ -48,6 +48,7 @@ const PAGE_NAMES: Record<string, string> = {
   '/news': 'Yangiliklar',
   '/journal': 'Journal',
   '/contact': 'Bog‘lanish',
+  '/join': 'Jamoaga qo‘shilish',
 }
 function pageName(path: string) {
   if (PAGE_NAMES[path]) return PAGE_NAMES[path]

@@ -5,6 +5,7 @@ import PageHeader from '@/admin/components/PageHeader.vue'
 import AdminEmpty from '@/admin/components/AdminEmpty.vue'
 import FormField from '@/admin/components/FormField.vue'
 import MediaField from '@/admin/components/MediaField.vue'
+import CoverSizeField from '@/admin/components/CoverSizeField.vue'
 import SeoFields from '@/admin/components/SeoFields.vue'
 import EditorSidebar from '@/admin/components/EditorSidebar.vue'
 import ErrorSummary from '@/admin/components/ErrorSummary.vue'
@@ -39,6 +40,8 @@ const { form, entity, loading, loadError, saving, errors, dirty, isNew, save, lo
     excerpt: '',
     tag: 'Studiya',
     cover: null,
+    cover_ratio: 'auto',
+    cover_focus: 'center',
     content: [{ type: 'text', data: { text: '' } }],
     status: 'draft',
     pinned: false,
@@ -51,6 +54,8 @@ const { form, entity, loading, loadError, saving, errors, dirty, isNew, save, lo
     excerpt: n.excerpt,
     tag: n.tag,
     cover: n.cover,
+    cover_ratio: n.cover_ratio ?? 'auto',
+    cover_focus: n.cover_focus ?? 'center',
     content: JSON.parse(JSON.stringify(n.content ?? [])),
     status: n.status,
     pinned: n.pinned,
@@ -161,6 +166,7 @@ const publicUrl = computed(() => (entity.value?.status === 'published' ? `/news/
         <section class="a-card">
           <h2 class="a-card__title">Muqova</h2>
           <MediaField v-model="form.cover" />
+          <CoverSizeField v-model:ratio="form.cover_ratio" v-model:focus="form.cover_focus" :media="form.cover" />
           <p class="a-hint" style="margin-top: 10px">Bo‘lmasa, teg rangidagi naqshli muqova avtomatik chiziladi.</p>
         </section>
       </aside>

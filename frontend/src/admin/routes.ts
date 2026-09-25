@@ -47,6 +47,7 @@ export const adminRoutes: RouteRecordRaw[] = [
   page('/admin/articles/:id(\\d+)', 'admin-article-edit', () => import('@/admin/pages/ArticleEditPage.vue'), 'Maqolani tahrirlash'),
 
   page('/admin/media', 'admin-media', () => import('@/admin/pages/MediaPage.vue'), 'Media'),
+  page('/admin/applications', 'admin-applications', () => import('@/admin/pages/ApplicationsPage.vue'), 'Nomzodlar'),
   page('/admin/requests', 'admin-requests', () => import('@/admin/pages/RequestsPage.vue'), 'So‘rovlar'),
   { path: '/admin/messages', redirect: '/admin/requests' },
   page('/admin/settings', 'admin-settings', () => import('@/admin/pages/SettingsPage.vue'), 'Sozlamalar'),

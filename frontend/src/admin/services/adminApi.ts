@@ -8,7 +8,11 @@ import type {
   Block,
   ContactRequest,
   ContactStatus,
+  ApplicationStatus,
+  JobApplication,
   ContentStatus,
+  CoverFocus,
+  CoverRatio,
   DashboardStats,
   GalleryItem,
   Lab,
@@ -90,6 +94,8 @@ export interface ArticleInput {
   slug: string
   excerpt: string
   cover_id: number | null
+  cover_ratio: CoverRatio
+  cover_focus: CoverFocus
   category_id: number | null
   content: Block[]
   author_name: string
@@ -105,6 +111,8 @@ export interface NewsInput {
   excerpt: string
   tag: string
   cover_id: number | null
+  cover_ratio: CoverRatio
+  cover_focus: CoverFocus
   content: Block[]
   status: ContentStatus
   pinned: boolean
@@ -230,6 +238,13 @@ export const adminApi = {
     update: (id: number, alt: string) => send<Media>('put', `/admin/media/${id}`, { alt }) as Promise<Media>,
     usage: (id: number) => get<{ count: number }>(`/admin/media/${id}/usage`),
     remove: (id: number) => remove(`/admin/media/${id}`),
+  },
+
+  applications: {
+    list: (q: ListQuery = {}) => paged<JobApplication>('/admin/applications', q),
+    update: (id: number, status: ApplicationStatus, note: string) =>
+      send<JobApplication>('patch', `/admin/applications/${id}`, { status, note }) as Promise<JobApplication>,
+    remove: (id: number) => remove(`/admin/applications/${id}`),
   },
 
   requests: {

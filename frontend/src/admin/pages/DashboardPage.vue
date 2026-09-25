@@ -24,6 +24,13 @@ const cards = computed<{ label: string; value: number; icon: IconName; to: strin
     { label: 'Yangiliklar', value: s.news, icon: 'news', to: '/admin/news' },
     { label: 'Maqolalar', value: s.articles, icon: 'file-text', to: '/admin/articles' },
     { label: 'Yangi so‘rovlar', value: s.incoming_requests, icon: 'inbox', to: '/admin/requests', accent: s.incoming_requests > 0 },
+    {
+      label: 'Yangi nomzodlar',
+      value: s.new_applications,
+      icon: 'briefcase',
+      to: '/admin/applications',
+      accent: s.new_applications > 0,
+    },
   ]
 })
 
@@ -45,7 +52,7 @@ const greeting = computed(() => {
     <template v-else>
       <div class="stats">
         <template v-if="loading && !stats">
-          <div v-for="n in 6" :key="n" class="skeleton stat-sk" />
+          <div v-for="n in 7" :key="n" class="skeleton stat-sk" />
         </template>
         <RouterLink v-for="c in cards" :key="c.label" :to="c.to" class="stat" :class="{ 'stat--accent': c.accent }">
           <span class="stat__icon"><AppIcon :name="c.icon" :size="20" /></span>

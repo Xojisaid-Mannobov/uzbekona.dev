@@ -62,11 +62,14 @@ export interface Column {
   text: string
 }
 
+export type CoverRatio = 'auto' | '16:9' | '4:3' | '1:1' | '3:4' | '21:9'
+export type CoverFocus = 'center' | 'top' | 'bottom'
+
 export interface BlockDataMap {
   heading: { text: string; label?: string }
   text: { text: string }
   large_text: { text: string }
-  image: { media: MediaRef | null; caption?: string }
+  image: { media: MediaRef | null; caption?: string; size?: 'small' | 'medium' | 'wide'; ratio?: CoverRatio }
   full_image: { media: MediaRef | null; caption?: string }
   gallery: { items: { media: MediaRef; caption?: string }[] }
   video: { media: MediaRef | null; poster: MediaRef | null; url?: string; caption?: string }
@@ -183,6 +186,8 @@ export interface Article {
   excerpt: string
   cover_id: number | null
   cover: MediaRef | null
+  cover_ratio: CoverRatio
+  cover_focus: CoverFocus
   category_id: number | null
   category: ArticleCategory | null
   content?: Block[]
@@ -210,6 +215,8 @@ export interface News {
   tag: string
   cover_id: number | null
   cover: MediaRef | null
+  cover_ratio: CoverRatio
+  cover_focus: CoverFocus
   content?: Block[]
   status: ContentStatus
   pinned: boolean
@@ -268,6 +275,32 @@ export interface ContactRequest {
   updated_at: string
 }
 
+export interface ApplicationPayload {
+  full_name: string
+  email: string
+  phone: string
+  telegram: string
+  position: string
+  experience: string
+  portfolio_url: string
+  resume_url: string
+  about: string
+  consent: boolean
+  website: string
+}
+
+export type ApplicationStatus = 'new' | 'reviewing' | 'interview' | 'accepted' | 'rejected'
+
+export interface JobApplication extends Omit<ApplicationPayload, 'consent' | 'website'> {
+  id: number
+  status: ApplicationStatus
+  note: string
+  ip: string
+  user_agent: string
+  created_at: string
+  updated_at: string
+}
+
 export interface ContactPayload {
   name: string
   contact: string
@@ -294,6 +327,7 @@ export interface DashboardStats {
   views_today: number
   visitors_today: number
   incoming_requests: number
+  new_applications: number
   total_requests: number
   media: number
   admins: number

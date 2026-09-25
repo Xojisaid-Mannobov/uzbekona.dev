@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import UiButton from '@/components/ui/UiButton.vue'
 import BrandMark from '@/components/layout/BrandMark.vue'
+import Doppi from '@/components/ornament/Doppi.vue'
 import HeroSkyline from './hero/HeroSkyline.vue'
 import HeroFlagWave from './hero/HeroFlagWave.vue'
 import HeroCircuit from './hero/HeroCircuit.vue'
@@ -28,7 +29,9 @@ const settings = useSettingsStore()
         <div class="hero__brand-text">
           <p class="hero__tagline hero__fade" style="--d: 80ms">{{ hero.tagline }}</p>
           <h1 id="hero-title" class="hero__title">
-            <span class="hero__rise">Uzbekona<span class="hero__tld">.dev</span></span>
+            <span class="hero__rise"
+              >Uzbek<span class="hero__o">o<Doppi class="hero__doppi" /></span>na<span class="hero__tld">.dev</span></span
+            >
           </h1>
           <p class="hero__services hero__fade" style="--d: 300ms">
             <template v-for="(s, i) in hero.services" :key="s">
@@ -178,8 +181,9 @@ const settings = useSettingsStore()
   line-height: 1;
   letter-spacing: -0.045em;
   overflow: hidden;
-  padding-bottom: 0.08em;
-  margin-bottom: -0.08em;
+  /* tepada do'ppi uchun joy, pastda descender'lar uchun */
+  padding-block: 0.3em 0.08em;
+  margin-block: -0.3em -0.08em;
 }
 
 .hero__rise {
@@ -189,6 +193,30 @@ const settings = useSettingsStore()
 
 .hero__tld {
   color: var(--accent);
+}
+
+/* "o" harfiga kiydirilgan do'ppi — o'lchami harf bilan birga (em) o'zgaradi */
+.hero__o {
+  position: relative;
+  display: inline-block;
+}
+
+.hero__doppi {
+  position: absolute;
+  left: 50%;
+  bottom: 0.45em;
+  width: 0.84em;
+  translate: -52% 0;
+  rotate: -10deg;
+  --doppi-outline: color-mix(in srgb, var(--ink) 35%, transparent);
+  animation: doppi-drop 900ms cubic-bezier(0.34, 1.56, 0.64, 1) 700ms both;
+}
+
+@keyframes doppi-drop {
+  from {
+    opacity: 0;
+    translate: -52% -0.4em;
+  }
 }
 
 .hero__services {

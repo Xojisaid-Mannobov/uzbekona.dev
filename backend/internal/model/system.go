@@ -77,6 +77,48 @@ type ContactUpdateInput struct {
 	Note   string `json:"note" validate:"max=5000"`
 }
 
+// ─── Jamoaga qo'shilish arizalari ───────────────────────────
+
+type Application struct {
+	ID           int64     `json:"id"`
+	FullName     string    `json:"full_name"`
+	Email        string    `json:"email"`
+	Phone        string    `json:"phone"`
+	Telegram     string    `json:"telegram"`
+	Position     string    `json:"position"`
+	Experience   string    `json:"experience"`
+	PortfolioURL string    `json:"portfolio_url"`
+	ResumeURL    string    `json:"resume_url"`
+	About        string    `json:"about"`
+	Status       string    `json:"status"`
+	Note         string    `json:"note"`
+	IP           string    `json:"ip"`
+	UserAgent    string    `json:"user_agent"`
+	CreatedAt    time.Time `json:"created_at"`
+	UpdatedAt    time.Time `json:"updated_at"`
+}
+
+type ApplicationInput struct {
+	FullName     string `json:"full_name" validate:"required,min=3,max=120"`
+	Email        string `json:"email" validate:"required,email,max=160"`
+	Phone        string `json:"phone" validate:"max=40"`
+	Telegram     string `json:"telegram" validate:"max=64"`
+	Position     string `json:"position" validate:"required,max=80"`
+	Experience   string `json:"experience" validate:"max=40"`
+	PortfolioURL string `json:"portfolio_url" validate:"omitempty,url,max=500"`
+	ResumeURL    string `json:"resume_url" validate:"omitempty,url,max=500"`
+	About        string `json:"about" validate:"required,min=50,max=5000"`
+	// Shaxsiy ma'lumotlarni ko'rib chiqish uchun ishlatishga rozilik
+	Consent bool `json:"consent" validate:"required"`
+	// Honeypot — botlar to'ldiradi, odamlar ko'rmaydi
+	Website string `json:"website"`
+}
+
+type ApplicationUpdateInput struct {
+	Status string `json:"status" validate:"required,oneof=new reviewing interview accepted rejected"`
+	Note   string `json:"note" validate:"max=5000"`
+}
+
 // ─── Settings ───────────────────────────────────────────────
 
 type SiteSettings struct {
@@ -122,6 +164,7 @@ type DashboardStats struct {
 	ViewsToday        int       `json:"views_today"`
 	VisitorsToday     int       `json:"visitors_today"`
 	IncomingRequests  int       `json:"incoming_requests"`
+	NewApplications   int       `json:"new_applications"`
 	TotalRequests     int       `json:"total_requests"`
 	Media             int       `json:"media"`
 	Admins            int       `json:"admins"`

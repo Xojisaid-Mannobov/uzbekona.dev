@@ -15,6 +15,8 @@ const props = withDefaults(
     priority?: boolean
     fill?: boolean
     fit?: 'cover' | 'contain'
+    /** object-position (masalan "center top") — kesilganda rasmning qaysi qismi ko'rinadi */
+    position?: string
   }>(),
   { sizes: '100vw', fit: 'cover' },
 )
@@ -40,7 +42,7 @@ const set = computed(() => srcset(props.media))
     v-else
     class="media"
     :class="{ 'media--fill': fill, 'is-loaded': loaded || priority }"
-    :style="{ objectFit: fit }"
+    :style="{ objectFit: fit, objectPosition: position }"
     :src="media.url"
     :srcset="set"
     :sizes="set ? sizes : undefined"

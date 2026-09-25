@@ -27,6 +27,7 @@ const publicRoutes: RouteRecordRaw[] = [
   { path: '/journal/:slug', name: 'article', component: () => import('@/pages/ArticlePage.vue') },
   { path: '/news', name: 'news', component: () => import('@/pages/NewsPage.vue') },
   { path: '/news/:slug', name: 'news-item', component: () => import('@/pages/NewsDetailPage.vue') },
+  { path: '/join', name: 'join', component: () => import('@/pages/JoinPage.vue'), meta: { hideCta: true } },
   { path: '/contact', name: 'contact', component: () => import('@/pages/ContactPage.vue'), meta: { hideCta: true } },
 ].map((r) => ({ ...r, meta: { layout: 'public' as const, ...r.meta } }))
 

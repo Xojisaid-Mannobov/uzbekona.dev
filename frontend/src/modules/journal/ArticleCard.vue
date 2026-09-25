@@ -1,22 +1,31 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import MediaImage from '@/components/media/MediaImage.vue'
 import GirihPattern from '@/components/ornament/GirihPattern.vue'
 import type { Article } from '@/types/api'
 import { formatDate } from '@/utils/format'
+import { focusCss, ratioCss } from '@/utils/cover'
 
 // Maqola kartasi: katta cover, kategoriya, sana, o'qish vaqti va 26–32px sarlavha
-withDefaults(defineProps<{ article: Article; large?: boolean }>(), { large: false })
+const props = withDefaults(defineProps<{ article: Article; large?: boolean }>(), { large: false })
+
+// Muqova nisbati admin tanlovi bo'yicha; tipografik muqova — standart nisbatda
+const coverRatio = computed(() => {
+  const fallback = props.large ? '16 / 10' : '4 / 3.2'
+  return props.article.cover ? ratioCss(props.article.cover_ratio, props.article.cover, fallback) : fallback
+})
 </script>
 
 <template>
   <article class="article" :class="{ 'article--large': large }">
     <RouterLink :to="`/journal/${article.slug}`" class="article__link">
-      <div class="article__cover">
+      <div class="article__cover" :style="{ aspectRatio: coverRatio }">
         <MediaImage
           v-if="article.cover"
           :media="article.cover"
           :sizes="large ? '(min-width: 1024px) 900px, 100vw' : '(min-width: 1024px) 440px, 100vw'"
+          :position="focusCss(article.cover_focus)"
           fill
         />
         <div v-else class="article__typo" aria-hidden="true">
@@ -43,15 +52,12 @@ withDefaults(defineProps<{ article: Article; large?: boolean }>(), { large: fals
 
 .article__cover {
   position: relative;
-  aspect-ratio: 4 / 3.2;
+  /* portret nisbat tanlansa ham karta ekrandan oshib ketmaydi (rasm kesiladi) */
+  max-height: min(78vh, 720px);
   border-radius: var(--r-lg);
   overflow: hidden;
   background: var(--surface-2);
   margin-bottom: 24px;
-}
-
-.article--large .article__cover {
-  aspect-ratio: 16 / 10;
 }
 
 .article__cover > :deep(*) {

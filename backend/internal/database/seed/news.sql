@@ -25,7 +25,7 @@ FROM (VALUES
   ('jamoaga-backend-dasturchi', 'Jamoamizga backend dasturchi qidiryapmiz', 'Go va PostgreSQL bilan ishlashni yaxshi ko‘rasizmi? Katta miqyosdagi loyihalarda birga ishlaymiz.', 'Jamoa', false, interval '20 days',
    $j$[
      {"type": "text", "data": {"text": "Loyihalar ko‘payishi bilan jamoamizni kengaytiryapmiz. Go, PostgreSQL va Docker bilan tajribaga ega backend dasturchini kutamiz."}},
-     {"type": "text", "data": {"text": "Rezyume va GitHub profilingizni bog‘lanish sahifasi orqali yuboring."}}
+     {"type": "text", "data": {"text": "Ariza qoldirish uchun saytdagi “Jamoaga qo‘shilish” sahifasiga o‘ting — o‘zingiz haqingizda yozing, biz ko‘rib chiqib bog‘lanamiz."}}
    ]$j$)
 ) AS n(slug, title, excerpt, tag, pinned, age, content)
 ON CONFLICT (slug) DO NOTHING;

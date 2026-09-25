@@ -12,6 +12,7 @@ import { useSeo } from '@/composables/useSeo'
 import { vReveal } from '@/composables/reveal'
 import { publicApi } from '@/services/public'
 import { formatDate } from '@/utils/format'
+import { focusCss, ratioCss } from '@/utils/cover'
 
 const route = useRoute()
 const slug = computed(() => String(route.params.slug))
@@ -64,8 +65,18 @@ useSeo(() => ({
       </header>
 
       <div v-if="article.cover" class="container">
-        <div class="article-cover" v-reveal="{ variant: 'scale' }">
-          <MediaImage :media="article.cover" priority sizes="(min-width: 1440px) 1360px, 100vw" />
+        <div
+          class="article-cover"
+          :style="article.cover_ratio !== 'auto' ? { aspectRatio: ratioCss(article.cover_ratio, article.cover, '16 / 9') } : undefined"
+          v-reveal="{ variant: 'scale' }"
+        >
+          <MediaImage
+            :media="article.cover"
+            priority
+            sizes="(min-width: 1440px) 1360px, 100vw"
+            :fill="article.cover_ratio !== 'auto'"
+            :position="focusCss(article.cover_focus)"
+          />
         </div>
       </div>
 
@@ -140,6 +151,8 @@ useSeo(() => ({
 }
 
 .article-cover {
+  position: relative;
+  max-height: 82vh;
   border-radius: var(--r-lg);
   overflow: hidden;
   margin-bottom: clamp(48px, 5vw, 80px);
