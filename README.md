@@ -1,0 +1,173 @@
+# Uzbekona.dev
+
+Digital Product Studio sayti va kontent boshqaruv tizimi: web platformalar, mobil ilovalar, Telegram tizimlari va avtomatlashtirish mahsulotlarini namoyish qiluvchi public sayt + shu frontend ichidagi admin panel + Go API.
+
+```
+Cloudflare → Nginx ─┬─ /            → Vue 3 (public sayt)
+                    ├─ /admin/*     → Vue 3 (admin panel, shu SPA ichida)
+                    ├─ /api/v1/*    → Go (Fiber) → PostgreSQL, Redis
+                    └─ /uploads/*   → media fayllar (Nginx to'g'ridan-to'g'ri beradi)
+```
+
+## Stack
+
+| Qatlam | Texnologiya |
+|---|---|
+| Frontend | Vue 3, TypeScript, Vite, Vue Router, Pinia, Axios, GSAP, Lenis |
+| Backend | Go 1.26, Fiber v2, pgx v5 (PostgreSQL), go-redis, golang-jwt |
+| Ma’lumotlar | PostgreSQL 16, Redis 7 (kesh + rate limit, ixtiyoriy) |
+| Infratuzilma | Docker Compose, Nginx, Cloudflare |
+
+UI butunlay custom — tayyor UI kutubxonasi yoki admin template ishlatilmagan.
+
+## Loyiha tuzilishi
+
+```
+uzbekona.dev/
+├── frontend/
+│   └── src/
+│       ├── components/   # UI, layout, media, content (BlockRenderer)
+│       ├── layouts/      # PublicLayout.vue
+│       ├── pages/        # Home, Projects, ProjectDetail, Services, About, Team, Journal, Contact …
+│       ├── modules/      # home bo'limlari, projects, journal, team, contact
+│       ├── composables/  # useAsync, useSeo, v-reveal, useTheme, smooth scroll
+│       ├── stores/       # Pinia: sayt sozlamalari
+│       ├── router/       # meta.layout orqali public / admin / blank
+│       ├── services/     # Axios + public API
+│       ├── types/ utils/ styles/ content/
+│       └── admin/        # AdminLayout, sahifalar, content builder, media manager
+├── backend/
+│   ├── cmd/api/main.go
+│   ├── internal/         # config, database, handler, middleware, model, repository, service, validator, routes, cache
+│   ├── migrations/       # SQL migratsiyalar (binary ichiga embed qilinadi)
+│   └── pkg/              # slug, imageproc
+├── nginx/nginx.conf
+├── docker-compose.yml
+└── .env.example
+```
+
+Backend arxitekturasi: **Handler → Service → Repository → PostgreSQL**. Handler faqat HTTP (parse, validatsiya, javob), biznes qoidalar service'da, SQL faqat repository'da.
+
+## Tez boshlash (Docker)
+
+```bash
+cp .env.example .env
+# .env: POSTGRES_PASSWORD, JWT_SECRET (openssl rand -hex 32), ADMIN_EMAIL, ADMIN_PASSWORD ni to'ldiring
+# Lokal http://localhost uchun: COOKIE_SECURE=false, CORS_ORIGINS=http://localhost
+docker compose up -d --build
+```
+
+- Sayt: http://localhost
+- Admin: http://localhost/admin (ADMIN_EMAIL / ADMIN_PASSWORD bilan)
+- API: http://localhost/api/v1/health
+
+Birinchi ishga tushishda migratsiyalar avtomatik qo‘llanadi, `SEED_DEMO=true` bo‘lsa boshlang‘ich kontent (xizmatlar, kategoriyalar, demo loyihalar) yoziladi.
+
+## Lokal development
+
+Talablar: Go 1.26+, Node 22+, PostgreSQL 16, Redis (ixtiyoriy).
+
+```bash
+# 1. Backend
+cd backend
+cp .env.example .env          # DATABASE_URL va ADMIN_* ni moslang
+go run ./cmd/api              # http://localhost:8080
+
+# 2. Frontend (boshqa terminalda)
+cd frontend
+npm install
+npm run dev                   # http://localhost:5173 — /api va /uploads 8080'ga proxy qilinadi
+```
+
+Backend buyruqlari:
+
+```bash
+go run ./cmd/api migrate      # faqat migratsiyalar
+go run ./cmd/api rollback     # oxirgi migratsiyani bekor qilish
+go run ./cmd/api seed         # demo kontent (faqat bo'sh bazaga)
+go test ./...
+```
+
+Frontend buyruqlari: `npm run build` (vue-tsc + vite), `npm run format`, `npm run lint`.
+
+## Environment o‘zgaruvchilari (backend)
+
+| O‘zgaruvchi | Standart | Izoh |
+|---|---|---|
+| `APP_ENV` | `development` | `production` da `JWT_SECRET` majburiy (≥32 belgi) |
+| `DATABASE_URL` | lokal postgres | pgx connection string |
+| `REDIS_URL` | — | bo‘lmasa kesh va rate limit xotirada |
+| `JWT_SECRET`, `JWT_TTL` | —, `12h` | admin sessiya tokeni |
+| `COOKIE_SECURE` | `false` | HTTPS’da `true` |
+| `CORS_ORIGINS` | `http://localhost:5173` | admin panel domenlari (CSRF tekshiruvi ham shu ro‘yxat bo‘yicha) |
+| `TRUST_PROXY` | `false` | Nginx orqasida `true` — IP `X-Real-IP` dan olinadi |
+| `UPLOAD_DIR`, `UPLOAD_URL`, `MAX_UPLOAD_MB` | `./storage/uploads`, `/uploads`, `100` | media |
+| `PUBLIC_CACHE_TTL` | `5m` | public GET javoblari keshi |
+| `AUTO_MIGRATE`, `SEED_DEMO` | `true`, `false` | |
+| `ADMIN_NAME`, `ADMIN_EMAIL`, `ADMIN_PASSWORD` | — | adminlar jadvali bo‘sh bo‘lsa birinchi admin |
+| `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` | — | yangi so‘rovlar haqida bildirishnoma (ixtiyoriy) |
+
+## API
+
+Prefiks: `/api/v1`. Javob formati: `{"data": …, "meta": …}`, xato: `{"error": {"code", "message", "fields"}}`.
+
+**Public**
+
+```
+GET  /settings                 GET  /team
+GET  /projects?featured=true   GET  /labs
+GET  /projects/:slug           GET  /articles?category=&page=&limit=
+GET  /services                 GET  /articles/:slug
+GET  /services/:slug           GET  /article-categories
+POST /contact                  GET  /health
+```
+
+**Admin** (HttpOnly cookie sessiya; `auth/login` va `auth/logout` dan tashqari hammasi autentifikatsiya talab qiladi)
+
+```
+POST /admin/auth/login   POST /admin/auth/logout   GET /admin/auth/me   PUT /admin/auth/password
+GET  /admin/dashboard
+GET|POST /admin/projects   GET|PUT|DELETE /admin/projects/:id
+PATCH /admin/projects/:id/status   PATCH /admin/projects/:id/featured   PUT /admin/projects/reorder
+GET|POST /admin/{services,team,labs}   GET|PUT|DELETE /admin/{…}/:id   PUT /admin/{…}/reorder
+GET|POST /admin/articles   GET|PUT|DELETE /admin/articles/:id
+GET|POST /admin/article-categories   PUT|DELETE /admin/article-categories/:id
+GET|POST /admin/media   PUT|DELETE /admin/media/:id   GET /admin/media/:id/usage
+GET /admin/requests   GET|PATCH|DELETE /admin/requests/:id
+GET|PUT /admin/settings
+GET|POST /admin/users   DELETE /admin/users/:id
+```
+
+## Admin panel
+
+`/admin/login` → Dashboard (faol/e’lon qilingan loyihalar, maqolalar, yangi so‘rovlar, 14 kunlik grafik), Loyihalar (draft/publish/archive, featured, drag & drop tartiblash, galereya, SEO), **content builder** (14 blok: Heading, Text, Large Text, Image, Full-width Image, Gallery, Video, Stats, Quote, Two/Three Columns, Technology, Process, Before/After — qo‘shish, tahrirlash, nusxalash, o‘chirish, tartiblash), Xizmatlar, Jamoa, Labs, Maqolalar (+kategoriyalar, rejalashtirilgan e’lon), Media manager, So‘rovlar, Sozlamalar (kontaktlar, metrikalar, SEO, ijtimoiy tarmoqlar, parol), Adminlar.
+
+Saqlanmagan o‘zgarishlar bilan sahifadan chiqishda ogohlantirish, `Ctrl+S` — tezkor saqlash.
+
+## Media
+
+PNG, JPG, WEBP, AVIF, SVG, MP4. Tur fayl tarkibi (magic bytes) bo‘yicha aniqlanadi. Raster rasmlardan 640/1024/1600/2400px variantlar yaratiladi (frontend `srcset` + lazy loading bilan ishlatadi). SVG ichida skript/`on*` atributlari bo‘lsa rad etiladi, Nginx `/uploads` uchun qat’iy CSP qo‘yadi.
+
+## Xavfsizlik
+
+- Admin sessiya: JWT **HttpOnly + SameSite=Strict** cookie (`/api/v1/admin` yo‘li bilan cheklangan); parol o‘zgarsa eski tokenlar bekor bo‘ladi; o‘chirilgan admin darhol chiqariladi.
+- CSRF: admin’dagi o‘zgartiruvchi so‘rovlar faqat `CORS_ORIGINS` dagi Origin’dan.
+- Rate limiting (Redis yoki xotira): public API, login (10/15 daq), contact (5/10 daq); Nginx’da qo‘shimcha `limit_req`.
+- Validatsiya (go-playground/validator, o‘zbekcha xabarlar), parametrlangan SQL, `ILIKE` wildcard ekranlash.
+- XSS: kontent faqat text interpolation bilan chiqariladi (`v-html` yo‘q); CSP, `X-Frame-Options`, HSTS va boshqa sarlavhalar (Fiber helmet + Nginx).
+- Request size limit: JSON uchun 1 MB, upload uchun `MAX_UPLOAD_MB`.
+- Contact formada honeypot; bcrypt (cost 12), timing-safe login.
+- Strukturali loglar (`slog`, productionda JSON) va har bir so‘rovga `X-Request-ID`.
+
+## Performance
+
+Lokal production build (Lighthouse, mobil emulyatsiya): bosh sahifa — Performance 94, Accessibility 96, Best Practices 100, SEO 100; case study va maqola sahifalari — Performance 97–98. Hero sof CSS bilan animatsiya qilinadi, GSAP/Lenis alohida chunk’da kechiktirib yuklanadi; sahifalar lazy-load; asset’lar immutable kesh.
+
+## Almashtirilishi kerak bo‘lgan boshlang‘ich kontent
+
+Seed ma’lumotlari admin paneldan tahrirlanadi, lekin quyidagilar **real ma’lumot bilan almashtirilishi shart**:
+
+- **Metrikalar** (75K+, 12+, 1M+, 99.9%) — TZ’dagi misol qiymatlar. Sozlamalar → Metrikalar.
+- **Kontaktlar va ijtimoiy tarmoqlar** (`hello@uzbekona.dev`, `@uzbekona_dev`, GitHub/Instagram/LinkedIn havolalari).
+- **OTMEDU, MyLearn** loyihalari tavsiflari va barcha loyihalar uchun real screenshot’lar (cover yuklanmaguncha loyiha accent rangidagi interfeys eskizi ko‘rsatiladi).
+- Jamoa a’zolari va rasmlari.

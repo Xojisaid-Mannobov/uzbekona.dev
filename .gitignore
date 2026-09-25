@@ -1,0 +1,17 @@
+# Muhit fayllari
+.env
+backend/.env
+
+# Backend
+backend/storage/
+backend/api
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
+dump.rdb

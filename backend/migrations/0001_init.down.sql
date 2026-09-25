@@ -1,0 +1,14 @@
+DROP TABLE IF EXISTS social_links;
+DROP TABLE IF EXISTS settings;
+DROP TABLE IF EXISTS contacts;
+DROP TABLE IF EXISTS labs;
+DROP TABLE IF EXISTS articles;
+DROP TABLE IF EXISTS article_categories;
+DROP TABLE IF EXISTS team_members;
+DROP TABLE IF EXISTS services;
+DROP TABLE IF EXISTS project_images;
+DROP TABLE IF EXISTS project_blocks;
+DROP TABLE IF EXISTS projects;
+DROP TABLE IF EXISTS media;
+DROP TABLE IF EXISTS admins;
+DROP FUNCTION IF EXISTS set_updated_at();
