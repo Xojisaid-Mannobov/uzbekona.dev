@@ -180,6 +180,22 @@ withDefaults(defineProps<{ name: IconName; size?: number | string }>(), { size: 
       <rect x="3" y="13" width="8" height="8" rx="2" />
       <rect x="13" y="13" width="8" height="8" rx="2" />
     </template>
+    <template v-else-if="name === 'news'">
+      <path d="M4 5h13v13a2 2 0 0 0 2 2H6a2 2 0 0 1-2-2Z" />
+      <path d="M17 9h3v9a2 2 0 0 1-2 2" />
+      <path d="M8 9h5M8 13h5M8 17h3" />
+    </template>
+    <template v-else-if="name === 'send'">
+      <path d="m21 3-9.5 9.5" />
+      <path d="M21 3 14.5 21l-3-8.5L3 9.5Z" />
+    </template>
+    <template v-else-if="name === 'link'">
+      <path d="M10 14a4.5 4.5 0 0 0 6.4 0l3.2-3.2a4.5 4.5 0 0 0-6.4-6.4L12 5.6" />
+      <path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3.2 3.2a4.5 4.5 0 0 0 6.4 6.4l1.2-1.2" />
+    </template>
+    <template v-else-if="name === 'pulse'">
+      <path d="M3 12h4l2.5-6 5 12L17 12h4" />
+    </template>
   </svg>
 </template>
 

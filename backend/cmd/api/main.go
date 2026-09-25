@@ -63,7 +63,10 @@ func run() error {
 			if err := database.Migrate(ctx, pool); err != nil {
 				return err
 			}
-			return database.SeedDemo(ctx, pool)
+			if err := database.SeedDemo(ctx, pool); err != nil {
+				return err
+			}
+			return database.SeedNews(ctx, pool)
 		default:
 			return fmt.Errorf("noma’lum buyruq: %s (migrate | rollback | seed)", os.Args[1])
 		}
@@ -78,6 +81,9 @@ func run() error {
 		if err := database.SeedDemo(ctx, pool); err != nil {
 			return err
 		}
+		if err := database.SeedNews(ctx, pool); err != nil {
+			return err
+		}
 	}
 
 	repos := repository.New(pool)
@@ -88,6 +94,14 @@ func run() error {
 	if err := os.MkdirAll(cfg.UploadDir, 0o755); err != nil {
 		return err
 	}
+
+	// Statistika: 13 oydan eski ko'rishlar kuniga bir marta tozalanadi
+	go func() {
+		for {
+			services.Analytics.Cleanup(ctx)
+			time.Sleep(24 * time.Hour)
+		}
+	}()
 
 	// Redis ixtiyoriy: bo'lsa kesh va rate limit hisoblagichlari shu yerda saqlanadi
 	var (

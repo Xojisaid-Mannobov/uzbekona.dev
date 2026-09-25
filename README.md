@@ -131,7 +131,9 @@ GET  /projects?featured=true   GET  /labs
 GET  /projects/:slug           GET  /articles?category=&page=&limit=
 GET  /services                 GET  /articles/:slug
 GET  /services/:slug           GET  /article-categories
-POST /contact                  GET  /health
+GET  /news?page=&limit=        GET  /news/:slug
+POST /contact                  POST /track   (sahifa ko'rilishi, 204)
+GET  /health
 ```
 
 **Admin** (HttpOnly cookie sessiya; `auth/login` va `auth/logout` dan tashqari hammasi autentifikatsiya talab qiladi)
@@ -143,6 +145,8 @@ GET|POST /admin/projects   GET|PUT|DELETE /admin/projects/:id
 PATCH /admin/projects/:id/status   PATCH /admin/projects/:id/featured   PUT /admin/projects/reorder
 GET|POST /admin/{services,team,labs}   GET|PUT|DELETE /admin/{…}/:id   PUT /admin/{…}/reorder
 GET|POST /admin/articles   GET|PUT|DELETE /admin/articles/:id
+GET|POST /admin/news       GET|PUT|DELETE /admin/news/:id
+GET /admin/analytics?days=7|30|90
 GET|POST /admin/article-categories   PUT|DELETE /admin/article-categories/:id
 GET|POST /admin/media   PUT|DELETE /admin/media/:id   GET /admin/media/:id/usage
 GET /admin/requests   GET|PATCH|DELETE /admin/requests/:id
@@ -152,9 +156,16 @@ GET|POST /admin/users   DELETE /admin/users/:id
 
 ## Admin panel
 
-`/admin/login` → Dashboard (faol/e’lon qilingan loyihalar, maqolalar, yangi so‘rovlar, 14 kunlik grafik), Loyihalar (draft/publish/archive, featured, drag & drop tartiblash, galereya, SEO), **content builder** (14 blok: Heading, Text, Large Text, Image, Full-width Image, Gallery, Video, Stats, Quote, Two/Three Columns, Technology, Process, Before/After — qo‘shish, tahrirlash, nusxalash, o‘chirish, tartiblash), Xizmatlar, Jamoa, Labs, Maqolalar (+kategoriyalar, rejalashtirilgan e’lon), Media manager, So‘rovlar, Sozlamalar (kontaktlar, metrikalar, SEO, ijtimoiy tarmoqlar, parol), Adminlar.
+`/admin/login` → Dashboard (faol/e’lon qilingan loyihalar, maqolalar, yangi so‘rovlar, 14 kunlik grafik), Loyihalar (draft/publish/archive, featured, drag & drop tartiblash, galereya, SEO), **content builder** (14 blok: Heading, Text, Large Text, Image, Full-width Image, Gallery, Video, Stats, Quote, Two/Three Columns, Technology, Process, Before/After — qo‘shish, tahrirlash, nusxalash, o‘chirish, tartiblash), Xizmatlar, Jamoa, Labs, Maqolalar (+kategoriyalar, rejalashtirilgan e’lon), Yangiliklar (teg, mahkamlash, ko‘rishlar soni), Statistika, Media manager, So‘rovlar, Sozlamalar (kontaktlar, metrikalar, SEO, ijtimoiy tarmoqlar, parol), Adminlar.
 
 Saqlanmagan o‘zgarishlar bilan sahifadan chiqishda ogohlantirish, `Ctrl+S` — tezkor saqlash.
+
+## Yangiliklar va statistika
+
+- **Yangiliklar** (`/news`): admin paneldan CRUD, content builder bloklari, teg (rangi teg bo‘yicha), bitta mahkamlangan asosiy yangilik, rejalashtirilgan e’lon. Bosh sahifada — hero ostidagi yuguruvchi yangiliklar lentasi va “Studiyada nimalar bo‘lyapti?” bo‘limi.
+- **Statistika** (`/admin/analytics`): ko‘rishlar, tashriflar (sessiyalar), noyob tashrif buyuruvchilar, hozir saytda, kunlik grafik, eng ko‘p ko‘rilgan sahifalar, manbalar (Telegram, Google …), qurilmalar va eng ko‘p o‘qilgan yangiliklar; 7/30/90 kun va oldingi davrga nisbatan o‘zgarish.
+- **Maxfiylik**: tashqi analytics skriptlari va cookie yo‘q. Brauzer tasodifiy ID’ni localStorage/sessionStorage’da saqlaydi, server faqat uning HMAC-xeshini yozadi; IP va User-Agent bazaga tushmaydi. Robotlar, admin sahifalari, 404 va “Do Not Track” yoqilgan brauzerlar hisobga olinmaydi. 400 kundan eski yozuvlar kuniga bir marta tozalanadi.
+- Kunlar `Asia/Tashkent` vaqti bo‘yicha hisoblanadi.
 
 ## Media
 
@@ -183,3 +194,4 @@ Seed ma’lumotlari admin paneldan tahrirlanadi, lekin quyidagilar **real ma’l
 - **Kontaktlar va ijtimoiy tarmoqlar** (`hello@uzbekona.dev`, `@uzbekona_dev`, GitHub/Instagram/LinkedIn havolalari).
 - **OTMEDU, MyLearn** loyihalari tavsiflari va barcha loyihalar uchun real screenshot’lar (cover yuklanmaguncha loyiha accent rangidagi interfeys eskizi ko‘rsatiladi).
 - Jamoa a’zolari va rasmlari.
+- **Demo yangiliklar** (4 ta: yangi sayt, KUAF, Telekit, vakansiya) — admin paneldagi Yangiliklar bo‘limida tahrirlang yoki o‘chiring.

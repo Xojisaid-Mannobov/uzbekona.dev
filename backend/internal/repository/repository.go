@@ -31,6 +31,8 @@ type Repositories struct {
 	Labs       *LabRepo
 	Articles   *ArticleRepo
 	Categories *CategoryRepo
+	News       *NewsRepo
+	Analytics  *AnalyticsRepo
 	Media      *MediaRepo
 	Contacts   *ContactRepo
 	Settings   *SettingsRepo
@@ -46,6 +48,8 @@ func New(pool *pgxpool.Pool) *Repositories {
 		Labs:       &LabRepo{db: pool},
 		Articles:   &ArticleRepo{db: pool},
 		Categories: &CategoryRepo{db: pool},
+		News:       &NewsRepo{db: pool},
+		Analytics:  &AnalyticsRepo{db: pool},
 		Media:      &MediaRepo{db: pool},
 		Contacts:   &ContactRepo{db: pool},
 		Settings:   &SettingsRepo{db: pool},

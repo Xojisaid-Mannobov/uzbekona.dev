@@ -19,12 +19,16 @@ const sidebarOpen = ref(false)
 const newRequests = ref(0)
 
 const nav: { to: string; label: string; icon: IconName; badge?: 'requests' }[][] = [
-  [{ to: '/admin/dashboard', label: 'Dashboard', icon: 'home' }],
+  [
+    { to: '/admin/dashboard', label: 'Dashboard', icon: 'home' },
+    { to: '/admin/analytics', label: 'Statistika', icon: 'pulse' },
+  ],
   [
     { to: '/admin/projects', label: 'Loyihalar', icon: 'folder' },
     { to: '/admin/services', label: 'Xizmatlar', icon: 'layers' },
     { to: '/admin/team', label: 'Jamoa', icon: 'users' },
     { to: '/admin/labs', label: 'Labs', icon: 'flask' },
+    { to: '/admin/news', label: 'Yangiliklar', icon: 'news' },
     { to: '/admin/articles', label: 'Maqolalar', icon: 'file-text' },
     { to: '/admin/media', label: 'Media', icon: 'image' },
   ],

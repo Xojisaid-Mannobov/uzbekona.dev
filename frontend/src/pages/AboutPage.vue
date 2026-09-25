@@ -45,7 +45,7 @@ useSeo({
 
     <WhySection index="01" />
     <ProcessSection index="02" />
-    <LabsSection />
+    <LabsSection index="03" />
   </div>
 </template>
 

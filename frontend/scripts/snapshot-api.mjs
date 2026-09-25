@@ -37,5 +37,9 @@ const articles = await fetchJSON('/articles?limit=50')
 await save('articles', articles)
 for (const a of articles.data) await save(`articles/${a.slug}`, await fetchJSON(`/articles/${a.slug}`))
 
+const news = await fetchJSON('/news?limit=50')
+await save('news', news)
+for (const n of news.data) await save(`news/${n.slug}`, await fetchJSON(`/news/${n.slug}`))
+
 const categories = await fetchJSON('/article-categories')
 for (const c of categories.data) await save(`articles-category/${c.slug}`, await fetchJSON(`/articles?limit=50&category=${c.slug}`))

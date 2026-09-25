@@ -27,6 +27,12 @@
   --ornament: #2350f5;
   --gold: #a8812f;
   --flag-white: #ffffff;
+  /* Grafiklar: kategoriyali ranglar (dataviz palitrasi, CVD tekshiruvidan o'tgan) */
+  --chart-1: #2a78d6;
+  --chart-2: #eb6834;
+  --chart-3: #1baf7a;
+  --chart-good: #0ca30c;
+  --chart-bad: #d03b3b;
   --gold-soft: rgb(168 129 47 / 0.12);
 
   /* Qora CTA / footer bloklari */
@@ -113,6 +119,9 @@
     --gold: #d2ae63;
     --gold-soft: rgb(210 174 99 / 0.14);
     --flag-white: #e4e9f2;
+    --chart-1: #3987e5;
+    --chart-2: #d95926;
+    --chart-3: #199e70;
     --dark: #1a1d1b;
     --dark-2: #222623;
     --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.3);
@@ -139,6 +148,9 @@
   --gold: #d2ae63;
   --gold-soft: rgb(210 174 99 / 0.14);
   --flag-white: #e4e9f2;
+  --chart-1: #3987e5;
+  --chart-2: #d95926;
+  --chart-3: #199e70;
   --dark: #1a1d1b;
   --dark-2: #222623;
   --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.3);

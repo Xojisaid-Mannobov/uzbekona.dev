@@ -6,6 +6,8 @@ import type {
   ArticleDetail,
   ContactPayload,
   Lab,
+  News,
+  NewsDetail,
   PageMeta,
   Project,
   ProjectDetail,
@@ -39,6 +41,12 @@ export const publicApi = {
     return { items: data.data, meta: data.meta as PageMeta }
   },
   article: (slug: string) => get<ArticleDetail>(`/articles/${encodeURIComponent(slug)}`),
+
+  async news(params: { page?: number; limit?: number } = {}) {
+    const { data } = await http.get<ApiResponse<News[]>>('/news', { params })
+    return { items: data.data, meta: data.meta as PageMeta }
+  },
+  newsItem: (slug: string) => get<NewsDetail>(`/news/${encodeURIComponent(slug)}`),
 
   async contact(payload: ContactPayload) {
     const { data } = await http.post<ApiResponse<{ message: string }>>('/contact', payload)

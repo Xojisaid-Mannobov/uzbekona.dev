@@ -223,3 +223,41 @@ type ArticleFilter struct {
 	Page     int
 	Limit    int
 }
+
+// ─── News (yangiliklar) ─────────────────────────────────────
+
+type News struct {
+	ID          int64      `json:"id"`
+	Slug        string     `json:"slug"`
+	Title       string     `json:"title"`
+	Excerpt     string     `json:"excerpt"`
+	Tag         string     `json:"tag"`
+	CoverID     *int64     `json:"cover_id"`
+	Cover       *MediaRef  `json:"cover"`
+	Content     []Block    `json:"content,omitempty"`
+	Status      string     `json:"status"`
+	Pinned      bool       `json:"pinned"`
+	Views       int64      `json:"views"`
+	SEO         SEO        `json:"seo"`
+	PublishedAt *time.Time `json:"published_at"`
+	CreatedAt   time.Time  `json:"created_at"`
+	UpdatedAt   time.Time  `json:"updated_at"`
+}
+
+type NewsDetail struct {
+	*News
+	Related []News `json:"related"`
+}
+
+type NewsInput struct {
+	Title       string     `json:"title" validate:"required,max=200"`
+	Slug        string     `json:"slug" validate:"omitempty,max=200,slug"`
+	Excerpt     string     `json:"excerpt" validate:"max=500"`
+	Tag         string     `json:"tag" validate:"max=40"`
+	CoverID     *int64     `json:"cover_id"`
+	Content     []Block    `json:"content" validate:"max=300,dive"`
+	Status      string     `json:"status" validate:"required,oneof=draft published archived"`
+	Pinned      bool       `json:"pinned"`
+	SEO         SEO        `json:"seo"`
+	PublishedAt *time.Time `json:"published_at"`
+}

@@ -96,6 +96,8 @@ func (r *MediaRepo) Usage(ctx context.Context, id int64) (int, error) {
 		(SELECT count(*) FROM team_members WHERE photo_id = $1) +
 		(SELECT count(*) FROM articles WHERE cover_id = $1) +
 		(SELECT count(*) FROM labs WHERE cover_id = $1) +
+		(SELECT count(*) FROM news WHERE cover_id = $1) +
+		(SELECT count(*) FROM news WHERE content::text LIKE '%"id": ' || $1::text || ',%') +
 		(SELECT count(*) FROM project_blocks WHERE data::text LIKE '%"id": ' || $1::text || ',%') +
 		(SELECT count(*) FROM articles WHERE content::text LIKE '%"id": ' || $1::text || ',%')`, id).Scan(&n)
 	return n, err

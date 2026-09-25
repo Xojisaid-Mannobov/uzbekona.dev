@@ -18,8 +18,10 @@ const cards = computed<{ label: string; value: number; icon: IconName; to: strin
   const s = stats.value
   if (!s) return []
   return [
+    { label: 'Bugun saytda (kishi)', value: s.visitors_today, icon: 'pulse', to: '/admin/analytics' },
     { label: 'Faol loyihalar', value: s.active_projects, icon: 'folder', to: '/admin/projects' },
     { label: 'E’lon qilingan', value: s.published_projects, icon: 'eye', to: '/admin/projects?status=published' },
+    { label: 'Yangiliklar', value: s.news, icon: 'news', to: '/admin/news' },
     { label: 'Maqolalar', value: s.articles, icon: 'file-text', to: '/admin/articles' },
     { label: 'Yangi so‘rovlar', value: s.incoming_requests, icon: 'inbox', to: '/admin/requests', accent: s.incoming_requests > 0 },
   ]
@@ -43,7 +45,7 @@ const greeting = computed(() => {
     <template v-else>
       <div class="stats">
         <template v-if="loading && !stats">
-          <div v-for="n in 4" :key="n" class="skeleton stat-sk" />
+          <div v-for="n in 6" :key="n" class="skeleton stat-sk" />
         </template>
         <RouterLink v-for="c in cards" :key="c.label" :to="c.to" class="stat" :class="{ 'stat--accent': c.accent }">
           <span class="stat__icon"><AppIcon :name="c.icon" :size="20" /></span>
@@ -142,7 +144,7 @@ const greeting = computed(() => {
 <style scoped>
 .stats {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
   gap: 16px;
   margin-bottom: 16px;
 }
@@ -332,10 +334,6 @@ const greeting = computed(() => {
 }
 
 @media (max-width: 1100px) {
-  .stats {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .grid {
     grid-template-columns: 1fr;
   }

@@ -118,6 +118,9 @@ type DashboardStats struct {
 	ActiveProjects    int       `json:"active_projects"`
 	PublishedProjects int       `json:"published_projects"`
 	Articles          int       `json:"articles"`
+	News              int       `json:"news"`
+	ViewsToday        int       `json:"views_today"`
+	VisitorsToday     int       `json:"visitors_today"`
 	IncomingRequests  int       `json:"incoming_requests"`
 	TotalRequests     int       `json:"total_requests"`
 	Media             int       `json:"media"`
@@ -130,4 +133,68 @@ type DashboardStats struct {
 type DayStat struct {
 	Day   string `json:"day"`
 	Count int    `json:"count"`
+}
+
+// ─── Analytics (tashriflar statistikasi) ────────────────────
+
+// TrackInput — brauzer har sahifa ochilganda yuboradigan ma'lumot.
+// vid/sid — brauzerdagi tasodifiy identifikatorlar; serverda faqat xeshi saqlanadi.
+type TrackInput struct {
+	Path     string `json:"path" validate:"required,max=300"`
+	Referrer string `json:"referrer" validate:"max=1000"`
+	VID      string `json:"vid" validate:"max=64"`
+	SID      string `json:"sid" validate:"max=64"`
+	Landing  bool   `json:"landing"`
+}
+
+// PageView — repository'ga yoziladigan tayyor yozuv.
+type PageView struct {
+	Path         string
+	Visitor      string
+	Session      string
+	ReferrerHost string
+	Device       string
+}
+
+type AnalyticsSummary struct {
+	Views           int `json:"views"`
+	Visits          int `json:"visits"`
+	Visitors        int `json:"visitors"`
+	PrevViews       int `json:"prev_views"`
+	PrevVisits      int `json:"prev_visits"`
+	PrevVisitors    int `json:"prev_visitors"`
+	TodayViews      int `json:"today_views"`
+	TodayVisitors   int `json:"today_visitors"`
+	OnlineNow       int `json:"online_now"`
+	AllTimeViews    int `json:"all_time_views"`
+	AllTimeVisitors int `json:"all_time_visitors"`
+}
+
+type AnalyticsDay struct {
+	Day      string `json:"day"`
+	Views    int    `json:"views"`
+	Visitors int    `json:"visitors"`
+}
+
+type AnalyticsRow struct {
+	Key      string `json:"key"`
+	Views    int    `json:"views"`
+	Visitors int    `json:"visitors"`
+}
+
+type NewsViews struct {
+	ID    int64  `json:"id"`
+	Slug  string `json:"slug"`
+	Title string `json:"title"`
+	Views int64  `json:"views"`
+}
+
+type Analytics struct {
+	Days      int              `json:"days"`
+	Summary   AnalyticsSummary `json:"summary"`
+	ByDay     []AnalyticsDay   `json:"by_day"`
+	TopPages  []AnalyticsRow   `json:"top_pages"`
+	Referrers []AnalyticsRow   `json:"referrers"`
+	Devices   []AnalyticsRow   `json:"devices"`
+	TopNews   []NewsViews      `json:"top_news"`
 }

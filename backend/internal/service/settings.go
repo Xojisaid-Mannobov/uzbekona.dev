@@ -84,5 +84,8 @@ func (s *DashboardService) Stats(ctx context.Context) (*model.DashboardStats, er
 	if stats.RequestsByDay, err = s.repos.Contacts.ByDay(ctx, 14); err != nil {
 		return nil, err
 	}
+	if stats.ViewsToday, stats.VisitorsToday, err = s.repos.Analytics.Today(ctx); err != nil {
+		return nil, err
+	}
 	return stats, nil
 }

@@ -49,3 +49,7 @@ export type IconName =
   | 'compare'
   | 'video'
   | 'gallery'
+  | 'news'
+  | 'send'
+  | 'link'
+  | 'pulse'

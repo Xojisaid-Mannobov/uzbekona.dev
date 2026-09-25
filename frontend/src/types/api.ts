@@ -200,6 +200,30 @@ export interface ArticleDetail extends Article {
   related: Article[]
 }
 
+// ─── Yangiliklar ────────────────────────────────────────
+
+export interface News {
+  id: number
+  slug: string
+  title: string
+  excerpt: string
+  tag: string
+  cover_id: number | null
+  cover: MediaRef | null
+  content?: Block[]
+  status: ContentStatus
+  pinned: boolean
+  views: number
+  seo: Seo
+  published_at: string | null
+  created_at: string
+  updated_at: string
+}
+
+export interface NewsDetail extends News {
+  related: News[]
+}
+
 // ─── Tizim ──────────────────────────────────────────────
 
 export interface SiteSettings {
@@ -266,6 +290,9 @@ export interface DashboardStats {
   active_projects: number
   published_projects: number
   articles: number
+  news: number
+  views_today: number
+  visitors_today: number
   incoming_requests: number
   total_requests: number
   media: number
@@ -273,6 +300,36 @@ export interface DashboardStats {
   recent_requests: ContactRequest[]
   recent_projects: Project[]
   requests_by_day: { day: string; count: number }[]
+}
+
+// ─── Statistika ─────────────────────────────────────────
+
+export interface AnalyticsRow {
+  key: string
+  views: number
+  visitors: number
+}
+
+export interface Analytics {
+  days: number
+  summary: {
+    views: number
+    visits: number
+    visitors: number
+    prev_views: number
+    prev_visits: number
+    prev_visitors: number
+    today_views: number
+    today_visitors: number
+    online_now: number
+    all_time_views: number
+    all_time_visitors: number
+  }
+  by_day: { day: string; views: number; visitors: number }[]
+  top_pages: AnalyticsRow[]
+  referrers: AnalyticsRow[]
+  devices: AnalyticsRow[]
+  top_news: { id: number; slug: string; title: string; views: number }[]
 }
 
 // ─── API konvertlari ────────────────────────────────────

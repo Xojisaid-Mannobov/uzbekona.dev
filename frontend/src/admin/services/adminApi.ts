@@ -1,6 +1,7 @@
 import { http } from '@/services/http'
 import type {
   Admin,
+  Analytics,
   ApiResponse,
   Article,
   ArticleCategory,
@@ -14,6 +15,7 @@ import type {
   LabStage,
   Media,
   Metric,
+  News,
   PageMeta,
   Project,
   Seo,
@@ -93,6 +95,19 @@ export interface ArticleInput {
   author_name: string
   status: ContentStatus
   featured: boolean
+  seo: Seo
+  published_at: string | null
+}
+
+export interface NewsInput {
+  title: string
+  slug: string
+  excerpt: string
+  tag: string
+  cover_id: number | null
+  content: Block[]
+  status: ContentStatus
+  pinned: boolean
   seo: Seo
   published_at: string | null
 }
@@ -181,6 +196,16 @@ export const adminApi = {
     update: (id: number, input: ArticleInput) => send<Article>('put', `/admin/articles/${id}`, input) as Promise<Article>,
     remove: (id: number) => remove(`/admin/articles/${id}`),
   },
+
+  news: {
+    list: (q: ListQuery = {}) => paged<News>('/admin/news', q),
+    get: (id: number) => get<News>(`/admin/news/${id}`),
+    create: (input: NewsInput) => send<News>('post', '/admin/news', input) as Promise<News>,
+    update: (id: number, input: NewsInput) => send<News>('put', `/admin/news/${id}`, input) as Promise<News>,
+    remove: (id: number) => remove(`/admin/news/${id}`),
+  },
+
+  analytics: (days: number) => get<Analytics>('/admin/analytics', { days }),
 
   categories: {
     list: () => get<ArticleCategory[]>('/admin/article-categories'),

@@ -36,6 +36,12 @@ export const adminRoutes: RouteRecordRaw[] = [
   page('/admin/labs/new', 'admin-lab-new', () => import('@/admin/pages/LabEditPage.vue'), 'Yangi Labs loyihasi'),
   page('/admin/labs/:id(\\d+)', 'admin-lab-edit', () => import('@/admin/pages/LabEditPage.vue'), 'Labs loyihasini tahrirlash'),
 
+  page('/admin/analytics', 'admin-analytics', () => import('@/admin/pages/AnalyticsPage.vue'), 'Statistika'),
+
+  page('/admin/news', 'admin-news', () => import('@/admin/pages/NewsListPage.vue'), 'Yangiliklar'),
+  page('/admin/news/new', 'admin-news-new', () => import('@/admin/pages/NewsEditPage.vue'), 'Yangi yangilik'),
+  page('/admin/news/:id(\\d+)', 'admin-news-edit', () => import('@/admin/pages/NewsEditPage.vue'), 'Yangilikni tahrirlash'),
+
   page('/admin/articles', 'admin-articles', () => import('@/admin/pages/ArticlesListPage.vue'), 'Maqolalar'),
   page('/admin/articles/new', 'admin-article-new', () => import('@/admin/pages/ArticleEditPage.vue'), 'Yangi maqola'),
   page('/admin/articles/:id(\\d+)', 'admin-article-edit', () => import('@/admin/pages/ArticleEditPage.vue'), 'Maqolani tahrirlash'),

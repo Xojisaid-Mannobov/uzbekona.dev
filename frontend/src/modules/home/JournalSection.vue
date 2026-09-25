@@ -13,7 +13,7 @@ const { data, loading, error, reload } = useAsync(() => publicApi.articles({ lim
 <template>
   <section v-if="loading || error || data?.items.length" class="section journal" aria-labelledby="journal-title">
     <div class="container">
-      <SectionHeader title-id="journal-title" index="08" label="Journal" title="Bilganimizni yashirmaymiz.">
+      <SectionHeader title-id="journal-title" index="09" label="Journal" title="Bilganimizni yashirmaymiz.">
         <template #aside>
           <UiButton to="/journal" variant="secondary" icon="arrow-up-right">Barcha maqolalar</UiButton>
         </template>

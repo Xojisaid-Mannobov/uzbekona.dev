@@ -5,6 +5,7 @@ export const navigation = [
   { to: '/services', label: 'Xizmatlar' },
   { to: '/about', label: 'Biz haqimizda' },
   { to: '/team', label: 'Jamoa' },
+  { to: '/news', label: 'Yangiliklar' },
   { to: '/journal', label: 'Journal' },
 ]
 
@@ -13,6 +14,7 @@ export const footerNavigation = [
   { to: '/services', label: 'Services' },
   { to: '/about', label: 'About' },
   { to: '/team', label: 'Team' },
+  { to: '/news', label: 'News' },
   { to: '/journal', label: 'Journal' },
 ]
 

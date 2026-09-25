@@ -88,6 +88,9 @@ func NewApp(d Deps) *fiber.App {
 	get("/articles", h.ListArticles)
 	get("/articles/:slug", h.GetArticle)
 	get("/article-categories", h.ListCategories)
+	get("/news", h.ListNews)
+	get("/news/:slug", h.GetNews)
+	api.Post("/track", middleware.RateLimit(d.Storage, "track", 120, time.Minute), h.Track)
 	api.Post("/contact", limit, middleware.RateLimit(d.Storage, "contact", 5, 10*time.Minute), h.SubmitContact)
 
 	// ─── Admin API ──────────────────────────────────────────
@@ -131,6 +134,15 @@ func NewApp(d Deps) *fiber.App {
 	secured.Get("/articles/:id", articleGet)
 	secured.Put("/articles/:id", articleSave)
 	secured.Delete("/articles/:id", articleDelete)
+
+	newsGet, newsSave, newsDelete := h.AdminNews()
+	secured.Get("/news", h.AdminListNews)
+	secured.Post("/news", newsSave)
+	secured.Get("/news/:id", newsGet)
+	secured.Put("/news/:id", newsSave)
+	secured.Delete("/news/:id", newsDelete)
+
+	secured.Get("/analytics", h.Analytics)
 
 	secured.Get("/article-categories", h.ListCategories)
 	secured.Post("/article-categories", h.AdminSaveCategory)

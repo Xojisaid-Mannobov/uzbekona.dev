@@ -8,6 +8,8 @@ import { vReveal } from '@/composables/reveal'
 import { publicApi } from '@/services/public'
 import { labStageLabels } from '@/content/site'
 
+withDefaults(defineProps<{ index?: string }>(), { index: '08' })
+
 const { data: labs, loading, error, reload } = useAsync(publicApi.labs)
 </script>
 
@@ -16,7 +18,7 @@ const { data: labs, loading, error, reload } = useAsync(publicApi.labs)
     <div class="container">
       <SectionHeader
         title-id="labs-title"
-        index="07"
+        :index="index"
         label="Uzbekona Labs"
         title="Ichki va open-source loyihalar."
         lead="Mijoz loyihalaridan tashqari o‘zimiz uchun va hamjamiyat uchun vositalar yaratamiz."

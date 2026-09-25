@@ -43,3 +43,10 @@ export function paragraphs(text: string | null | undefined): string[] {
     .map((p) => p.trim())
     .filter(Boolean)
 }
+
+/** 12345 → "12 345" (o'zbekcha: minglar bo'sh joy bilan; brauzer ICU'siga bog'liq emas) */
+export function formatNumber(n: number): string {
+  return Math.round(n)
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, '\u00a0')
+}

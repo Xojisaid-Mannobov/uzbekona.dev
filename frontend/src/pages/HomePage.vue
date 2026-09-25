@@ -10,6 +10,8 @@ import WhySection from '@/modules/home/WhySection.vue'
 import TeamSection from '@/modules/home/TeamSection.vue'
 import LabsSection from '@/modules/home/LabsSection.vue'
 import JournalSection from '@/modules/home/JournalSection.vue'
+import NewsSection from '@/modules/home/NewsSection.vue'
+import NewsTicker from '@/modules/news/NewsTicker.vue'
 import { useAsync } from '@/composables/useAsync'
 import { useSeo } from '@/composables/useSeo'
 import { publicApi } from '@/services/public'
@@ -24,6 +26,7 @@ useSeo({})
 <template>
   <div>
     <HeroSection />
+    <NewsTicker />
     <AboutStatement />
     <SelectedProjects :projects="projects" :loading="loading" :error="error" @retry="reload" />
     <MetricsSection />
@@ -32,7 +35,8 @@ useSeo({})
     <ProcessSection index="04" />
     <TechSection index="05" />
     <TeamSection />
-    <LabsSection />
+    <NewsSection index="07" />
+    <LabsSection index="08" />
     <JournalSection />
   </div>
 </template>

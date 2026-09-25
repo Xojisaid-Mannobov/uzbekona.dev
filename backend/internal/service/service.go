@@ -25,6 +25,8 @@ type Services struct {
 	Team      *TeamService
 	Labs      *LabService
 	Articles  *ArticleService
+	News      *NewsService
+	Analytics *AnalyticsService
 	Media     *MediaService
 	Contacts  *ContactService
 	Settings  *SettingsService
@@ -39,6 +41,8 @@ func New(cfg *config.Config, repos *repository.Repositories) *Services {
 		Team:      &TeamService{repo: repos.Team},
 		Labs:      &LabService{repo: repos.Labs},
 		Articles:  &ArticleService{repo: repos.Articles, categories: repos.Categories},
+		News:      &NewsService{repo: repos.News},
+		Analytics: newAnalyticsService(cfg, repos),
 		Media:     &MediaService{cfg: cfg, repo: repos.Media},
 		Contacts:  &ContactService{repo: repos.Contacts, notifier: NewTelegramNotifier(cfg)},
 		Settings:  &SettingsService{repos: repos},
