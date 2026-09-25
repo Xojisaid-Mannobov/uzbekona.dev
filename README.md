@@ -90,6 +90,18 @@ go test ./...
 
 Frontend buyruqlari: `npm run build` (vue-tsc + vite), `npm run format`, `npm run lint`.
 
+## Vercel’da demo (faqat frontend)
+
+Vercel serverless platforma — Go server, PostgreSQL va diskka fayl yuklash u yerda doimiy ishlamaydi. Shuning uchun Vercel’da **demo rejim** ishlatiladi:
+
+1. https://vercel.com/new → GitHub repo’ni import qiling, **Root Directory: `frontend`** (qolgan sozlamalar `frontend/vercel.json` da).
+2. `/api/v1/*` so‘rovlari `frontend/public/demo-api/*.json` statik snapshot’ga rewrite qilinadi — public sayt to‘liq ishlaydi.
+3. Kontakt forma va admin panel `api/demo.js` orqali aniq “Demo rejim” xabarini qaytaradi.
+
+Snapshot’ni yangilash (lokal API ishlab turganda): `cd frontend && npm run snapshot`, keyin commit + push.
+
+To‘liq versiya (admin, forma, media) uchun backend’ni VPS’da `docker compose up -d` bilan ishga tushiring.
+
 ## Environment o‘zgaruvchilari (backend)
 
 | O‘zgaruvchi | Standart | Izoh |
