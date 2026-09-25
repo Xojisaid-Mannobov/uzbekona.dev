@@ -20,7 +20,6 @@ export const hero = {
   tagline: 'Raqamli O‘zbekistonni birga quramiz',
   services: ['Raqamli mahsulotlar', 'Avtomatlashtirish', 'Dasturlash'],
   lead: 'G‘oyalarni ishlaydigan raqamli mahsulotlarga aylantiramiz: web platformalar, mobil ilovalar, Telegram tizimlari va biznes avtomatlashtirish.',
-  words: ['G‘oyalar', 'Odamlar', 'Texnologiya', 'Yorug‘ kelajak'],
 }
 
 export const aboutStatement = {

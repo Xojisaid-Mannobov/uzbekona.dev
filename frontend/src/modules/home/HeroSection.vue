@@ -22,10 +22,6 @@ const settings = useSettingsStore()
       <HeroFlagWave class="hero__wave" />
     </div>
 
-    <ul class="hero__words hero__fade" style="--d: 700ms" role="list">
-      <li v-for="w in hero.words" :key="w">{{ w }}</li>
-    </ul>
-
     <div class="container hero__inner">
       <div class="hero__brand">
         <BrandMark class="hero__mark" />
@@ -134,28 +130,6 @@ const settings = useSettingsStore()
   to {
     clip-path: inset(0 0 0 0);
   }
-}
-
-/* O'ng yuqoridagi so'zlar ro'yxati */
-.hero__words {
-  position: absolute;
-  top: 40px;
-  right: var(--edge);
-  display: grid;
-  gap: 6px;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--ink-2);
-}
-
-.hero__words::after {
-  content: '';
-  width: 36px;
-  height: 2px;
-  margin-top: 10px;
-  background: var(--ornament);
 }
 
 /* ─── Matn ───────────────────────────────────────── */
@@ -291,12 +265,6 @@ const settings = useSettingsStore()
 }
 
 /* ─── Moslashuvchanlik ───────────────────────────── */
-@media (max-width: 1200px) {
-  .hero__words {
-    display: none;
-  }
-}
-
 @media (max-width: 1024px) {
   .hero {
     min-height: auto;
