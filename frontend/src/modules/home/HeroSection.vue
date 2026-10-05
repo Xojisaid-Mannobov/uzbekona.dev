@@ -51,7 +51,7 @@ const settings = useSettingsStore()
 
       <p v-if="settings.site.available" class="hero__status hero__fade" style="--d: 620ms">
         <span class="hero__dot" aria-hidden="true" />
-        Yangi loyihalar uchun ochiqmiz
+        Yangi hamkorliklarga tayyormiz
       </p>
     </div>
   </section>
