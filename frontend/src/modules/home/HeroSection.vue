@@ -51,7 +51,7 @@ const settings = useSettingsStore()
 
       <p v-if="settings.site.available" class="hero__status hero__fade" style="--d: 620ms">
         <span class="hero__dot" aria-hidden="true" />
-        Yangi loyihalar uchun ochiqmiz
+        Yangi hamkorliklarga tayyormiz
       </p>
     </div>
   </section>
@@ -204,7 +204,7 @@ const settings = useSettingsStore()
 .hero__doppi {
   position: absolute;
   left: 50%;
-  bottom: 0.45em;
+  bottom: 0.6em;
   width: 0.84em;
   translate: -52% 0;
   rotate: -10deg;

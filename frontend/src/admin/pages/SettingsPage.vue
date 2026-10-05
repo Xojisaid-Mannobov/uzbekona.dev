@@ -140,7 +140,7 @@ const platforms = ['github', 'telegram', 'instagram', 'linkedin', 'x', 'youtube'
           <label class="a-switch" style="margin-top: 20px">
             <input v-model="form.site.available" type="checkbox" />
             <span class="a-switch__track" />
-            “Yangi loyihalar uchun ochiqmiz” belgisini ko‘rsatish
+            “Yangi hamkorliklarga tayyormiz” belgisini ko‘rsatish
           </label>
         </section>
 
