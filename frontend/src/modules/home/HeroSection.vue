@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import UiButton from '@/components/ui/UiButton.vue'
-import BrandMark from '@/components/layout/BrandMark.vue'
 import Doppi from '@/components/ornament/Doppi.vue'
 import HeroSkyline from './hero/HeroSkyline.vue'
 import HeroFlagWave from './hero/HeroFlagWave.vue'
@@ -25,7 +24,7 @@ const settings = useSettingsStore()
 
     <div class="container hero__inner">
       <div class="hero__brand">
-        <BrandMark class="hero__mark" />
+        <img class="hero__mark" src="/logo-mark.png" alt="" width="480" height="540" decoding="async" />
         <div class="hero__brand-text">
           <p class="hero__tagline hero__fade" style="--d: 80ms">{{ hero.tagline }}</p>
           <h1 id="hero-title" class="hero__title">
@@ -149,6 +148,7 @@ const settings = useSettingsStore()
 }
 
 .hero__mark {
+  width: auto;
   height: clamp(96px, 9.6vw, 148px);
   flex-shrink: 0;
   animation: mark-in 1100ms cubic-bezier(0.16, 1, 0.3, 1) both;

@@ -5,6 +5,7 @@ import AppIcon from '@/components/ui/AppIcon.vue'
 import OrnamentBorder from '@/components/ornament/OrnamentBorder.vue'
 import Doppi from '@/components/ornament/Doppi.vue'
 import BrandIcon from '@/components/ui/BrandIcon.vue'
+import BrandLogo from './BrandLogo.vue'
 import { useSettingsStore } from '@/stores/settings'
 import { useTheme } from '@/composables/useTheme'
 import { footerNavigation } from '@/content/site'
@@ -49,7 +50,7 @@ onMounted(placeDoppi)
     <div class="container">
       <div class="footer__grid">
         <div class="footer__brand">
-          <p class="footer__name">Uzbekona<span>.dev</span></p>
+          <BrandLogo class="footer__logo" on-dark />
           <p class="footer__tagline">Digital Product Studio. Web platformalar, mobil ilovalar, Telegram tizimlari va avtomatlashtirish.</p>
           <a v-if="settings.site.email" :href="`mailto:${settings.site.email}`" class="footer__email">
             {{ settings.site.email }}
@@ -126,14 +127,8 @@ onMounted(placeDoppi)
   gap: 48px;
 }
 
-.footer__name {
-  font-size: 26px;
-  font-weight: 700;
-  letter-spacing: -0.04em;
-}
-
-.footer__name span {
-  color: var(--accent);
+.footer__logo :deep(.brand__img) {
+  height: 44px;
 }
 
 .footer__tagline {
