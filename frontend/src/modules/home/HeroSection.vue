@@ -204,7 +204,7 @@ const settings = useSettingsStore()
 .hero__doppi {
   position: absolute;
   left: 50%;
-  bottom: 0.45em;
+  bottom: 0.6em;
   width: 0.84em;
   translate: -52% 0;
   rotate: -10deg;

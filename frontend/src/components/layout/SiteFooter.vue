@@ -242,7 +242,6 @@ onMounted(placeDoppi)
 }
 
 .footer__doppi {
-  --doppi-body: #070808;
   --doppi-outline: rgb(255 255 255 / 0.16);
   animation: doppi-drop 900ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
