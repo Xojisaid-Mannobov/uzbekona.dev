@@ -19,8 +19,10 @@ const props = withDefaults(
     seed?: string
     sizes?: string
     priority?: boolean
+    /** contain — cover (ko'pincha logo) kesilmasdan, oq fonda chetlaridan bo'sh joy bilan; cover — butun maydonni to'ldiradi */
+    fit?: 'contain' | 'cover'
   }>(),
-  { variant: 'auto', sizes: '(min-width: 1440px) 1360px, 100vw' },
+  { variant: 'auto', sizes: '(min-width: 1440px) 1360px, 100vw', fit: 'contain' },
 )
 
 const accent = computed(() => (props.accent && /^#[0-9a-f]{6}$/i.test(props.accent) ? props.accent : '#2350F5'))
@@ -35,8 +37,11 @@ const kind = computed(() => {
 </script>
 
 <template>
-  <div class="visual" :style="{ '--pa': accent }">
-    <MediaImage v-if="cover" :media="cover" :sizes="sizes" :priority="priority" fill :alt="cover.alt || title" />
+  <div class="visual" :class="{ 'visual--logo': cover && fit === 'contain' }" :style="{ '--pa': accent }">
+    <div v-if="cover && fit === 'contain'" class="visual__logo">
+      <MediaImage :media="cover" :sizes="sizes" :priority="priority" fill fit="contain" :alt="cover.alt || title" />
+    </div>
+    <MediaImage v-else-if="cover" :media="cover" :sizes="sizes" :priority="priority" fill :alt="cover.alt || title" />
     <!-- Screenshot bo'lmaganda fonda loyiha rangidagi girih naqshi -->
     <GirihPattern v-if="!cover" :color="accent" :size="84" :opacity="0.2" fade="top" />
 
@@ -128,6 +133,16 @@ const kind = computed(() => {
     radial-gradient(120% 90% at 85% 0%, color-mix(in srgb, var(--pa) 30%, transparent) 0%, transparent 60%),
     linear-gradient(160deg, var(--tint) 0%, var(--tint-2) 100%);
   container-type: size;
+}
+
+/* Logo cover: oq fon (logolar oq fon uchun chizilgan), har ikki mavzuda bir xil */
+.visual--logo {
+  background: #fff;
+}
+
+.visual__logo {
+  position: absolute;
+  inset: 8% 10%;
 }
 
 .mock {

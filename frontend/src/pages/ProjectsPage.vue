@@ -10,12 +10,12 @@ import { publicApi } from '@/services/public'
 
 const { data: projects, loading, error, reload } = useAsync(() => publicApi.projects())
 
-// Platforma bo'yicha filtr (Web, Mobile, Telegram …) — ma'lumotlardan avtomatik
+// Platforma bo'yicha filtr (Web, Telegram …) — ma'lumotlardan avtomatik, eng ko'pidan boshlab
 const filter = ref('all')
 const platforms = computed(() => {
-  const set = new Set<string>()
-  projects.value?.forEach((p) => p.platforms.forEach((x) => set.add(x)))
-  return [...set]
+  const counts = new Map<string, number>()
+  projects.value?.forEach((p) => p.platforms.forEach((x) => counts.set(x, (counts.get(x) ?? 0) + 1)))
+  return [...counts].sort((a, b) => b[1] - a[1]).map(([name, count]) => ({ name, count }))
 })
 const visible = computed(() =>
   filter.value === 'all' ? (projects.value ?? []) : (projects.value ?? []).filter((p) => p.platforms.includes(filter.value)),
@@ -32,7 +32,7 @@ useSeo({
     <PageHero
       label="Loyihalar"
       title="Ishlagan mahsulotlarimiz."
-      lead="Har bir loyiha — real foydalanuvchilar ishlatadigan tizim. Case-study’larda muammo, yechim va natijani ko‘rsatamiz."
+      lead="Web platformalar, ichki boshqaruv tizimlari va Telegram botlar — hammasi bugun real foydalanuvchilar uchun ishlab turibdi."
     >
       <div v-if="platforms.length > 1" class="filters" role="group" aria-label="Platforma bo‘yicha filtr">
         <button
@@ -46,14 +46,14 @@ useSeo({
         </button>
         <button
           v-for="p in platforms"
-          :key="p"
+          :key="p.name"
           type="button"
           class="filter"
-          :class="{ 'is-active': filter === p }"
-          :aria-pressed="filter === p"
-          @click="filter = p"
+          :class="{ 'is-active': filter === p.name }"
+          :aria-pressed="filter === p.name"
+          @click="filter = p.name"
         >
-          {{ p }}
+          {{ p.name }} <span>{{ p.count }}</span>
         </button>
       </div>
     </PageHero>
@@ -61,7 +61,7 @@ useSeo({
     <section class="section section--flush-top">
       <div class="container">
         <div v-if="loading && !projects" class="grid">
-          <div v-for="n in 2" :key="n" class="skeleton grid__skeleton" />
+          <div v-for="n in 6" :key="n" class="skeleton grid__skeleton" />
         </div>
         <StateMessage
           v-else-if="error"
@@ -77,8 +77,8 @@ useSeo({
           text="Bu yo‘nalishdagi case-study’lar tez orada qo‘shiladi."
         />
         <div v-else class="grid">
-          <div v-for="(p, i) in visible" :key="p.id" :class="{ grid__wide: i % 3 === 0 }" v-reveal="(i % 3 === 2 ? 1 : 0) * 120">
-            <ProjectCard :project="p" :size="i % 3 === 0 ? 'wide' : 'half'" :priority="i === 0" />
+          <div v-for="(p, i) in visible" :key="p.id" v-reveal="(i % 3) * 80">
+            <ProjectCard :project="p" size="compact" :priority="i < 3" />
           </div>
         </div>
       </div>
@@ -126,20 +126,22 @@ useSeo({
 
 .grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(72px, 8vw, 120px) clamp(24px, 2.4vw, 40px);
-}
-
-.grid__wide {
-  grid-column: 1 / -1;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(40px, 4vw, 56px) clamp(20px, 2vw, 28px);
 }
 
 .grid__skeleton {
-  height: 600px;
+  aspect-ratio: 4 / 3;
   border-radius: var(--r-lg);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
   .grid {
     grid-template-columns: 1fr;
   }
