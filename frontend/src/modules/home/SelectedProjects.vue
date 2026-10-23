@@ -39,7 +39,7 @@ defineEmits<{ retry: [] }>()
         text="Case-study’lar tayyorlanmoqda. Hozircha biz bilan bevosita bog‘laning."
       />
 
-      <div v-else class="projects__grid">
+      <div v-else class="projects__grid snap-row">
         <div v-for="(p, i) in projects" :key="p.id" v-reveal="(i % 3) * 80">
           <ProjectCard :project="p" size="compact" />
         </div>

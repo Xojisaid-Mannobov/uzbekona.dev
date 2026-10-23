@@ -74,8 +74,8 @@
   --container: 1320px;
   --gutter: 32px;
   --nav-h: 80px;
-  --section-y: 112px;
-  --section-y-lg: 136px;
+  --section-y: 88px;
+  --section-y-lg: 104px;
 
   /* ─── Radius ──────────────────────────────────── */
   --r-xl: 28px;
@@ -162,8 +162,8 @@
 /* ─── Responsive scale ───────────────────────────── */
 @media (max-width: 1024px) {
   :root {
-    --section-y: 96px;
-    --section-y-lg: 112px;
+    --section-y: 76px;
+    --section-y-lg: 88px;
     --fs-hero: clamp(44px, 6vw, 60px);
   }
 }
@@ -172,8 +172,8 @@
   :root {
     --gutter: 20px;
     --nav-h: 68px;
-    --section-y: 68px;
-    --section-y-lg: 80px;
+    --section-y: 56px;
+    --section-y-lg: 64px;
     --fs-hero: clamp(36px, 10vw, 44px);
     --fs-display: clamp(36px, 10vw, 44px);
     --fs-h2: clamp(28px, 7.4vw, 34px);

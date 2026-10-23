@@ -37,7 +37,7 @@ const { data: labs, loading, error, reload } = useAsync(publicApi.labs)
         @action="reload"
       />
 
-      <div v-else class="labs__grid">
+      <div v-else class="labs__grid snap-row">
         <article v-for="(lab, i) in labs" :key="lab.id" class="lab" v-reveal="(i % 2) * 110">
           <div v-if="lab.cover" class="lab__cover">
             <MediaImage :media="lab.cover" sizes="(min-width: 1024px) 660px, 100vw" fill />
@@ -70,21 +70,20 @@ const { data: labs, loading, error, reload } = useAsync(publicApi.labs)
 <style scoped>
 .labs__grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: clamp(16px, 1.6vw, 24px);
 }
 
 .labs__skeleton {
-  height: 320px;
+  height: 280px;
   border-radius: var(--r-lg);
 }
 
 .lab {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  min-height: 320px;
-  padding: clamp(28px, 3vw, 48px);
+  gap: 10px;
+  padding: clamp(18px, 1.6vw, 24px);
   border-radius: var(--r-lg);
   background: var(--surface);
   border: 1px solid var(--line);
@@ -110,18 +109,17 @@ const { data: labs, loading, error, reload } = useAsync(publicApi.labs)
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: auto;
-  padding-bottom: 40px;
+  padding-bottom: 4px;
 }
 
 .lab__stage {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  height: 36px;
-  padding: 0 16px;
+  height: 28px;
+  padding: 0 12px;
   border-radius: var(--r-pill);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
   background: var(--surface-2);
 }
@@ -156,36 +154,41 @@ const { data: labs, loading, error, reload } = useAsync(publicApi.labs)
 }
 
 .lab__title {
-  font-size: clamp(24px, 2vw, 32px);
+  font-size: clamp(20px, 1.5vw, 24px);
   letter-spacing: -0.04em;
 }
 
 .lab__desc {
-  max-width: 44ch;
-  font-size: var(--fs-body-lg);
+  font-size: 15px;
+  line-height: 1.5;
   color: var(--ink-2);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .lab__foot {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  gap: 24px;
-  margin-top: 16px;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 8px;
   flex-wrap: wrap;
 }
 
 .lab__stack {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
 }
 
 .lab__stack li {
-  padding: 6px 14px;
+  padding: 3px 10px;
   border-radius: var(--r-pill);
   border: 1px solid var(--line);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
   color: var(--ink-2);
 }
@@ -206,13 +209,15 @@ const { data: labs, loading, error, reload } = useAsync(publicApi.labs)
   color: var(--accent);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1100px) {
+  .labs__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
   .labs__grid {
     grid-template-columns: 1fr;
-  }
-
-  .lab {
-    min-height: 280px;
   }
 }
 </style>

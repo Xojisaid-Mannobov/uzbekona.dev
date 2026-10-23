@@ -36,7 +36,7 @@ defineProps<{
 .section-header {
   display: grid;
   gap: 22px;
-  margin-bottom: clamp(44px, 4.6vw, 72px);
+  margin-bottom: clamp(32px, 3.4vw, 52px);
 }
 
 .section-header__label {

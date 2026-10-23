@@ -42,8 +42,8 @@ const { data: team, loading, error, reload } = useAsync(publicApi.team)
 <style scoped>
 .team-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 64px clamp(20px, 2.4vw, 40px);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 40px clamp(16px, 1.8vw, 28px);
 }
 
 .team-grid__skeleton {
@@ -103,12 +103,14 @@ const { data: team, loading, error, reload } = useAsync(publicApi.team)
 
 @media (max-width: 600px) {
   .team-grid {
-    grid-template-columns: 1fr;
+    gap: 32px 14px;
   }
 
   .team-grid__join {
+    grid-column: 1 / -1;
     aspect-ratio: auto;
-    min-height: 300px;
+    min-height: 180px;
+    gap: 24px;
   }
 }
 </style>

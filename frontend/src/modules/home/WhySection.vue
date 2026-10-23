@@ -191,8 +191,8 @@ const SPRINTS = [16, 83, 150, 217, 284]
   flex-direction: column;
   justify-content: space-between;
   gap: 32px;
-  min-height: 380px;
-  padding: clamp(26px, 2.6vw, 40px);
+  min-height: 300px;
+  padding: clamp(24px, 2.2vw, 34px);
   border-radius: var(--r-lg);
   border: 1px solid var(--line);
   background: var(--surface);
@@ -244,7 +244,7 @@ const SPRINTS = [16, 83, 150, 217, 284]
 /* 01 — accent karta, oq suzani */
 .tile--care {
   grid-column: span 7;
-  min-height: clamp(420px, 36vw, 520px);
+  min-height: clamp(340px, 28vw, 420px);
   border: 0;
   color: #fff;
   background:
@@ -274,7 +274,7 @@ const SPRINTS = [16, 83, 150, 217, 284]
 /* 02 — o'sish ustunlari */
 .tile--scale {
   grid-column: span 5;
-  min-height: clamp(420px, 36vw, 520px);
+  min-height: clamp(340px, 28vw, 420px);
 }
 
 .tile--scale {
@@ -514,7 +514,7 @@ const SPRINTS = [16, 83, 150, 217, 284]
   }
 
   .tile--scale {
-    min-height: 380px;
+    min-height: 300px;
   }
 
   .tile:nth-child(5) {
@@ -536,7 +536,7 @@ const SPRINTS = [16, 83, 150, 217, 284]
   }
 
   .tile--care {
-    min-height: 420px;
+    min-height: 280px;
   }
 
   .tile__rosette {

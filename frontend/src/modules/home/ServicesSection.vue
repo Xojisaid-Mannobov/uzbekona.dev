@@ -89,8 +89,8 @@ function onMove(e: MouseEvent) {
   grid-template-columns: 96px minmax(0, 1.2fr) minmax(0, 1fr) 56px;
   align-items: center;
   gap: 24px;
-  min-height: 92px;
-  padding: 20px 8px;
+  min-height: 72px;
+  padding: 14px 8px;
   border-bottom: 1px solid var(--line-strong);
   transition:
     padding var(--dur) var(--ease),

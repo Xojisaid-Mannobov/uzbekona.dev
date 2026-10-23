@@ -42,7 +42,7 @@ const initials = computed(() =>
   background: radial-gradient(90% 70% at 70% 10%, var(--accent-soft), transparent 70%), var(--surface-2);
   display: grid;
   place-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 18px;
 }
 
 .member__photo :deep(img) {
@@ -76,9 +76,14 @@ const initials = computed(() =>
 }
 
 .member__bio {
-  margin-top: 16px;
+  margin-top: 12px;
+  font-size: 15px;
   color: var(--ink-2);
   max-width: 36ch;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .member__socials {

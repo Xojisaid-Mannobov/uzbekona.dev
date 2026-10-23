@@ -40,7 +40,7 @@ withDefaults(defineProps<{ index?: string }>(), { index: '04' })
   display: grid;
   align-content: start;
   gap: 16px;
-  padding: 40px 0 64px;
+  padding: 28px 0 40px;
   border-top: 1px solid var(--line-strong);
 }
 
@@ -73,11 +73,11 @@ withDefaults(defineProps<{ index?: string }>(), { index: '04' })
 
 @media (max-width: 640px) {
   .process__grid {
-    grid-template-columns: 1fr;
+    gap: 0 16px;
   }
 
   .step {
-    padding: 32px 0 48px;
+    padding: 20px 0 24px;
   }
 }
 </style>

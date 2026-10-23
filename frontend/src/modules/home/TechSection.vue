@@ -40,7 +40,7 @@ withDefaults(defineProps<{ index?: string }>(), { index: '03' })
   grid-template-columns: minmax(200px, 1fr) 3fr;
   gap: 32px;
   align-items: baseline;
-  padding-block: 36px;
+  padding-block: 24px;
   border-bottom: 1px solid var(--line);
 }
 
@@ -85,7 +85,7 @@ withDefaults(defineProps<{ index?: string }>(), { index: '03' })
   .tech__group {
     grid-template-columns: 1fr;
     gap: 16px;
-    padding-block: 28px;
+    padding-block: 20px;
   }
 
   .tech__item {
