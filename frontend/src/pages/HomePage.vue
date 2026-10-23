@@ -19,7 +19,7 @@ import { publicApi } from '@/services/public'
 
 // Tartib ishontirish mantig'i bo'yicha: kimmiz → isbot (loyihalar, raqamlar) → nega biz → nima qilamiz → qanday → vositalar.
 // Preview bloki olib tashlangan: hero'da illyustratsiya bor, birinchi loyiha esa "Tanlangan loyihalar"da darhol ko'rinadi.
-const { data: projects, loading, error, reload } = useAsync(() => publicApi.projects({ featured: true, limit: 7 }))
+const { data: projects, loading, error, reload } = useAsync(() => publicApi.projects({ featured: true, limit: 6 }))
 
 useSeo({})
 </script>

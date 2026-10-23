@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import SectionHeader from '@/components/ui/SectionHeader.vue'
 import UiButton from '@/components/ui/UiButton.vue'
 import StateMessage from '@/components/states/StateMessage.vue'
@@ -8,24 +7,8 @@ import { vReveal } from '@/composables/reveal'
 import type { Project } from '@/types/api'
 import type { ApiError } from '@/services/http'
 
-const props = defineProps<{ projects: Project[] | null; loading: boolean; error: ApiError | null }>()
+defineProps<{ projects: Project[] | null; loading: boolean; error: ApiError | null }>()
 defineEmits<{ retry: [] }>()
-
-// Ritm: 1 ta keng → 2 ta yarim → 1 ta keng …
-const rows = computed(() => {
-  const list = props.projects ?? []
-  const out: { wide?: Project; pair?: Project[] }[] = []
-  let i = 0
-  while (i < list.length) {
-    out.push({ wide: list[i] })
-    i++
-    if (i < list.length) {
-      out.push({ pair: list.slice(i, i + 2) })
-      i += 2
-    }
-  }
-  return out
-})
 </script>
 
 <template>
@@ -37,8 +20,8 @@ const rows = computed(() => {
         </template>
       </SectionHeader>
 
-      <div v-if="loading && !projects" class="projects__list" aria-busy="true">
-        <div class="skeleton projects__skeleton" />
+      <div v-if="loading && !projects" class="projects__grid" aria-busy="true">
+        <div v-for="n in 3" :key="n" class="skeleton projects__skeleton" />
       </div>
 
       <StateMessage
@@ -56,47 +39,36 @@ const rows = computed(() => {
         text="Case-study’lar tayyorlanmoqda. Hozircha biz bilan bevosita bog‘laning."
       />
 
-      <div v-else class="projects__list">
-        <template v-for="(row, i) in rows" :key="i">
-          <div v-if="row.wide" v-reveal>
-            <ProjectCard :project="row.wide" size="wide" />
-          </div>
-          <div v-else class="projects__pair">
-            <div v-for="(p, j) in row.pair" :key="p.id" v-reveal="j * 120">
-              <ProjectCard :project="p" size="half" />
-            </div>
-          </div>
-        </template>
+      <div v-else class="projects__grid">
+        <div v-for="(p, i) in projects" :key="p.id" v-reveal="(i % 3) * 80">
+          <ProjectCard :project="p" size="compact" />
+        </div>
       </div>
     </div>
   </section>
 </template>
 
 <style scoped>
-.projects__list {
+.projects__grid {
   display: grid;
-  gap: clamp(72px, 8vw, 120px);
-}
-
-.projects__pair {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(24px, 2.4vw, 40px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(40px, 4vw, 56px) clamp(20px, 2vw, 28px);
 }
 
 .projects__skeleton {
-  height: 520px;
+  aspect-ratio: 4 / 3;
   border-radius: var(--r-lg);
 }
 
-@media (max-width: 768px) {
-  .projects__pair {
-    grid-template-columns: 1fr;
-    gap: 72px;
+@media (max-width: 1024px) {
+  .projects__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+}
 
-  .projects__skeleton {
-    height: 360px;
+@media (max-width: 640px) {
+  .projects__grid {
+    grid-template-columns: 1fr;
   }
 }
 </style>
